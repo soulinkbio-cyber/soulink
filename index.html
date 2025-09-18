@@ -70,8 +70,7 @@
 
   async function loadSheetMap() {
     // Requiere: Archivo -> Publicar en la web (Sheet: Profiles)
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
-    const txt = await fetch(url, { cache: 'no-store' }).then(r => r.text());
+    const url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vRJvg1A6WKFanb6H_nECt5M-vz10RKxce5xNJlfjnnuC9NCvGGwBD47L52aqmXMY_HgnhjImMLyg1Qo/pubhtml    const txt = await fetch(url, { cache: 'no-store' }).then(r => r.text());
     // Extraer JSON del wrapper gviz
     const start = txt.indexOf('{');
     const end = txt.lastIndexOf('}') + 2;
