@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Soulink • Perfil</title>
+<style>
+  body{font-family: -apple-system,system-ui,Segoe UI,Roboto,Inter,Arial,sans-serif;margin:0;background:#fff;color:#111}
+  .wrap{max-width:720px;margin:0 auto;padding:28px 18px;text-align:center}
+  .avatar{width:120px;height:120px;border-radius:999px;border:1px solid #eee;object-fit:cover;background:#f6f6f6}
+  .name{font-size:28px;font-weight:800;margin:12px 0 2px}
+  .muted{color:#777;margin-bottom:14px}
+  .buttons a{display:block;margin:10px 0;padding:14px;border-radius:10px;text-decoration:none;color:#fff;font-weight:800}
+  .ig{background:#d62976} .fb{background:#1877f2} .tt{background:#000} .yt{background:#ff0000} .wa{background:#25d366;color:#003b16} .em{background:#6d6d6d}
+  .msg{margin-top:14px;color:#b00020;background:#fff7f7;border:1px solid #ffd6d6;border-radius:10px;padding:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <img id="avatar" class="avatar" alt="avatar" />
+  <div id="uname" class="name">@usuario</div>
+  <div id="realname" class="muted">Soulink profile</div>
+
+  <div class="buttons" id="btns">
+    <a id="btn-ig" class="ig" target="_blank" rel="noopener" style="display:none">Instagram</a>
+    <a id="btn-fb" class="fb" target="_blank" rel="noopener" style="display:none">Facebook</a>
+    <a id="btn-tt" class="tt" target="_blank" rel="noopener" style="display:none">TikTok</a>
+    <a id="btn-yt" class="yt" target="_blank" rel="noopener" style="display:none">YouTube</a>
+    <a id="btn-wa" class="wa" target="_blank" rel="noopener" style="display:none">WhatsApp</a>
+    <a id="btn-em" class="em" style="display:none">Email</a>
+  </div>
+
+  <div id="msg" class="msg" style="display:none"></div>
+  <div class="muted" style="margin-top:18px">© Soulink NFC • Conecta con un toque</div>
+</div>
+
+<script>
+  // Lee el username de la URL (soporta ?u=manu y /@manu)
+  function getUsernameFromURL() {
+    const q = new URLSearchParams(location.search);
+    const qu = q.get('u');
+    if (qu) return qu.trim().toLowerCase();
+    const m = location.pathname.match(/\/\@([^\/\?#]+)/);
+    if (m) return decodeURIComponent(m[1]).trim().toLowerCase();
+    return "";
+  }
+
+  async function fetchProfiles() {
+    // Hoja publicada en la web (Sheet: Profiles)
+    const url = "https://docs.google.com/spreadsheets/d/1mJt5VUh7g9PUHhPrWBpJiJdGp5y5EdXfEquodIC9xdE/gviz/tq?tqx=out:json&sheet=Profiles";
+    const txt = await fetch(url, {cache:'no-store'}).then(r => r.text());
+    // Respuesta viene envuelta: google.visualization.Query.setResponse(...)
+    const start = txt.indexOf('{');
+    const end = txt.lastIndexOf('}') + 2;
+    const json = JSON.parse(txt.slice(start, end));
+    const cols = json.table.cols.map(c => (c.label || '').toLowerCase());
+    const out = {}
+    for (const row of (json.table.rows||[])) {
+      const obj = {}, c = row.c;
+      cols.forEach((k,i)=> obj[k] = (c[i] && c[i].v!=null) ? String(c[i].v) : '' );
+      if (obj.username) out[obj.username.toLowerCase()] = obj;
+    }
+    return out;
+  }
+
+  function setHref(id, url) {
+    const el = document.getElementById(id);
+    if (url) { el.href = url; el.style.display = 'block'; }
+  }
+  function setMail(id, email) {
+    const el = document.getElementById(id);
+    if (email) { el.href = 'mailto:' + email; el.style.display = 'block'; }
+  }
+
+  (async () => {
+    const u = getUsernameFromURL();
+    if (!u) {
+      const m = document.getElementById('msg');
+      m.textContent = 'Falta el usuario en el enlace. Usa ?u=manu360 o /@manu360';
+      m.style.display = 'block';
+      return;
+    }
+    try {
+      const map = await fetchProfiles();
+      const p = map[u];
+      if (!p) throw new Error('notfound');
+      document.getElementById('uname').textContent = '@' + p.username;
+      document.getElementById('realname').textContent = p.name || p.username;
+      document.getElementById('avatar').src = p.avatar || 'https://i.pravatar.cc/200?img=12';
+      setHref('btn-ig', p.instagram);
+      setHref('btn-fb', p.facebook);
+      setHref('btn-tt', p.tiktok);
+      setHref('btn-yt', p.youtube);
+      setHref('btn-wa', p.wa || p.whatsapp);
+      setMail('btn-em', p.email);
+    } catch(e) {
+      const m = document.getElementById('msg');
+      m.textContent = 'No encontré este usuario. Revisa el enlace.';
+      m.style.display = 'block';
+    }
+  })();
+</script>
+</body>
+</html>
