@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<title>Redirigiendo…</title>
+<script>
+  // Captura /@usuario en cualquier subruta (ej: /soulink/@manu360)
+  (function () {
+    var m = location.pathname.match(/\/@([^\/?#]+)/);
+    if (m) {
+      var u = decodeURIComponent(m[1]);
+      location.replace(location.origin + "/soulink/?u=" + u);
+      // Si usas dominio root (soulink.bio) GitHub ajusta base automáticamente,
+      // y esta ruta también funciona como /?u=usuario por tu index.html.
+    } else {
+      location.replace(location.origin + "/soulink/");
+    }
+  })();
+</script>
+<body>Redirigiendo…</body>
+</html>
