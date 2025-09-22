@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Soulink • Perfil</title>
+  <style>
+    body { font-family: -apple-system, system-ui, Segoe UI, Roboto, Inter, Arial, sans-serif; margin: 0; background: #fff; color: #111; }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 28px 18px; text-align: center; }
+    .avatar { border-radius: 999px; width: 120px; height: 120px; object-fit: cover; border: 1px solid #eee; background:#f6f6f6; }
+    .uname { font-size: 26px; font-weight: 800; margin: 12px 0 2px; }
+    .name { color: #666; margin-bottom: 12px; }
+    .buttons a { display: block; margin: 10px 0; padding: 14px; border-radius: 10px; text-decoration: none; color: #fff; font-weight: 800; }
+    .ig { background:#d62976 } .fb { background:#1877f2 } .tt { background:#000 } .yt { background:#ff0000 } .wa { background:#25d366; color:#003b16 } .em { background:#6d6d6d }
+    .msg { margin-top: 14px; color:#b00020; background:#fff7f7; border:1px solid #ffd6d6; border-radius:10px; padding:12px; }
+    .foot { margin-top: 18px; color:#888; font-size: 12px; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <img id="avatar" class="avatar" alt="avatar" />
+  <div id="uname" class="uname">@usuario</div>
+  <div id="realname" class="name">Soulink profile</div>
+
+  <div id="btns" class="buttons">
+    <a id="btn-ig" class="ig" target="_blank" rel="noopener" style="display:none">Instagram</a>
+    <a id="btn-fb" class="fb" target="_blank" rel="noopener" style="display:none">Facebook</a>
+    <a id="btn-tt" class="tt" target="_blank" rel="noopener" style="display:none">TikTok</a>
+    <a id="btn-yt" class="yt" target="_blank" rel="noopener" style="display:none">YouTube</a>
+    <a id="btn-wa" class="wa" target="_blank" rel="noopener" style="display:none">WhatsApp</a>
+    <a id="btn-em" class="em" style="display:none">Email</a>
+  </div>
+
+  <div id="msg" class="msg" style="display:none"></div>
+  <div class="foot">© Soulink NFC</div>
+</div>
+
+<script>
+  function getUsername() {
+    const q = new URLSearchParams(location.search);
+    const u = q.get('u');
+    if (u) return u.trim().toLowerCase();
+    const m = location.pathname.match(/\/\@([^\/\?#]+)/);
+    if (m) return decodeURIComponent(m[1]).trim().toLowerCase();
+    return "";
+  }
+
+  const SHEET_TSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=tsv";
+
+  async function loadTSV() {
+    const txt = await fetch(SHEET_TSV, { cache:'no-store' }).then(r => r.text());
+    const rows = txt.split(/\r?\n/).map(line => line.split('\t'));
+    const headers = rows[0].map(h => h.trim().toLowerCase());
+    const data = rows.slice(1).filter(r => r.length && r.some(c => (c||'').trim() !== ''));
+    const map = {};
+    data.forEach(r => {
+      const obj = {};
+      headers.forEach((h,i)=> obj[h] = (r[i]||'').trim());
+      if (obj.username) map[obj.username.toLowerCase()] = obj;
+    });
+    return map;
+  }
+
+  const $ = id => document.getElementById(id);
+  const showMsg = t => { const m=$('msg'); m.textContent=t; m.style.display='block'; };
+  const setHref = (id, url) => { const el=$(id); if(url){ el.href=url; el.style.display='block'; } };
+  const setMail = (id, email) => { const el=$(id); if(email){ el.href='mailto:'+email; el.style.display='block'; } };
+
+  (async () => {
+    const u = getUsername();
+    if (!u) { showMsg('Falta el usuario en el enlace. Usa ?u=manu360 o /@manu360'); return; }
+
+    try {
+      const map = await loadTSV();
+      const p = map[u];
+      if (!p) throw new Error('notfound');
+
+      $('uname').textContent = '@' + p.username;
+      $('realname').textContent = p.name || p.username;
+      $('avatar').src = p.avatar || 'https://i.pravatar.cc/200?img=12';
+
+      const wa = p.wa || p.whatsapp;
+      setHref('btn-ig', p.instagram);
+      setHref('btn-fb', p.facebook);
+      setHref('btn-tt', p.tiktok);
+      setHref('btn-yt', p.youtube);
+      setHref('btn-wa', wa);
+      setMail('btn-em', p.email);
+    } catch(e) {
+      showMsg('No encontré este usuario o no pude leer la hoja.');
+    }
+  })();
+</script>
+</body>
+</html>
