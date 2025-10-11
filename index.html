@@ -1,153 +1,158 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Soulink • Perfil</title>
 
-<!-- ICONS (Font Awesome CDN) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 :root {
-  --fg:#111;
-  --muted:#666;
-  --soft:#f6f6f6;
+  --bg: #fff;
+  --text: #111;
+  --muted: #666;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:-apple-system,system-ui,Segoe UI,Roboto,Inter,Arial,sans-serif;
-  background:#fff;
-  color:var(--fg);
-  display:flex;
-  justify-content:center;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
-.wrap{
-  width:100%;
-  max-width:420px;
-  padding:40px 18px;
-  text-align:center;
+.wrap {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  padding: 30px 18px;
 }
-.avatar{
-  width:120px;
-  height:120px;
-  border-radius:999px;
-  object-fit:cover;
-  border:2px solid #eee;
-  margin-bottom:15px;
+.avatar {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+  margin-bottom: 10px;
 }
-.uname{
-  font-size:24px;
-  font-weight:800;
-  margin:6px 0 0;
+.uname {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 25px;
 }
-.name{
-  color:var(--muted);
-  font-size:15px;
-  margin-bottom:24px;
+.links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 18px;
 }
-.buttons{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:16px;
+.link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+  font-size: 24px;
+  transition: transform 0.2s, opacity 0.2s;
 }
-.buttons a{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  text-decoration:none;
-  color:white;
-  font-size:26px;
-  transition:transform .2s ease,opacity .2s ease;
+.link-btn:hover { transform: scale(1.1); opacity: 0.9; }
+.ig { background: #d62976; }
+.fb { background: #1877f2; }
+.tt { background: #000; }
+.yt { background: #ff0000; }
+.wa { background: #25d366; }
+.em { background: #6d6d6d; }
+.msg {
+  margin-top: 15px;
+  color: #b00020;
+  background: #fff7f7;
+  border: 1px solid #ffd6d6;
+  border-radius: 10px;
+  padding: 12px;
 }
-.buttons a:hover{transform:scale(1.1);opacity:.9}
-.ig{background:#d62976}
-.fb{background:#1877f2}
-.tt{background:#000}
-.yt{background:#ff0000}
-.wa{background:#25d366}
-.em{background:#6d6d6d}
-.msg{margin-top:14px;color:#b00020;background:#fff7f7;border:1px solid #ffd6d6;border-radius:10px;padding:12px}
-.foot{margin-top:28px;color:#aaa;font-size:12px}
-.skeleton{animation:pulse 1.2s ease-in-out infinite;background:#eee}
-@keyframes pulse{0%{opacity:.6}50%{opacity:1}100%{opacity:.6}}
+.foot {
+  margin-top: 30px;
+  color: #aaa;
+  font-size: 12px;
+}
 </style>
 </head>
+
 <body>
 <div class="wrap">
-  <img id="avatar" class="avatar skeleton" alt="avatar"/>
-  <div id="uname" class="uname skeleton" style="display:inline-block;min-width:140px;height:28px;border-radius:8px"></div>
-  <div id="realname" class="name skeleton" style="display:inline-block;min-width:200px;height:18px;border-radius:6px"></div>
+  <img id="avatar" class="avatar" src="https://i.pravatar.cc/300?img=12" alt="avatar">
+  <div id="uname" class="uname">@usuario</div>
 
-  <div id="btns" class="buttons">
-    <a id="btn-ig" class="ig" target="_blank" rel="noopener" style="display:none"><i class="fab fa-instagram"></i></a>
-    <a id="btn-fb" class="fb" target="_blank" rel="noopener" style="display:none"><i class="fab fa-facebook-f"></i></a>
-    <a id="btn-tt" class="tt" target="_blank" rel="noopener" style="display:none"><i class="fab fa-tiktok"></i></a>
-    <a id="btn-yt" class="yt" target="_blank" rel="noopener" style="display:none"><i class="fab fa-youtube"></i></a>
-    <a id="btn-wa" class="wa" target="_blank" rel="noopener" style="display:none"><i class="fab fa-whatsapp"></i></a>
-    <a id="btn-em" class="em" style="display:none"><i class="fas fa-envelope"></i></a>
+  <div class="links">
+    <a id="btn-ig" class="link-btn ig" href="#" target="_blank" style="display:none;"><i class="fab fa-instagram"></i></a>
+    <a id="btn-fb" class="link-btn fb" href="#" target="_blank" style="display:none;"><i class="fab fa-facebook-f"></i></a>
+    <a id="btn-tt" class="link-btn tt" href="#" target="_blank" style="display:none;"><i class="fab fa-tiktok"></i></a>
+    <a id="btn-yt" class="link-btn yt" href="#" target="_blank" style="display:none;"><i class="fab fa-youtube"></i></a>
+    <a id="btn-wa" class="link-btn wa" href="#" target="_blank" style="display:none;"><i class="fab fa-whatsapp"></i></a>
+    <a id="btn-em" class="link-btn em" href="#" style="display:none;"><i class="fas fa-envelope"></i></a>
   </div>
 
-  <div id="msg" class="msg" style="display:none"></div>
+  <div id="msg" class="msg" style="display:none;"></div>
   <div class="foot">© Soulink NFC</div>
 </div>
 
 <script>
-function getUsername(){
-  const q=new URLSearchParams(location.search);
-  const u=q.get('u');
-  if(u)return u.trim().toLowerCase();
-  const m=location.pathname.match(/\/@([^\/\?#]+)/);
-  if(m)return decodeURIComponent(m[1]).trim().toLowerCase();
+function getUsername() {
+  const q = new URLSearchParams(location.search);
+  const u = q.get('u');
+  if (u) return u.trim().toLowerCase();
+  const m = location.pathname.match(/\/@([^\/?#]+)/);
+  if (m) return decodeURIComponent(m[1]).trim().toLowerCase();
   return "";
 }
 
-const SHEET_TSV="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=tsv";
+const SHEET_TSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=tsv";
 
-async function loadTSV(){
-  const res=await fetch(SHEET_TSV,{cache:'no-store'});
-  if(!res.ok)throw new Error('no_tsv');
-  const txt=await res.text();
-  const lines=txt.split(/\r?\n/).filter(l=>l.trim()!=="");
-  const rows=lines.map(l=>l.split('\t'));
-  const headers=rows[0].map(h=>h.trim().toLowerCase());
-  const data=rows.slice(1).map(r=>{
-    const o={};headers.forEach((h,i)=>o[h]=r[i]?r[i].trim():"");return o;
+async function loadTSV() {
+  const res = await fetch(SHEET_TSV, { cache: 'no-store' });
+  if (!res.ok) throw new Error('no_tsv');
+  const txt = await res.text();
+  const lines = txt.split(/\r?\n/).filter(l => l.trim() !== "");
+  const rows = lines.map(l => l.split('\t'));
+  const headers = rows[0].map(h => h.trim().toLowerCase());
+  const data = rows.slice(1).map(r => {
+    const o = {};
+    headers.forEach((h, i) => o[h] = r[i] ? r[i].trim() : "");
+    return o;
   });
-  const map={};data.forEach(o=>{if(o.username)map[o.username.toLowerCase()]=o});
+  const map = {};
+  data.forEach(o => { if (o.username) map[o.username.toLowerCase()] = o });
   return map;
 }
 
-const $=id=>document.getElementById(id);
-const showMsg=t=>{const m=$('msg');m.textContent=t;m.style.display='block'};
-const setHref=(id,url)=>{const el=$(id);if(url){el.href=url;el.style.display='flex'}};
-const setMail=(id,email)=>{const el=$(id);if(email){el.href='mailto:'+email;el.style.display='flex'}};
+const $ = id => document.getElementById(id);
+const showMsg = t => { const m = $('msg'); m.textContent = t; m.style.display = 'block'; };
+const setHref = (id, url) => { const el = $(id); if (url) { el.href = url; el.style.display = 'flex'; } };
+const setMail = (id, email) => { const el = $(id); if (email) { el.href = 'mailto:' + email; el.style.display = 'flex'; } };
 
-(async()=>{
-  try{
-    const u=getUsername();
-    if(!u){showMsg('Falta el usuario en el enlace. Usa ?u=manu360 o /@manu360');return;}
-    const map=await loadTSV();
-    const p=map[u];
-    if(!p){showMsg('No encontré este usuario en la hoja.');return;}
-    $('uname').classList.remove('skeleton');
-    $('realname').classList.remove('skeleton');
-    $('avatar').classList.remove('skeleton');
-    $('uname').textContent='@'+(p.username||u);
-    $('realname').textContent=p.name||p.username||u;
-    $('avatar').src=p.avatar||'https://i.pravatar.cc/300?img=12';
-    const wa=p.wa||p.whatsapp||"";
-    setHref('btn-ig',p.instagram);
-    setHref('btn-fb',p.facebook);
-    setHref('btn-tt',p.tiktok);
-    setHref('btn-yt',p.youtube);
-    setHref('btn-wa',wa);
-    setMail('btn-em',p.email);
-  }catch(e){
+(async () => {
+  try {
+    const u = getUsername();
+    if (!u) { showMsg('Falta el usuario en el enlace. Usa ?u=manu360 o /@manu360'); return; }
+    const map = await loadTSV();
+    const p = map[u];
+    if (!p) { showMsg('No encontré este usuario en la hoja.'); return; }
+
+    $('uname').textContent = '@' + (p.username || u);
+    $('avatar').src = p.avatar || 'https://i.pravatar.cc/300?img=12';
+
+    setHref('btn-ig', p.instagram);
+    setHref('btn-fb', p.facebook);
+    setHref('btn-tt', p.tiktok);
+    setHref('btn-yt', p.youtube);
+    setHref('btn-wa', p.whatsapp || p.wa);
+    setMail('btn-em', p.email);
+  } catch (e) {
     showMsg('No pude leer datos. Verifica que la hoja esté publicada.');
     console.error(e);
   }
