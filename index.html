@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Soulink • Perfil</title>
 
 <!-- Evitar cache agresivo (Safari) -->
@@ -17,29 +17,39 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: 'Inter', -apple-system, system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  display: flex; justify-content: center; align-items: center;
-  min-height: 100vh;
+  background: var(--bg); color: var(--text);
+  display:flex; justify-content:center; align-items:center; min-height:100vh;
 }
-.wrap { width: 100%; max-width: 400px; text-align: center; padding: 30px 18px; }
-.avatar {
-  width: 130px; height: 130px; border-radius: 50%; object-fit: cover;
-  border: 2px solid #ddd; margin-bottom: 10px;
-}
-.uname { font-size: 22px; font-weight: 700; margin-bottom: 25px; }
-.links { display: flex; justify-content: center; flex-wrap: wrap; gap: 18px; }
+.wrap { width:100%; max-width:420px; text-align:center; padding:30px 18px; }
+.avatar { width:130px; height:130px; border-radius:50%; object-fit:cover; border:2px solid #ddd; margin-bottom:10px; }
+.uname { font-size:22px; font-weight:700; margin-bottom:22px; }
+.links { display:flex; justify-content:center; flex-wrap:wrap; gap:16px; }
+
 .link-btn {
   display:flex; align-items:center; justify-content:center;
-  width:58px; height:58px; border-radius:50%;
-  color:#fff; text-decoration:none; font-size:24px;
-  transition: transform .2s, opacity .2s;
+  width:58px; height:58px; border-radius:50%; color:#fff; text-decoration:none;
+  font-size:24px; transition: transform .2s, opacity .2s; border:0;
 }
-.link-btn:hover { transform: scale(1.1); opacity: .9; }
-.ig { background:#d62976; } .fb { background:#1877f2; }
-.tt { background:#000; }   .yt { background:#ff0000; }
-.wa { background:#25d366; } .em { background:#6d6d6d; }
-.foot { margin-top:30px; color:#aaa; font-size:12px; }
+.link-btn:hover { transform:scale(1.08); opacity:.92; }
+
+.x  { background:#000; }
+.fb { background:#1877f2; }
+.ig { background:#d62976; }
+.wa { background:#25d366; }
+.th { background:#000; }        /* Threads */
+.tt { background:#000; }        /* TikTok */
+.sc { background:#fffc00; color:#000; } /* Snapchat */
+.yt { background:#ff0000; }
+.tw { background:#6441a5; }     /* Twitch */
+.tg { background:#229ED9; }     /* Telegram */
+.dc { background:#5865F2; }     /* Discord */
+.gh { background:#24292e; }     /* GitHub */
+.li { background:#0a66c2; }     /* LinkedIn (LINKEDLN en sheet) */
+.rd { background:#ff4500; }     /* Reddit */
+.pi { background:#bd081c; }     /* Pinterest */
+.em { background:#6d6d6d; }
+
+.foot { margin-top:28px; color:#aaa; font-size:12px; }
 </style>
 </head>
 
@@ -49,105 +59,147 @@ body {
   <div id="uname" class="uname">@usuario</div>
 
   <div class="links">
-    <a id="btn-ig" class="link-btn ig" href="#" target="_blank" style="display:none;"><i class="fab fa-instagram"></i></a>
-    <a id="btn-fb" class="link-btn fb" href="#" target="_blank" style="display:none;"><i class="fab fa-facebook-f"></i></a>
-    <a id="btn-tt" class="link-btn tt" href="#" target="_blank" style="display:none;"><i class="fab fa-tiktok"></i></a>
-    <a id="btn-yt" class="link-btn yt" href="#" target="_blank" style="display:none;"><i class="fab fa-youtube"></i></a>
-    <a id="btn-wa" class="link-btn wa" href="#" target="_blank" style="display:none;"><i class="fab fa-whatsapp"></i></a>
-    <a id="btn-em" class="link-btn em" href="#" style="display:none;"><i class="fas fa-envelope"></i></a>
+    <a id="btn-x"   class="link-btn x"   href="#" target="_blank" style="display:none" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+    <a id="btn-fb"  class="link-btn fb"  href="#" target="_blank" style="display:none" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a id="btn-ig"  class="link-btn ig"  href="#" target="_blank" style="display:none" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a id="btn-wa"  class="link-btn wa"  href="#" target="_blank" style="display:none" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <a id="btn-th"  class="link-btn th"  href="#" target="_blank" style="display:none" aria-label="Threads"><i class="fa-brands fa-threads"></i></a>
+    <a id="btn-tt"  class="link-btn tt"  href="#" target="_blank" style="display:none" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+    <a id="btn-sc"  class="link-btn sc"  href="#" target="_blank" style="display:none" aria-label="Snapchat"><i class="fab fa-snapchat-ghost"></i></a>
+    <a id="btn-yt"  class="link-btn yt"  href="#" target="_blank" style="display:none" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    <a id="btn-tw"  class="link-btn tw"  href="#" target="_blank" style="display:none" aria-label="Twitch"><i class="fab fa-twitch"></i></a>
+    <a id="btn-tg"  class="link-btn tg"  href="#" target="_blank" style="display:none" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+    <a id="btn-dc"  class="link-btn dc"  href="#" target="_blank" style="display:none" aria-label="Discord"><i class="fab fa-discord"></i></a>
+    <a id="btn-gh"  class="link-btn gh"  href="#" target="_blank" style="display:none" aria-label="GitHub"><i class="fab fa-github"></i></a>
+    <a id="btn-li"  class="link-btn li"  href="#" target="_blank" style="display:none" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    <a id="btn-rd"  class="link-btn rd"  href="#" target="_blank" style="display:none" aria-label="Reddit"><i class="fab fa-reddit-alien"></i></a>
+    <a id="btn-pi"  class="link-btn pi"  href="#" target="_blank" style="display:none" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+    <a id="btn-em"  class="link-btn em"  href="#"             style="display:none" aria-label="Email"><i class="fas fa-envelope"></i></a>
   </div>
 
   <div class="foot">© Soulink NFC</div>
 </div>
 
 <script>
-// ====== CONFIG ======
-const SHEET_TSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=tsv";
+// =================== CONFIG ===================
+const SHEET_TSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=tsv&gid=0";
 
 // Perfil oficial por defecto (@soulink)
 const OFFICIAL = {
-  username: "soulink",
-  avatar:   "https://i.pravatar.cc/300?img=12", // <-- pon aquí tu logo oficial si quieres
-  instagram: "https://instagram.com/soulink",
-  tiktok:    "https://tiktok.com/@soulink",
-  youtube:   "",
-  facebook:  "",
-  whatsapp:  "",
-  email:     ""
+  USERNAME: "soulink",
+  AVATAR:   "https://i.pravatar.cc/300?img=12", // <-- cambia por tu logo oficial si quieres
+  X:         "https://x.com/soulink",
+  FACEBOOK:  "",
+  INSTAGRAM: "",
+  WHATSAPP:  "",
+  THREATS:   "",   // <-- columna "THREATS" (Threads) en tu Sheet
+  TIKTOK:    "",
+  SNAPCHAT:  "",
+  YOUTUBE:   "",
+  TWITCH:    "",
+  TELEGRAM:  "",
+  DISCORD:   "",
+  GITHUB:    "",
+  LINKEDLN:  "",   // <-- columna "LINKEDLN" (LinkedIn) en tu Sheet
+  REDDIT:    "",
+  PINTEREST: "",
+  EMAIL:     ""
 };
-// ====================
+// =============================================
 
+// Lee username desde URL: ?u=usuario, /@usuario, /usuario; raíz -> "soulink"
 function getUsername() {
-  // ?u=usuario
   const q = new URLSearchParams(location.search).get("u");
   if (q && q.trim()) return q.replace(/^@/, "").trim().toLowerCase();
 
-  // /@usuario
   const mAt = location.pathname.match(/^\/@([^\/?#]+)/);
   if (mAt) return decodeURIComponent(mAt[1]).trim().toLowerCase();
 
-  // /usuario
   const mPlain = location.pathname.match(/^\/([^\/?#]+)/);
   if (mPlain && mPlain[1]) return decodeURIComponent(mPlain[1]).trim().toLowerCase();
 
-  // raíz -> oficial
   return "soulink";
 }
 
 async function loadTSV() {
-  const res = await fetch(SHEET_TSV, { cache: 'no-store' });
-  if (!res.ok) throw new Error('no_tsv');
+  const res = await fetch(SHEET_TSV, { cache: "no-store" });
+  if (!res.ok) throw new Error("no_tsv");
   const txt = await res.text();
+
   const lines = txt.split(/\r?\n/).filter(l => l.trim() !== "");
-  const rows = lines.map(l => l.split('\t'));
-  const headers = rows[0].map(h => h.trim().toLowerCase());
-  const data = rows.slice(1).map(r => {
-    const o = {};
-    headers.forEach((h, i) => o[h] = r[i] ? r[i].trim() : "");
-    return o;
-  });
+  const rows  = lines.map(l => l.split("\t"));
+  const headers = rows[0].map(h => h.trim());
+
+  // Mapa por USERNAME en minúsculas
   const map = {};
-  data.forEach(o => { if (o.username) map[o.username.toLowerCase()] = o });
+  for (let i = 1; i < rows.length; i++) {
+    const obj = {};
+    for (let j = 0; j < headers.length; j++) {
+      obj[headers[j]] = (rows[i][j] || "").trim();
+    }
+    const uname = (obj.USERNAME || "").toLowerCase();
+    if (uname) map[uname] = obj;
+  }
   return map;
 }
 
 const $ = id => document.getElementById(id);
-const setHref = (id, url) => { const el = $(id); if (url) { el.href = url; el.style.display = 'flex'; } };
-const setMail = (id, email) => { const el = $(id); if (email) { el.href = 'mailto:' + email; el.style.display = 'flex'; } };
+const show = (id, url) => { const el = $(id); if (url) { el.href = url; el.style.display = "flex"; } };
+const showMail = (id, email) => { const el = $(id); if (email) { el.href = "mailto:" + email; el.style.display = "flex"; } };
 
-function renderProfile(p) {
-  $('uname').textContent = '@' + (p.username || 'soulink');
-  $('avatar').src = p.avatar || OFFICIAL.avatar || 'https://i.pravatar.cc/300?img=12';
+function sanitize(url) {
+  // Permite http/https/mailto/tel; deja vacío lo demás
+  if (!url) return "";
+  const ok = /^(https?:\/\/|mailto:|tel:)/i.test(url);
+  return ok ? url : "";
+}
 
-  setHref('btn-ig', p.instagram);
-  setHref('btn-fb', p.facebook);
-  setHref('btn-tt', p.tiktok);
-  setHref('btn-yt', p.youtube);
-  setHref('btn-wa', p.whatsapp || p.wa);
-  setMail('btn-em', p.email);
+function render(p) {
+  // Nombre y avatar
+  $("uname").textContent = "@" + (p.USERNAME || "soulink");
+  $("avatar").src = p.AVATAR || OFFICIAL.AVATAR || "https://i.pravatar.cc/300?img=12";
+
+  // Botones (usa tus cabeceras exactas)
+  show("btn-x",  sanitize(p.X));
+  show("btn-fb", sanitize(p.FACEBOOK));
+  show("btn-ig", sanitize(p.INSTAGRAM));
+  show("btn-wa", sanitize(p.WHATSAPP));
+  show("btn-th", sanitize(p.THREATS));    // Threads (tu columna es THREATS)
+  show("btn-tt", sanitize(p.TIKTOK));
+  show("btn-sc", sanitize(p.SNAPCHAT));
+  show("btn-yt", sanitize(p.YOUTUBE));
+  show("btn-tw", sanitize(p.TWITCH));
+  show("btn-tg", sanitize(p.TELEGRAM));
+  show("btn-dc", sanitize(p.DISCORD));
+  show("btn-gh", sanitize(p.GITHUB));
+  show("btn-li", sanitize(p.LINKEDLN));   // LinkedIn (tu columna es LINKEDLN)
+  show("btn-rd", sanitize(p.REDDIT));
+  show("btn-pi", sanitize(p.PINTEREST));
+  showMail("btn-em", (p.EMAIL || "").trim());
 }
 
 (async () => {
   try {
     const u = getUsername();
-    const map = await loadTSV();
-
-    // Si existe el usuario → muestra ese
-    if (map[u]) {
-      renderProfile(map[u]);
+    let map;
+    try {
+      map = await loadTSV();
+    } catch (e) {
+      // Si falla la hoja, cae a OFFICIAL
+      render(OFFICIAL);
       return;
     }
 
-    // Si no existe o falla → muestra el oficial
-    renderProfile(OFFICIAL);
+    // Si el usuario existe en la hoja, úsalo; si no, OFFICIAL
+    const p = map[u] || OFFICIAL;
+    // Asegura USERNAME si faltara en la hoja
+    if (!p.USERNAME) p.USERNAME = u;
+    render(p);
   } catch (e) {
-    // Si la hoja falla por alguna razón → muestra el oficial
     console.error(e);
-    renderProfile(OFFICIAL);
+    render(OFFICIAL);
   }
 })();
 </script>
 </body>
 </html>
- 
- 
