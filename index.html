@@ -5,81 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Soulink • Perfil</title>
 
+<!-- Evitar cache agresivo (Safari) -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-:root {
-  --bg: #fff;
-  --text: #111;
-  --muted: #666;
-}
+:root { --bg:#fff; --text:#111; --muted:#666; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: 'Inter', -apple-system, system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex; justify-content: center; align-items: center;
   min-height: 100vh;
 }
-.wrap {
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-  padding: 30px 18px;
-}
+.wrap { width: 100%; max-width: 400px; text-align: center; padding: 30px 18px; }
 .avatar {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #ddd;
-  margin-bottom: 10px;
+  width: 130px; height: 130px; border-radius: 50%; object-fit: cover;
+  border: 2px solid #ddd; margin-bottom: 10px;
 }
-.uname {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 25px;
-}
-.links {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 18px;
-}
+.uname { font-size: 22px; font-weight: 700; margin-bottom: 25px; }
+.links { display: flex; justify-content: center; flex-wrap: wrap; gap: 18px; }
 .link-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  color: white;
-  text-decoration: none;
-  font-size: 24px;
-  transition: transform 0.2s, opacity 0.2s;
+  display:flex; align-items:center; justify-content:center;
+  width:58px; height:58px; border-radius:50%;
+  color:#fff; text-decoration:none; font-size:24px;
+  transition: transform .2s, opacity .2s;
 }
-.link-btn:hover { transform: scale(1.1); opacity: 0.9; }
-.ig { background: #d62976; }
-.fb { background: #1877f2; }
-.tt { background: #000; }
-.yt { background: #ff0000; }
-.wa { background: #25d366; }
-.em { background: #6d6d6d; }
-.msg {
-  margin-top: 15px;
-  color: #b00020;
-  background: #fff7f7;
-  border: 1px solid #ffd6d6;
-  border-radius: 10px;
-  padding: 12px;
-}
-.foot {
-  margin-top: 30px;
-  color: #aaa;
-  font-size: 12px;
-}
+.link-btn:hover { transform: scale(1.1); opacity: .9; }
+.ig { background:#d62976; } .fb { background:#1877f2; }
+.tt { background:#000; }   .yt { background:#ff0000; }
+.wa { background:#25d366; } .em { background:#6d6d6d; }
+.foot { margin-top:30px; color:#aaa; font-size:12px; }
 </style>
 </head>
 
@@ -97,21 +57,42 @@ body {
     <a id="btn-em" class="link-btn em" href="#" style="display:none;"><i class="fas fa-envelope"></i></a>
   </div>
 
-  <div id="msg" class="msg" style="display:none;"></div>
   <div class="foot">© Soulink NFC</div>
 </div>
 
 <script>
-function getUsername() {
-  const q = new URLSearchParams(location.search);
-  const u = q.get('u');
-  if (u) return u.trim().toLowerCase();
-  const m = location.pathname.match(/\/@([^\/?#]+)/);
-  if (m) return decodeURIComponent(m[1]).trim().toLowerCase();
-  return "";
-}
-
+// ====== CONFIG ======
 const SHEET_TSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=tsv";
+
+// Perfil oficial por defecto (@soulink)
+const OFFICIAL = {
+  username: "soulink",
+  avatar:   "https://i.pravatar.cc/300?img=12", // <-- pon aquí tu logo oficial si quieres
+  instagram: "https://instagram.com/soulink",
+  tiktok:    "https://tiktok.com/@soulink",
+  youtube:   "",
+  facebook:  "",
+  whatsapp:  "",
+  email:     ""
+};
+// ====================
+
+function getUsername() {
+  // ?u=usuario
+  const q = new URLSearchParams(location.search).get("u");
+  if (q && q.trim()) return q.replace(/^@/, "").trim().toLowerCase();
+
+  // /@usuario
+  const mAt = location.pathname.match(/^\/@([^\/?#]+)/);
+  if (mAt) return decodeURIComponent(mAt[1]).trim().toLowerCase();
+
+  // /usuario
+  const mPlain = location.pathname.match(/^\/([^\/?#]+)/);
+  if (mPlain && mPlain[1]) return decodeURIComponent(mPlain[1]).trim().toLowerCase();
+
+  // raíz -> oficial
+  return "soulink";
+}
 
 async function loadTSV() {
   const res = await fetch(SHEET_TSV, { cache: 'no-store' });
@@ -131,32 +112,42 @@ async function loadTSV() {
 }
 
 const $ = id => document.getElementById(id);
-const showMsg = t => { const m = $('msg'); m.textContent = t; m.style.display = 'block'; };
 const setHref = (id, url) => { const el = $(id); if (url) { el.href = url; el.style.display = 'flex'; } };
 const setMail = (id, email) => { const el = $(id); if (email) { el.href = 'mailto:' + email; el.style.display = 'flex'; } };
+
+function renderProfile(p) {
+  $('uname').textContent = '@' + (p.username || 'soulink');
+  $('avatar').src = p.avatar || OFFICIAL.avatar || 'https://i.pravatar.cc/300?img=12';
+
+  setHref('btn-ig', p.instagram);
+  setHref('btn-fb', p.facebook);
+  setHref('btn-tt', p.tiktok);
+  setHref('btn-yt', p.youtube);
+  setHref('btn-wa', p.whatsapp || p.wa);
+  setMail('btn-em', p.email);
+}
 
 (async () => {
   try {
     const u = getUsername();
-    if (!u) { showMsg('Falta el usuario en el enlace. Usa ?u=manu360 o /@manu360'); return; }
     const map = await loadTSV();
-    const p = map[u];
-    if (!p) { showMsg('No encontré este usuario en la hoja.'); return; }
 
-    $('uname').textContent = '@' + (p.username || u);
-    $('avatar').src = p.avatar || 'https://i.pravatar.cc/300?img=12';
+    // Si existe el usuario → muestra ese
+    if (map[u]) {
+      renderProfile(map[u]);
+      return;
+    }
 
-    setHref('btn-ig', p.instagram);
-    setHref('btn-fb', p.facebook);
-    setHref('btn-tt', p.tiktok);
-    setHref('btn-yt', p.youtube);
-    setHref('btn-wa', p.whatsapp || p.wa);
-    setMail('btn-em', p.email);
+    // Si no existe o falla → muestra el oficial
+    renderProfile(OFFICIAL);
   } catch (e) {
-    showMsg('No pude leer datos. Verifica que la hoja esté publicada.');
+    // Si la hoja falla por alguna razón → muestra el oficial
     console.error(e);
+    renderProfile(OFFICIAL);
   }
 })();
 </script>
 </body>
 </html>
+ 
+ 
