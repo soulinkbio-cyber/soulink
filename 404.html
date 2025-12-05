@@ -4,13 +4,26 @@
 <title>Redirigiendo…</title>
 <script>
   (function () {
-    var m = location.pathname.match(/\/@([^\/?#]+)/);
-    if (m) {
-      var u = decodeURIComponent(m[1]);
+    var path = location.pathname.replace(/\/+$/, "");
+
+    // /@usuario
+    var mAt = path.match(/^\/@([^\/?#]+)/);
+    if (mAt) {
+      var u = decodeURIComponent(mAt[1]);
       location.replace(location.origin + "/?u=" + u);
-    } else {
-      location.replace(location.origin + "/");
+      return;
     }
+
+    // /usuario
+    var mPlain = path.match(/^\/([^\/?#]+)/);
+    if (mPlain && mPlain[1]) {
+      var u2 = decodeURIComponent(mPlain[1]);
+      location.replace(location.origin + "/?u=" + u2);
+      return;
+    }
+
+    // raíz -> deja que el index cargue @soulink por defecto
+    location.replace(location.origin + "/");
   })();
 </script>
 <body>Redirigiendo…</body>
