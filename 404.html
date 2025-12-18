@@ -10,19 +10,16 @@
   <script>
     (async function(){
       try{
-        // carga el index y lo inyecta
         const res = await fetch("/index.html", { cache:"no-store" });
         const html = await res.text();
         document.open();
         document.write(html);
         document.close();
 
-        // username por ruta /@usuario
         const path = decodeURIComponent(location.pathname || "/");
         const m = path.match(/^\/@([^\/?#]+)/);
         const username = m ? m[1].replace(/^@/,"") : "soulink";
 
-        // espera a window.loadProfile
         const run = () => {
           if (typeof window.loadProfile === "function") window.loadProfile(username);
           else setTimeout(run, 30);
