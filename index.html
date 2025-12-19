@@ -142,7 +142,7 @@
       background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
     }
 
-    /* ✅ EXACTO estilo “tu imagen”: círculo sólido */
+    /* círculo como tu imagen */
     .iconCircle{
       width:var(--circle);
       height:var(--circle);
@@ -150,13 +150,13 @@
       display:grid;
       place-items:center;
       background: var(--bg, #333);
+      overflow:hidden;
     }
-    .iconCircle svg{
+    .iconCircle img{
       width:var(--glyph);
       height:var(--glyph);
       display:block;
-      color: var(--fg, #fff);
-      fill: currentColor;
+      object-fit:contain;
     }
 
     .state{padding:0 16px 14px; color:var(--muted); font-size:13px; text-align:center;}
@@ -194,7 +194,7 @@ const SHEETS_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
 
 /***********************
- * THEME TOGGLE
+ * THEME
  ***********************/
 const THEME_KEY = "soulink_theme";
 function svgSun(){ return `<svg viewBox="0 0 24 24" fill="none">
@@ -206,10 +206,7 @@ function svgMoon(){ return `<svg viewBox="0 0 24 24" fill="none">
   <path d="M21 13.6A8.2 8.2 0 0 1 10.4 3a6.9 6.9 0 1 0 10.6 10.6Z"
     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>`; }
-
-function getTheme(){
-  return localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute("data-theme") || "dark";
-}
+function getTheme(){ return localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute("data-theme") || "dark"; }
 function setTheme(t){
   document.documentElement.setAttribute("data-theme", t);
   localStorage.setItem(THEME_KEY, t);
@@ -221,52 +218,52 @@ document.getElementById("themeBtn").addEventListener("click", ()=>{
 });
 
 /***********************
- * BRAND COLORS (como tu imagen)
+ * BRAND BACKGROUNDS (como tu imagen)
  ***********************/
 const BRAND = {
-  x:{bg:"#000000", fg:"#ffffff"},
-  facebook:{bg:"#1877F2", fg:"#ffffff"},
-  instagram:{bg:"#C13584", fg:"#ffffff"},
-  whatsapp:{bg:"#25D366", fg:"#ffffff"},
-  threads:{bg:"#000000", fg:"#ffffff"},
-  tiktok:{bg:"#000000", fg:"#ffffff"},
-  snapchat:{bg:"#FFFC00", fg:"#000000"},   // 👈 ghost negro
-  youtube:{bg:"#FF0000", fg:"#ffffff"},
-  twitch:{bg:"#9146FF", fg:"#ffffff"},
-  telegram:{bg:"#2AABEE", fg:"#ffffff"},
-  discord:{bg:"#5865F2", fg:"#ffffff"},
-  github:{bg:"#1F2328", fg:"#ffffff"},
-  reddit:{bg:"#FF4500", fg:"#ffffff"},
-  pinterest:{bg:"#BD081C", fg:"#ffffff"},
-  email:{bg:"#7A7F87", fg:"#ffffff"},
+  x:{bg:"#000000"},
+  facebook:{bg:"#1877F2"},
+  instagram:{bg:"#C13584"},
+  whatsapp:{bg:"#25D366"},
+  threads:{bg:"#000000"},
+  tiktok:{bg:"#000000"},
+  snapchat:{bg:"#FFFC00"},
+  youtube:{bg:"#FF0000"},
+  twitch:{bg:"#9146FF"},
+  telegram:{bg:"#2AABEE"},
+  discord:{bg:"#5865F2"},
+  github:{bg:"#1F2328"},
+  reddit:{bg:"#FF4500"},
+  pinterest:{bg:"#BD081C"},
+  email:{bg:"#7A7F87"},
 };
 
 /***********************
- * ICONS (flat + centrados como tu imagen)
- * Nota: estos SVG están hechos para verse “flat” en blanco/negro.
+ * ICON FILES (LOS REALES)
+ * Tú subes los archivos a /icons/
  ***********************/
-const ICONS = {
-  x: svgX(),
-  facebook: svgFacebook(),
-  instagram: svgInstagram(),
-  whatsapp: svgWhatsApp(),
-  threads: svgThreads(),
-  tiktok: svgTikTok(),
-  snapchat: svgSnapchat(),
-  youtube: svgYouTube(),
-  twitch: svgTwitch(),
-  telegram: svgTelegram(),
-  discord: svgDiscord(),
-  github: svgGithub(),
-  reddit: svgReddit(),
-  pinterest: svgPinterest(),
-  email: svgMail(),
+const ICON_FILES = {
+  x:"/icons/x.svg",
+  facebook:"/icons/facebook.svg",
+  instagram:"/icons/instagram.svg",
+  whatsapp:"/icons/whatsapp.svg",
+  threads:"/icons/threads.svg",
+  tiktok:"/icons/tiktok.svg",
+  snapchat:"/icons/snapchat.svg",
+  youtube:"/icons/youtube.svg",
+  twitch:"/icons/twitch.svg",
+  telegram:"/icons/telegram.svg",
+  discord:"/icons/discord.svg",
+  github:"/icons/github.svg",
+  reddit:"/icons/reddit.svg",
+  pinterest:"/icons/pinterest.svg",
+  email:"/icons/email.svg"
 };
 
 const ORDER = [
-  "x","facebook","instagram","whatsapp","threads",
-  "tiktok","snapchat","youtube","twitch","telegram",
-  "discord","github","reddit","pinterest","email"
+  "email","x","facebook","instagram","whatsapp","threads",
+  "tiktok","snapchat","youtube","twitch","telegram","discord",
+  "github","reddit","pinterest"
 ];
 
 (async function init(){
@@ -274,13 +271,10 @@ const ORDER = [
   const u = sanitizeUsername(getParam("u") || getUserFromPath() || DEFAULT_USERNAME);
   await loadProfile(u);
 })();
-
 window.loadProfile = loadProfile;
 
 async function loadProfile(username){
   const safeU = sanitizeUsername(username);
-
-  // ✅ limpia SIEMPRE
   renderIcons([]);
   setState("Cargando…");
 
@@ -291,7 +285,6 @@ async function loadProfile(username){
   try{
     const row = await fetchUserRowFromCSV(SHEETS_CSV_URL, safeU);
     if(!row){
-      renderIcons([]);
       setState("Este usuario todavía no existe en la base de datos.");
       return;
     }
@@ -320,15 +313,19 @@ function renderIcons(links){
     a.rel = "noopener noreferrer";
     a.title = l.type.toUpperCase();
 
-    const inner = document.createElement("div");
-    inner.className = "iconCircle";
+    const circle = document.createElement("div");
+    circle.className = "iconCircle";
 
-    const b = BRAND[l.type] || {bg:"#333", fg:"#fff"};
-    inner.style.setProperty("--bg", b.bg);
-    inner.style.setProperty("--fg", b.fg);
+    const b = BRAND[l.type] || {bg:"#333"};
+    circle.style.setProperty("--bg", b.bg);
 
-    inner.innerHTML = ICONS[l.type] || "";
-    a.appendChild(inner);
+    const img = document.createElement("img");
+    img.alt = l.type;
+    img.src = ICON_FILES[l.type] || "";
+    img.onerror = () => { img.style.display="none"; };
+
+    circle.appendChild(img);
+    a.appendChild(circle);
     box.appendChild(a);
   });
 }
@@ -348,12 +345,9 @@ async function fetchUserRowFromCSV(csvUrl, username){
 }
 
 function extractLinksFromRow(row){
-  const want = ["email","x","facebook","instagram","whatsapp","threads","threats","tiktok","snapchat","youtube","twitch","telegram","discord","github","reddit","pinterest"];
   const links = [];
-
   for(const k in row){
     const type = normalizeType(k);
-    if(!want.includes(type)) continue;
     const val = String(row[k]||"").trim();
     if(!val) continue;
 
@@ -363,17 +357,11 @@ function extractLinksFromRow(row){
       continue;
     }
 
-    links.push({ type, url: normalizeUrl(val) });
+    if(ORDER.includes(type)){
+      links.push({ type, url: normalizeUrl(val) });
+    }
   }
-
-  // dedupe
-  const seen = new Set();
-  return links.filter(l=>{
-    const id = l.type + "|" + l.url;
-    if(seen.has(id)) return false;
-    seen.add(id);
-    return true;
-  });
+  return links;
 }
 
 function sortLinks(links){
@@ -389,6 +377,7 @@ function normalizeType(header){
   const clean = h.replace(/\s+/g,"").replace(/[_-]/g,"");
   if(clean === "threats") return "threads";
   if(clean === "twitter") return "x";
+  if(clean === "linkedln" || clean === "linkedin") return "linkedin"; // por si lo añades después
   return clean;
 }
 
@@ -421,7 +410,6 @@ function normalizeUrl(u){
   if(/^https?:\/\//i.test(s)) return s;
   return "https://" + s;
 }
-
 function sanitizeUsername(u){
   return String(u||"").trim().replace(/^@/,"").replace(/[^\w.-]/g,"").slice(0,40) || "usuario";
 }
@@ -434,23 +422,6 @@ function getUserFromPath(){
     return m ? m[1].replace(/^@/,"") : null;
   }catch(e){ return null; }
 }
-
-/******** ICONS (flat) ********/
-function svgX(){ return `<svg viewBox="0 0 24 24"><path d="M18.3 2.9h2.9l-6.3 7.2L22 21.1h-6.4l-5-6.7-5.9 6.7H1.8l6.8-7.8L1.8 2.9h6.6l4.5 6 5.4-6z"/></svg>`; }
-function svgFacebook(){ return `<svg viewBox="0 0 24 24"><path d="M13.8 21v-7h2.3l.5-3h-2.8V9.1c0-.8.4-1.4 1.4-1.4H16.7V5.1c-.3 0-1.3-.1-2.5-.1-2.4 0-4 1.5-4 4.1V11H7.8v3h2.4v7h3.6z"/></svg>`; }
-function svgInstagram(){ return `<svg viewBox="0 0 24 24"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9A3.5 3.5 0 0 0 20 16.5v-9A3.5 3.5 0 0 0 16.5 4h-9Z"/><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z"/><path d="M17.6 6.4a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0Z"/></svg>`; }
-function svgWhatsApp(){ return `<svg viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5Zm0 2a6.5 6.5 0 0 1 5.6 9.8l-.2.3.5 2.8-2.7-.7-.3.2A6.5 6.5 0 1 1 12 5.5Z"/><path d="M10.1 9.2c.2-.3.4-.3.6-.2l.8.4c.2.1.3.3.2.6-.1.3-.2.6-.1.9.2.6 1.2 1.7 2.2 2.1.3.1.6.1.8-.1l.6-.6c.2-.2.4-.2.6-.1l.9.4c.2.1.3.3.2.6-.1.6-.6 1.3-1.6 1.4-1.7.2-4-1.1-5.5-2.8-1.3-1.4-2.4-3.8-2.2-5.4.1-1 .9-1.4 1.1-1.6Z"/></svg>`; }
-function svgThreads(){ return `<svg viewBox="0 0 24 24"><path d="M12 3.6c4.7 0 8.4 3.3 8.4 8 0 5-3.2 8.8-8.5 8.8-4 0-6.4-2.1-7.2-5.2-.7-2.8.9-6.3 6-6.3 2.7 0 4.8 1.2 5.6 3.3.9 2.4-.3 5-3.4 5.8-1.8.5-3.7.2-4.8-1.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`; }
-function svgTikTok(){ return `<svg viewBox="0 0 24 24"><path d="M14 3v9.3a4.3 4.3 0 1 1-2.8-4V3H14Z"/><path d="M14 3c.8 2.2 2.5 3.7 5 4.1v2.8c-2-.2-3.7-1-5-2.3V3z" opacity=".55"/></svg>`; }
-function svgSnapchat(){ return `<svg viewBox="0 0 24 24"><path d="M12 3c2.6 0 4.7 2.1 4.7 4.7v3.3c0 .7.4 1.3 1.1 1.6l.9.4c.6.3.6 1.1 0 1.4l-1.3.6c-.7.3-1.2 1-1.3 1.8-.1.9-.8 1.6-1.7 1.6H9.6c-.9 0-1.6-.7-1.7-1.6-.1-.8-.6-1.5-1.3-1.8l-1.3-.6c-.6-.3-.6-1.1 0-1.4l.9-.4c.7-.3 1.1-.9 1.1-1.6V7.7C7.3 5.1 9.4 3 12 3Z"/></svg>`; }
-function svgYouTube(){ return `<svg viewBox="0 0 24 24"><path d="M21 12c0 3.8-.4 5.3-1.3 6.2-.9.9-2.5 1.1-5 1.2H9.3c-2.5-.1-4.1-.3-5-1.2C3.4 17.3 3 15.8 3 12s.4-5.3 1.3-6.2c.9-.9 2.5-1.1 5-1.2h5.4c2.5.1 4.1.3 5 1.2C20.6 6.7 21 8.2 21 12z" opacity=".2"/><path d="M10.5 9.7v4.6l4.3-2.3-4.3-2.3z"/></svg>`; }
-function svgTwitch(){ return `<svg viewBox="0 0 24 24"><path d="M6 4h15v10l-4 4h-4l-2 2H9v-2H6V4z"/><path d="M15 8v4M18 8v4" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" opacity=".35"/></svg>`; }
-function svgTelegram(){ return `<svg viewBox="0 0 24 24"><path d="M20.7 5.6 18 19.2c-.2 1-1 .9-1.6.6l-4.6-3.4-2.2 2.1c-.2.2-.4.4-.8.4l.3-5.1 9.3-8.4c.4-.3-.1-.5-.6-.2l-11.5 7.2-5-1.6c-1.1-.3-1.1-1.1.2-1.6l17.7-6.8c.8-.3 1.5.2 1.3 1.2z"/></svg>`; }
-function svgDiscord(){ return `<svg viewBox="0 0 24 24"><path d="M19.3 6.4A15.4 15.4 0 0 0 16 5.1l-.4.8a12.8 12.8 0 0 0-3.2-.4c-1.1 0-2.2.1-3.2.4l-.4-.8a15.4 15.4 0 0 0-3.3 1.3C3.9 9 3.5 11.6 3.7 14.2c1.4 1 2.8 1.7 4.3 2l.5-1a9.7 9.7 0 0 1-1.4-.7l.3-.2c2.8 1.2 5.9 1.2 8.7 0l.3.2c-.5.3-.9.5-1.4.7l.5 1c1.5-.3 2.9-1 4.3-2 .2-2.6-.2-5.2-1.9-7.8z"/><circle cx="9.4" cy="12.5" r="1.1" fill="#000" opacity=".30"/><circle cx="14.6" cy="12.5" r="1.1" fill="#000" opacity=".30"/></svg>`; }
-function svgGithub(){ return `<svg viewBox="0 0 24 24"><path d="M12 2.7c-5.2 0-9.4 4.2-9.4 9.4 0 4.1 2.7 7.6 6.4 8.8.5.1.7-.2.7-.5v-1.8c-2.6.6-3.2-1.1-3.2-1.1-.4-1.1-1-1.4-1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.4 1.1 3 .8.1-.6.3-1.1.6-1.3-2.1-.2-4.3-1.1-4.3-4.7 0-1 .3-1.9 1-2.6-.1-.2-.4-1.2.1-2.5 0 0 .8-.2 2.6 1a9.5 9.5 0 0 1 4.9 0c1.8-1.2 2.6-1 2.6-1 .5 1.3.2 2.3.1 2.5.6.7 1 1.6 1 2.6 0 3.6-2.2 4.5-4.3 4.7.3.3.6.9.6 1.8v2.6c0 .3.2.6.7.5a9.4 9.4 0 0 0 6.4-8.8c0-5.2-4.2-9.4-9.4-9.4z"/></svg>`; }
-function svgReddit(){ return `<svg viewBox="0 0 24 24"><path d="M12 7.2c-3.6 0-6.6 2.1-6.6 4.8 0 2.7 3 4.8 6.6 4.8s6.6-2.1 6.6-4.8c0-2.7-3-4.8-6.6-4.8z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9.7" cy="12" r="1.1"/><circle cx="14.3" cy="12" r="1.1"/><path d="M10 14.1c1.1.9 2.9.9 4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M14.8 6.4 15.8 4l2.2.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="18.3" cy="4.9" r="1.1"/></svg>`; }
-function svgPinterest(){ return `<svg viewBox="0 0 24 24"><path d="M12 3.2a8.8 8.8 0 0 0-3 17.1c-.1-.7-.2-1.8 0-2.6l1.5-6.1s-.4-.8-.4-2c0-1.9 1.1-3.3 2.4-3.3 1.1 0 1.7.8 1.7 1.8 0 1.1-.7 2.7-1 4.2-.3 1.3.6 2.3 1.9 2.3 2.2 0 3.9-2.3 3.9-5.6 0-2.9-2.1-5-5.1-5z"/></svg>`; }
-function svgMail(){ return `<svg viewBox="0 0 24 24"><path d="M4 7.5h16v9H4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4.2 8.2 12 13.8 19.8 8.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`; }
 </script>
 </body>
 </html>
