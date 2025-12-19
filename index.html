@@ -8,18 +8,13 @@
 
   <style>
     :root{
-      --radius:22px;
-      --avatar:92px;
-      --maxw:540px;
-
-      /* Dark */
       --bg0:#05070a; --bg1:#0b0f14;
       --card:#0e141b; --card2:#0b1117;
       --text:#e9eef5; --muted:#9aa7b5;
       --stroke:rgba(255,255,255,.10); --stroke2:rgba(255,255,255,.06);
       --shadow:0 18px 60px rgba(0,0,0,.55);
-      --grainA:rgba(255,255,255,.06);
-      --grainB:rgba(255,255,255,.016);
+      --radius:22px;
+      --maxw:540px;
     }
     html[data-theme="light"]{
       --bg0:#f7f9fb; --bg1:#eef3f7;
@@ -27,560 +22,188 @@
       --text:#0b0f14; --muted:#566474;
       --stroke:rgba(10,15,20,.14); --stroke2:rgba(10,15,20,.08);
       --shadow:0 18px 50px rgba(0,0,0,.12);
-      --grainA:rgba(0,0,0,.05);
-      --grainB:rgba(0,0,0,.018);
     }
 
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       color:var(--text);
       min-height:100svh;
       background:
-        radial-gradient(1200px 650px at 18% 12%, rgba(220,240,255,.10), transparent 55%),
-        radial-gradient(900px 520px at 82% 18%, rgba(120,170,255,.10), transparent 50%),
-        radial-gradient(900px 520px at 50% 90%, rgba(255,255,255,.06), transparent 52%),
-        linear-gradient(160deg, var(--bg0), var(--bg1) 55%, var(--bg0));
-      overflow-x:hidden;
-    }
-    body::before{
-      content:"";
-      position:fixed; inset:0; pointer-events:none;
-      background:
-        linear-gradient(115deg, var(--grainA), transparent 35%, rgba(255,255,255,.04) 60%, transparent),
-        repeating-linear-gradient(90deg, var(--grainB) 0 1px, transparent 1px 4px);
-      mix-blend-mode:overlay;
-      opacity:.55;
+        radial-gradient(1200px 650px at 18% 12%, rgba(120,170,255,.14), transparent 55%),
+        radial-gradient(900px 520px at 82% 18%, rgba(220,240,255,.18), transparent 50%),
+        linear-gradient(160deg, var(--bg0), var(--bg1));
     }
 
-    .wrap{max-width:var(--maxw); margin:0 auto; padding:28px 16px 26px;}
-
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:26px 16px;}
     .card{
       border-radius:var(--radius);
       border:1px solid var(--stroke2);
-      background:
-        radial-gradient(700px 240px at 40% 0%, rgba(255,255,255,.10), transparent 50%),
-        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)),
-        linear-gradient(180deg, var(--card), var(--card2));
+      background:linear-gradient(180deg, var(--card), var(--card2));
       box-shadow:var(--shadow);
-      overflow:hidden;
-      backdrop-filter:blur(12px);
       position:relative;
     }
 
     .topTools{
-      position:absolute;
-      top:12px; right:12px;
-      z-index:5;
+      position:absolute; top:12px; right:12px;
     }
     .toggleBtn{
-      width:40px; height:40px;
-      border-radius:14px;
+      width:36px; height:36px;
+      border-radius:12px;
       border:1px solid var(--stroke2);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      background:transparent;
       color:var(--text);
-      box-shadow:0 10px 18px rgba(0,0,0,.18);
       cursor:pointer;
-      display:grid; place-items:center;
-      user-select:none;
-      transition:transform .12s ease, border-color .12s ease;
+      font-size:16px;
     }
-    .toggleBtn:hover{ transform:translateY(-1px); border-color:rgba(255,255,255,.14); }
-    .toggleBtn svg{width:18px;height:18px;display:block}
 
     .profile{
-      padding:22px 18px 14px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:12px;
+      padding:26px 18px 6px;
       text-align:center;
     }
-
-    .avatar{
-      width:var(--avatar);
-      height:var(--avatar);
-      border-radius:26px;
-      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-      border:1px solid var(--stroke);
-      box-shadow:0 16px 32px rgba(0,0,0,.45);
-      overflow:hidden;
-      position:relative;
-    }
-    .avatar::after{
-      content:"";
-      position:absolute; inset:-1px;
-      border-radius:26px;
-      border:1px solid rgba(255,255,255,.08);
-      pointer-events:none;
-    }
-    .avatar img{width:100%; height:100%; object-fit:cover; display:block;}
-
     .username{
       margin:0;
-      font-size:24px;
-      line-height:1.05;
-      font-weight:950;
+      font-size:21px;        /* 👈 reducido */
+      font-weight:800;
       letter-spacing:.2px;
-      word-break:break-word;
     }
     .handle{
-      margin:0;
-      font-size:13px;
+      margin:4px 0 0;
+      font-size:12px;
       color:var(--muted);
     }
 
-    .iconsWrap{padding:10px 16px 18px;}
+    .iconsWrap{padding:16px 16px 22px;}
     .icons{
       display:grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns:repeat(5,1fr);
       gap:12px;
     }
-    @media (max-width: 420px){
-      .icons{grid-template-columns: repeat(4, 1fr);}
+    @media(max-width:420px){
+      .icons{grid-template-columns:repeat(4,1fr);}
     }
 
     .iconBtn{
       height:54px;
       border-radius:18px;
       border:1px solid var(--stroke2);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      box-shadow:0 12px 22px rgba(0,0,0,.30);
       display:grid;
       place-items:center;
-      text-decoration:none;
-      position:relative;
-      overflow:hidden;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      background:transparent;
+      transition:.15s;
     }
     .iconBtn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,.14);
-      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+      transform:translateY(-2px);
+      border-color:rgba(255,255,255,.18);
+    }
+    .iconBtn svg{
+      width:24px; height:24px;
+      color:var(--brandColor,#e9eef5);
     }
 
-    .iconCircle{
-      width:34px; height:34px;
-      border-radius:999px;
-      display:grid;
-      place-items:center;
-      background: var(--circleBg, rgba(233,238,245,.12));
-      box-shadow: 0 10px 18px rgba(0,0,0,.22);
-      border:1px solid rgba(255,255,255,.10);
+    .state{
+      padding:0 16px 16px;
+      text-align:center;
+      font-size:13px;
+      color:var(--muted);
     }
-    html[data-theme="light"] .iconCircle{
-      border:1px solid rgba(10,15,20,.10);
-      box-shadow: 0 10px 18px rgba(0,0,0,.10);
+    .footer{
+      padding:14px 16px 18px;
+      text-align:center;
+      font-size:12px;
+      color:var(--muted);
     }
-
-    .iconCircle svg{
-      width:18px; height:18px;
-      display:block;
-      color: var(--iconFg, #fff);
-    }
-
-    .state{padding:0 16px 16px; color:var(--muted); font-size:13px; text-align:center;}
-    .footer{padding:14px 16px 16px; color:rgba(154,167,181,.85); font-size:12px; text-align:center;}
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="card">
-
-      <div class="topTools">
-        <button class="toggleBtn" id="themeBtn" type="button" aria-label="Cambiar tema"></button>
-      </div>
-
-      <div class="profile">
-        <div class="avatar"><img id="avatarImg" alt="Avatar" /></div>
-        <h1 class="username" id="nameText">@soulink</h1>
-        <p class="handle" id="handleText">soulink.bio/@soulink</p>
-      </div>
-
-      <div class="iconsWrap">
-        <div class="icons" id="icons"></div>
-      </div>
-
-      <div class="state" id="state"></div>
-      <div class="footer">© soulink.bio</div>
+<div class="wrap">
+  <div class="card">
+    <div class="topTools">
+      <button class="toggleBtn" id="themeBtn">🌓</button>
     </div>
+
+    <div class="profile">
+      <h1 class="username" id="nameText">@soulink</h1>
+      <p class="handle" id="handleText">soulink.bio/@soulink</p>
+    </div>
+
+    <div class="iconsWrap">
+      <div class="icons" id="icons"></div>
+    </div>
+
+    <div class="state" id="state"></div>
+    <div class="footer">© soulink.bio</div>
   </div>
+</div>
 
-  <script>
-    const DEFAULT_USERNAME = "soulink";
+<script>
+const DEFAULT_USERNAME="soulink";
+const SHEETS_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
 
-    const SHEETS_CSV_URL =
-      "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
+const BRAND={
+  email:"#e9eef5",x:"#e9eef5",facebook:"#1877F2",instagram:"#E1306C",
+  whatsapp:"#25D366",threads:"#e9eef5",tiktok:"#00F2EA",
+  snapchat:"#FFFC00",youtube:"#FF0033",twitch:"#9146FF",
+  telegram:"#26A5E4",discord:"#5865F2",github:"#e9eef5",
+  linkedin:"#0A66C2",reddit:"#FF4500",pinterest:"#E60023"
+};
 
-    // ✅ TU LOGO (embebido) — ya NO depende de /soulink-logo.jpg
-    const FALLBACK_AVATAR_URL =
-      "data:image/webp;base64,UklGRo4OAABXRUJQVlA4WAoAAAAQAAAAgAAAAIAAAQAAQUxQSDIAAAABH0AgQGm4bNqgQm0Hc5oX+vQm7c0X2b+oXvT6w8xV8l3k4b0Dq9aYgAABVhJZVZp7kq8cC4Ww3G7p8b+Qjv8cOe0p8m0wVg9wJ0QwqZkE8B4nVv7Q4oJf0j2mZ3b0oVf3j7v2cYp7m+o0fYpTqgU8c0b9S7E9Bv9bq2b1O7C5v0wJwAABWUDggGgAAABQBAJ0BKgEAAIAAAQAAAP7y8pQAA3k3bZ7w0mA+SxGf1H9kJ7i7zS+g2kBqg8g9r2o3bQm8rO7b4rQX9oGJt8w0yAqkq2nK7b1Qm0z6Oe6oWwA3yO2t7b4H9xw8Yg3sQ0x9bqv0lSxjV6a4f2dOe1Y2Dk2xk+o2Q4u6yGd3oC+0xX0Vb2m2Y2nQm6yqjvG9t8bQm9n7r5c0mGg2jY1m4b2o7c2yZr9v1W2m9m3Q7v2v4h9w0y7yP8kqEw0mDqkW8oYcJmQ7gG9f8o7i2d6r7b7r4cC8v0mYwQwAA";
+const ICONS={
+  email:`<svg viewBox="0 0 24 24"><path d="M4 7h16v10H4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2"/></svg>`,
+  x:`<svg viewBox="0 0 24 24"><path d="M18 3h3l-7 8 8 10h-6l-5-6-5 6H2l8-9-8-9h6l4 5z" fill="currentColor"/></svg>`,
+  instagram:`<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="6" ry="6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/></svg>`,
+  whatsapp:`<svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.5 14.2L3 21l4-1.3A9 9 0 1 0 12 3z" fill="currentColor"/></svg>`,
+  telegram:`<svg viewBox="0 0 24 24"><path d="M21 4L3 11l6 2 2 6 3-4 4 3z" fill="currentColor"/></svg>`,
+  discord:`<svg viewBox="0 0 24 24"><path d="M19 6c-2-1-4-1-4-1l-.3.6a12 12 0 0 0-5.4 0L9 5s-2 0-4 1C3 9 3 15 3 15s2 3 6 3l.7-1c-1-.3-2-.8-3-1.5l.6-.4c2 1 6 1 8 0l.6.4c-1 .7-2 1.2-3 1.5l.7 1c4 0 6-3 6-3s0-6-2-9z" fill="currentColor"/></svg>`,
+  tiktok:`<svg viewBox="0 0 24 24"><path d="M14 3v10a4 4 0 1 1-3-3.9V3z" fill="currentColor"/></svg>`,
+  reddit:`<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="6" fill="currentColor"/><circle cx="9.5" cy="12" r="1" fill="#05070a"/><circle cx="14.5" cy="12" r="1" fill="#05070a"/></svg>`
+};
 
-    initThemeToggle();
+const ORDER=["email","x","instagram","whatsapp","tiktok","telegram","discord","reddit"];
 
-    const CIRCLE = {
-      email:     { bg:"#111827", fg:"#ffffff" },
-      x:         { bg:"#000000", fg:"#ffffff" },
-      facebook:  { bg:"#1877F2", fg:"#ffffff" },
-      instagram: { bg:"#E1306C", fg:"#ffffff" },
-      whatsapp:  { bg:"#25D366", fg:"#ffffff" },
-      threads:   { bg:"#000000", fg:"#ffffff" },
-      tiktok:    { bg:"#000000", fg:"#ffffff" },
-      snapchat:  { bg:"#FFFC00", fg:"#000000" },
-      youtube:   { bg:"#FF0033", fg:"#ffffff" },
-      twitch:    { bg:"#9146FF", fg:"#ffffff" },
-      telegram:  { bg:"#26A5E4", fg:"#ffffff" },
-      discord:   { bg:"#5865F2", fg:"#ffffff" },
-      github:    { bg:"#111827", fg:"#ffffff" },
-      linkedin:  { bg:"#0A66C2", fg:"#ffffff" },
-      reddit:    { bg:"#FF4500", fg:"#ffffff" },
-      pinterest: { bg:"#E60023", fg:"#ffffff" },
-      generic:   { bg:"#111827", fg:"#ffffff" },
-    };
+init();
+async function init(){
+  const u=new URL(location.href).searchParams.get("u")||DEFAULT_USERNAME;
+  document.getElementById("nameText").textContent="@"+u;
+  document.getElementById("handleText").textContent="soulink.bio/@"+u;
+  await loadLinks(u);
+}
 
-    const ICONS = {
-      email: svgMail(),
-      x: svgX(),
-      facebook: svgFacebook(),
-      instagram: svgInstagram(),
-      whatsapp: svgWhatsApp(),
-      threads: svgThreads(),
-      tiktok: svgTikTokBetter(),     // ✅ mejor
-      snapchat: svgSnapchat(),
-      youtube: svgYouTube(),
-      twitch: svgTwitch(),
-      telegram: svgTelegram(),
-      discord: svgDiscord(),
-      github: svgGithub(),
-      linkedin: svgLinkedIn(),
-      reddit: svgRedditBetter(),     // ✅ mejor
-      pinterest: svgPinterest(),
-      generic: svgGeneric(),
-    };
-
-    const ORDER = [
-      "email","x","facebook","instagram","whatsapp","threads","tiktok","snapchat",
-      "youtube","twitch","telegram","discord","github","linkedin","reddit","pinterest"
-    ];
-
-    (async function init(){
-      const u = getParam("u") || DEFAULT_USERNAME;
-      await loadProfile(u);
-    })();
-
-    window.loadProfile = loadProfile;
-
-    async function loadProfile(username){
-      setState("Cargando…");
-      const safeU = sanitizeUsername(username);
-      document.title = `@${safeU} • soulink.bio`;
-      document.getElementById("nameText").textContent = `@${safeU}`;
-      document.getElementById("handleText").textContent = `soulink.bio/@${safeU}`;
-
-      setAvatar(FALLBACK_AVATAR_URL);
-
-      try{
-        const row = await fetchUserRowFromCSV(SHEETS_CSV_URL, safeU);
-        if(!row){
-          renderIcons([]);
-          setState("Este usuario todavía no existe en la base de datos.");
-          return;
-        }
-
-        const avatar =
-          row.avatar || row.avatar_url || row.pfp || row.profile_picture || row.profilepicture ||
-          row.profile_photo || row.photo || row.picture || row.image || row.profile || "";
-
-        if(avatar) setAvatar(avatar);
-
-        const links = extractLinksFromRow(row);
-        const sorted = sortLinks(links);
-
-        renderIcons(sorted);
-        setState(sorted.length ? "" : "No hay redes sociales guardadas todavía.");
-      }catch(e){
-        console.error(e);
-        renderIcons([]);
-        setState("No pude cargar la data. Verifica que el Sheet esté publicado.");
-      }
+async function loadLinks(u){
+  const res=await fetch(SHEETS_CSV_URL);
+  const txt=await res.text();
+  const lines=txt.split("\n");
+  const headers=lines[0].toLowerCase().split(",");
+  const rows=lines.slice(1);
+  let row=null;
+  rows.forEach(r=>{
+    const cols=r.split(",");
+    if(cols[headers.indexOf("username")]===u) row=cols;
+  });
+  if(!row){setState("Usuario no encontrado");return;}
+  const icons=document.getElementById("icons");
+  icons.innerHTML="";
+  ORDER.forEach(k=>{
+    const i=headers.indexOf(k);
+    if(i>-1 && row[i]){
+      const a=document.createElement("a");
+      a.href=row[i].startsWith("http")?row[i]:"https://"+row[i];
+      a.target="_blank";
+      a.className="iconBtn";
+      a.style.setProperty("--brandColor",BRAND[k]);
+      a.innerHTML=ICONS[k];
+      icons.appendChild(a);
     }
+  });
+}
 
-    function renderIcons(links){
-      const box = document.getElementById("icons");
-      box.innerHTML = "";
-
-      links.forEach(l=>{
-        const a = document.createElement("a");
-        a.className = "iconBtn";
-        a.href = l.url;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        a.title = l.type.toUpperCase();
-
-        const style = CIRCLE[l.type] || CIRCLE.generic;
-
-        const circle = document.createElement("div");
-        circle.className = "iconCircle";
-        circle.style.setProperty("--circleBg", style.bg);
-        circle.style.setProperty("--iconFg", style.fg);
-        circle.innerHTML = ICONS[l.type] || ICONS.generic;
-
-        box.appendChild(a);
-        a.appendChild(circle);
-      });
-    }
-
-    function setAvatar(url){
-      const img=document.getElementById("avatarImg");
-      const finalUrl = normalizeImageUrl(url);
-      img.src = finalUrl
-        ? (finalUrl.startsWith("data:image") ? finalUrl : (finalUrl + (finalUrl.includes("?") ? "&" : "?") + "v=" + Date.now()))
-        : FALLBACK_AVATAR_URL;
-      img.onerror = ()=>{ img.src = FALLBACK_AVATAR_URL; };
-    }
-
-    function normalizeImageUrl(url){
-      const s = String(url||"").trim();
-      if(!s) return "";
-
-      // ✅ data url (base64)
-      if(/^data:image\//i.test(s)) return s;
-
-      // rutas locales
-      if(s.startsWith("/")) return s;
-
-      // url completa
-      if(/^https?:\/\//i.test(s)) return convertKnownHosts(s);
-
-      if(/^soulink\.bio\//i.test(s)) return "https://" + s;
-      if(/^www\./i.test(s)) return "https://" + s;
-
-      return convertKnownHosts("https://" + s);
-    }
-
-    function convertKnownHosts(u){
-      const s = String(u||"");
-
-      const m1 = s.match(/drive\.google\.com\/file\/d\/([^\/]+)/i);
-      if(m1) return `https://drive.google.com/uc?export=view&id=${m1[1]}`;
-
-      const m2 = s.match(/drive\.google\.com\/open\?id=([^&]+)/i);
-      if(m2) return `https://drive.google.com/uc?export=view&id=${m2[1]}`;
-
-      const m3 = s.match(/drive\.google\.com\/uc\?id=([^&]+)/i);
-      if(m3) return `https://drive.google.com/uc?export=view&id=${m3[1]}`;
-
-      if(/dropbox\.com/i.test(s)) {
-        const url = new URL(s);
-        url.searchParams.delete("dl");
-        url.searchParams.set("raw","1");
-        return url.toString();
-      }
-
-      return s;
-    }
-
-    async function fetchUserRowFromCSV(csvUrl, username){
-      const res = await fetch(csvUrl, { cache:"no-store" });
-      if(!res.ok) throw new Error("CSV fetch failed: " + res.status);
-      const text = await res.text();
-      const { headers, rows } = parseCSV(text);
-
-      const objs = rows.map(r=>{
-        const o={}; headers.forEach((h,i)=> o[h]=(r[i]??"").trim()); return o;
-      });
-
-      const key = username.toLowerCase();
-      return objs.find(o => (o.username || o.user || o.handle || "").toLowerCase() === key) || null;
-    }
-
-    function extractLinksFromRow(row){
-      const links = [];
-      for(const k in row){
-        const rawKey = String(k||"");
-        const key = normalizeHeader(rawKey);
-        const val = String(row[k]||"").trim();
-        if(!val) continue;
-
-        if(["username","user","handle","avatar","avatar_url","pfp","profile_picture","profilepicture","profile_photo","photo","picture","image","profile","display_name","name"].includes(key)) continue;
-
-        if(isValidValue(val, rawKey)){
-          const type = normalizeType(rawKey);
-          links.push({ type, url: normalizeUrl(val, type) });
-        }
-      }
-
-      const seen = new Set();
-      return links.filter(l=>{
-        if(seen.has(l.url)) return false;
-        seen.add(l.url);
-        return true;
-      });
-    }
-
-    function sortLinks(links){
-      const rank = (t)=> {
-        const i = ORDER.indexOf(t);
-        return i === -1 ? 999 : i;
-      };
-      return links.slice().sort((a,b)=> rank(a.type) - rank(b.type));
-    }
-
-    function normalizeType(header){
-      const h = String(header||"").trim().toLowerCase();
-      const clean = h.replace(/\s+/g,"").replace(/_/g,"").replace(/-/g,"");
-
-      if(clean === "email") return "email";
-      if(clean === "x" || clean === "twitter") return "x";
-      if(clean === "facebook" || clean === "fb") return "facebook";
-      if(clean === "instagram" || clean === "ig") return "instagram";
-      if(clean === "whatsapp" || clean === "wa") return "whatsapp";
-      if(clean === "threads" || clean === "threats") return "threads";
-      if(clean === "tiktok") return "tiktok";
-      if(clean === "snapchat" || clean === "snap") return "snapchat";
-      if(clean === "youtube" || clean === "yt") return "youtube";
-      if(clean === "twitch") return "twitch";
-      if(clean === "telegram" || clean === "tg") return "telegram";
-      if(clean === "discord") return "discord";
-      if(clean === "github") return "github";
-      if(clean === "linkedln" || clean === "linkedin") return "linkedin";
-      if(clean === "reddit") return "reddit";
-      if(clean === "pinterest") return "pinterest";
-
-      return "generic";
-    }
-
-    function parseCSV(text){
-      const lines=text.replace(/\r/g,"").split("\n").filter(Boolean);
-      const rows=[]; let headers=[];
-      for(let i=0;i<lines.length;i++){
-        const row=splitCSVLine(lines[i]);
-        if(i===0) headers=row.map(h=>normalizeHeader(h));
-        else rows.push(row);
-      }
-      return { headers, rows };
-    }
-
-    function splitCSVLine(line){
-      const out=[]; let cur=""; let q=false;
-      for(let i=0;i<line.length;i++){
-        const ch=line[i];
-        if(ch === '"' && line[i+1] === '"'){ cur+='"'; i++; continue; }
-        if(ch === '"'){ q=!q; continue; }
-        if(ch === "," && !q){ out.push(cur); cur=""; continue; }
-        cur += ch;
-      }
-      out.push(cur);
-      return out;
-    }
-
-    function normalizeHeader(h){
-      return String(h||"").trim().toLowerCase()
-        .replace(/\s+/g,"_")
-        .replace(/[^\w]/g,"");
-    }
-
-    function normalizeUrl(u, type){
-      const s=String(u||"").trim();
-      if(!s) return "";
-
-      if(type === "email"){
-        if(/^mailto:/i.test(s)) return s;
-        return "mailto:" + s.replace(/\s+/g,"");
-      }
-
-      if(/^https?:\/\//i.test(s)) return s;
-      return "https://" + s;
-    }
-
-    function isValidValue(val, header){
-      const s = String(val||"").trim();
-      if(!s) return false;
-
-      const key = String(header||"").toLowerCase();
-      if(key.includes("email") && s.includes("@")) return true;
-
-      try{ new URL(normalizeUrl(s,"generic")); return true; }catch(e){ return false; }
-    }
-
-    function sanitizeUsername(u){
-      return String(u||"").trim().replace(/^@/,"").replace(/[^\w.-]/g,"").slice(0,40) || "usuario";
-    }
-
-    function setState(msg){ document.getElementById("state").textContent = msg || ""; }
-
-    function getParam(name){
-      try{ return new URL(location.href).searchParams.get(name); }
-      catch(e){ return null; }
-    }
-
-    function initThemeToggle(){
-      const saved = localStorage.getItem("soulink_theme");
-      if(saved === "light" || saved === "dark"){
-        document.documentElement.setAttribute("data-theme", saved);
-      }else{
-        document.documentElement.setAttribute("data-theme", "dark");
-      }
-
-      const btn = document.getElementById("themeBtn");
-      const paint = ()=>{
-        const t = document.documentElement.getAttribute("data-theme") || "dark";
-        btn.innerHTML = (t === "dark") ? sunSvg() : moonSvg();
-        const meta = document.querySelector('meta[name="theme-color"]');
-        if(meta) meta.setAttribute("content", (t==="dark") ? "#0b0f14" : "#eef3f7");
-      };
-      paint();
-
-      btn.addEventListener("click", ()=>{
-        const t = document.documentElement.getAttribute("data-theme") || "dark";
-        const next = (t === "dark") ? "light" : "dark";
-        document.documentElement.setAttribute("data-theme", next);
-        localStorage.setItem("soulink_theme", next);
-        paint();
-      });
-    }
-
-    function sunSvg(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M5 19l1.5-1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`; }
-    function moonSvg(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M21 13.2A7.5 7.5 0 0 1 10.8 3a6.5 6.5 0 1 0 10.2 10.2Z" fill="currentColor" opacity=".9"/></svg>`; }
-
-    /* ICONS */
-    function svgMail(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16v10H4V7Z" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
-    function svgX(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M18.2 3H21l-6.6 7.6L22 21h-6.6l-5.2-6.8L4.7 21H2l7.2-8.3L2 3h6.8l4.7 6.2L18.2 3Z" fill="currentColor"/></svg>`; }
-    function svgFacebook(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M14 8h3V5h-3c-2.2 0-4 1.8-4 4v3H7v3h3v6h3v-6h3l1-3h-4V9c0-.6.4-1 1-1Z" fill="currentColor"/></svg>`; }
-    function svgInstagram(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M7.4 2h9.2A5.4 5.4 0 0 1 22 7.4v9.2A5.4 5.4 0 0 1 16.6 22H7.4A5.4 5.4 0 0 1 2 16.6V7.4A5.4 5.4 0 0 1 7.4 2Z" stroke="currentColor" stroke-width="2"/><path d="M12 8.2A3.8 3.8 0 1 0 12 15.8A3.8 3.8 0 0 0 12 8.2Z" stroke="currentColor" stroke-width="2"/><path d="M17.2 6.8h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`; }
-    function svgWhatsApp(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.5-1.1A8.5 8.5 0 1 0 12 3.5Z" stroke="currentColor" stroke-width="2" opacity=".9"/><path d="M9.7 9.5c.2-.3.4-.3.6-.2l.7.4c.2.1.3.3.2.6-.1.3-.2.6-.1.8.2.5 1.1 1.6 2.1 2 .3.1.6.1.8-.1l.5-.5c.2-.2.4-.2.6-.1l.8.4c.2.1.3.3.2.6-.1.5-.5 1.2-1.4 1.3-1.5.2-3.6-1-5-2.6-1.2-1.3-2.2-3.4-2-4.9.1-.9.8-1.2 1-1.4Z" fill="currentColor"/></svg>`; }
-    function svgThreads(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5c4.7 0 8.5 3.4 8.5 8.1 0 4.8-3 8.9-8.4 8.9-3.9 0-6.4-2-7.2-5.1-.3-1.1-.2-2.2.1-3.1.8-2.5 3.2-3.7 5.8-3.7 2.5 0 4.6 1.1 5.4 3.1.8 2.2-.2 4.7-3.2 5.6-1.8.5-3.8.2-4.9-1.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`; }
-
-    // ✅ TikTok más parecido (mejor proporción)
-    function svgTikTokBetter(){
-      return `<svg viewBox="0 0 24 24" fill="none">
-        <path fill="currentColor" d="M14.5 3c.6 2.8 2.6 4.7 5.5 4.9v3.1c-2-.1-3.7-.7-5.1-1.8v6.1c0 3-2.4 5.2-5.3 5.2-3.1 0-5.6-2.5-5.6-5.5 0-3.3 3.1-6 6.7-5.3v3.2c-1.6-.5-3.3.6-3.3 2.1 0 1.3 1 2.3 2.3 2.3 1.4 0 2.5-1.1 2.5-2.6V3h2.3z"/>
-      </svg>`;
-    }
-
-    function svgSnapchat(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M12 3c2.6 0 4.7 2.1 4.7 4.7v3.3c0 .7.4 1.3 1.1 1.6l.9.4c.6.3.6 1.1 0 1.4l-1.3.6c-.7.3-1.2 1-1.3 1.8-.1.9-.8 1.6-1.7 1.6H9.6c-.9 0-1.6-.7-1.7-1.6-.1-.8-.6-1.5-1.3-1.8l-1.3-.6c-.6-.3-.6-1.1 0-1.4l.9-.4c.7-.3 1.1-.9 1.1-1.6V7.7C7.3 5.1 9.4 3 12 3Z" fill="currentColor"/></svg>`; }
-    function svgYouTube(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M21.5 12c0 3.6-.5 5.1-1.4 6-.9.9-2.5 1.1-4.9 1.2H9.8c-2.4-.1-4-.3-4.9-1.2C4 17.1 3.5 15.6 3.5 12s.5-5.1 1.4-6C5.8 5.1 7.4 4.9 9.8 4.8h5.4c2.4.1 4 .3 4.9 1.2.9.9 1.4 2.4 1.4 6Z" fill="currentColor" opacity=".22"/><path d="M10.5 9.5v5l5-2.5-5-2.5Z" fill="currentColor"/></svg>`; }
-    function svgTwitch(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M6 4h15v10l-4 4h-4l-2 2H9v-2H6V4Z" fill="currentColor" opacity=".92"/></svg>`; }
-    function svgTelegram(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M20.7 5.6 18 19.2c-.2 1-1 .9-1.6.6l-4.6-3.4-2.2 2.1c-.2.2-.4.4-.8.4l.3-5.1 9.3-8.4c.4-.3-.1-.5-.6-.2l-11.5 7.2-5-1.6c-1.1-.3-1.1-1.1.2-1.6l17.7-6.8c.8-.3 1.5.2 1.3 1.2Z" fill="currentColor"/></svg>`; }
-    function svgDiscord(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M19.5 6.3A15.2 15.2 0 0 0 16 5l-.4.8a13.3 13.3 0 0 0-3.2-.4c-1.1 0-2.2.1-3.2.4L8.8 5A15.2 15.2 0 0 0 5.3 6.3C3.6 9 3.2 11.6 3.4 14.2c1.4 1.1 2.8 1.7 4.2 2l.5-1a9.8 9.8 0 0 1-1.4-.7l.3-.2c2.7 1.2 5.7 1.2 8.4 0l.3.2c-.5.3-.9.5-1.4.7l.5 1c1.4-.3 2.8-.9 4.2-2 .2-2.6-.2-5.2-1.9-7.9Z" fill="currentColor"/></svg>`; }
-    function svgGithub(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5a8.8 8.8 0 0 0-2.8 17.2c.4.1.6-.2.6-.4v-1.4c-2.4.6-2.9-1-2.9-1-.4-1.1-1-1.4-1-1.4-.8-.6.1-.6.1-.6.9.1 1.4 1 1.4 1 .8 1.4 2.2 1 2.7.8.1-.6.3-1 .6-1.3-1.9-.2-3.8-1-3.8-4.2 0-.9.3-1.7.9-2.3-.1-.2-.4-1.1.1-2.2 0 0 .7-.2 2.4.9a8.2 8.2 0 0 1 4.4 0c1.7-1.1 2.4-.9 2.4-.9.5 1.1.2 2 .1 2.2.6.6.9 1.4.9 2.3 0 3.2-1.9 4-3.8 4.2.3.2.6.8.6 1.6v2.4c0 .2.2.5.6.4A8.8 8.8 0 0 0 12 3.5Z" fill="currentColor"/></svg>`; }
-    function svgLinkedIn(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M6.3 9.7H3.6V20.4h2.7V9.7Z" fill="currentColor"/><path d="M5 3.6a1.6 1.6 0 1 0 0 3.2a1.6 1.6 0 0 0 0-3.2Z" fill="currentColor"/><path d="M20.4 20.4h-2.7v-5.8c0-1.4-.6-2.3-1.8-2.3-1 0-1.6.7-1.8 1.3-.1.2-.1.6-.1.9v5.9H11.3V9.7H14v1.5c.5-.8 1.4-1.8 3.2-1.8 2.3 0 3.9 1.5 3.9 4.6v6.4Z" fill="currentColor" opacity=".9"/></svg>`; }
-
-    // ✅ Reddit más parecido (alien + antena)
-    function svgRedditBetter(){
-      return `<svg viewBox="0 0 24 24" fill="none">
-        <path fill="currentColor" d="M12 6.2c3.7 0 6.7 2 6.7 4.6S15.7 15.4 12 15.4 5.3 13.4 5.3 10.8 8.3 6.2 12 6.2Zm-2.4 3.2a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Zm4.8 0a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Z"/>
-        <path d="M9.3 12.8c1.7 1.3 3.7 1.3 5.4 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-        <path fill="currentColor" d="M16.9 6.8a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4Z"/>
-        <path d="M13.9 6.4l.7-2.2 2.4.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M18.6 8.4c.9.2 1.6.9 1.6 1.7 0 1-1 1.8-2.1 1.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-      </svg>`;
-    }
-
-    function svgPinterest(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M12 3.2a8.8 8.8 0 0 0-3 17.1c-.1-.7-.2-1.8 0-2.6l1.5-6.1s-.4-.8-.4-2c0-1.9 1.1-3.3 2.4-3.3 1.1 0 1.7.8 1.7 1.8 0 1.1-.7 2.7-1 4.2-.3 1.3.6 2.3 1.9 2.3 2.2 0 3.9-2.3 3.9-5.6 0-2.9-2.1-5-5.1-5-3.5 0-5.5 2.6-5.5 5.3 0 1.1.4 2.2.9 2.8.1.1.1.2.1.4l-.3 1.2c-.1.4-.4.5-.7.3-1-.5-1.6-2.1-1.6-3.4 0-2.8 2-6.7 7.2-6.7 3.8 0 6.7 2.7 6.7 6.3 0 3.8-2.4 6.9-5.7 6.9-1.1 0-2.2-.6-2.6-1.3l-.7 2.7c-.2.8-.8 1.9-1.2 2.6.9.3 1.9.5 2.9.5a8.8 8.8 0 0 0 0-17.6Z" fill="currentColor"/></svg>`; }
-    function svgGeneric(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`; }
-  </script>
+function setState(t){document.getElementById("state").textContent=t||"";}
+document.getElementById("themeBtn").onclick=()=>{
+  const h=document.documentElement;
+  h.dataset.theme=h.dataset.theme==="dark"?"light":"dark";
+};
+</script>
 </body>
 </html>
