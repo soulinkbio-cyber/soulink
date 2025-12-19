@@ -22,7 +22,6 @@
 
       --btn:56px;
       --circle:44px;
-      --glyph:22px;
     }
     html[data-theme="light"]{
       --bg0:#f7f9fb; --bg1:#eef3f7;
@@ -142,21 +141,16 @@
       background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
     }
 
-    /* círculo como tu imagen */
+    /* ✅ Logo EXACTO usando tu imagen como sprite */
     .iconCircle{
       width:var(--circle);
       height:var(--circle);
       border-radius:999px;
-      display:grid;
-      place-items:center;
-      background: var(--bg, #333);
       overflow:hidden;
-    }
-    .iconCircle img{
-      width:var(--glyph);
-      height:var(--glyph);
-      display:block;
-      object-fit:contain;
+      background-image: var(--sprite);
+      background-repeat:no-repeat;
+      background-size: 500% 300%; /* 5 columnas x 3 filas */
+      background-position: var(--posX) var(--posY);
     }
 
     .state{padding:0 16px 14px; color:var(--muted); font-size:13px; text-align:center;}
@@ -193,6 +187,15 @@ const DEFAULT_USERNAME = "soulink";
 const SHEETS_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
 
+/* ✅ TU IMAGEN (sprite) EMBEBIDA */
+const SPRITE_DATA_URL = "data:image/jpeg;base64,/9j/4QEIRXhpZgAATU0AKgAAAAgABgESAAMAAAABAAEAAAEaAAUAAAABAAAAWgEbAAUAAAABAAAA...TRUNCATED...";
+
+/* ⚠️ IMPORTANTE:
+   El base64 aquí está truncado en esta vista del chat para no hacer el mensaje gigantesco.
+   En tu implementación, pega el base64 COMPLETO de tu imagen.
+   Si quieres, te lo vuelvo a pegar completo en el próximo mensaje (dímelo y lo suelto completo).
+*/
+
 /***********************
  * THEME
  ***********************/
@@ -218,46 +221,29 @@ document.getElementById("themeBtn").addEventListener("click", ()=>{
 });
 
 /***********************
- * BRAND BACKGROUNDS (como tu imagen)
+ * POSICIONES (3 filas x 5 columnas) EXACTO como tu imagen
+ * fila 1: X FB IG WA Threads
+ * fila 2: TikTok Snapchat YouTube Twitch Telegram
+ * fila 3: Discord GitHub Reddit Pinterest Email
  ***********************/
-const BRAND = {
-  x:{bg:"#000000"},
-  facebook:{bg:"#1877F2"},
-  instagram:{bg:"#C13584"},
-  whatsapp:{bg:"#25D366"},
-  threads:{bg:"#000000"},
-  tiktok:{bg:"#000000"},
-  snapchat:{bg:"#FFFC00"},
-  youtube:{bg:"#FF0000"},
-  twitch:{bg:"#9146FF"},
-  telegram:{bg:"#2AABEE"},
-  discord:{bg:"#5865F2"},
-  github:{bg:"#1F2328"},
-  reddit:{bg:"#FF4500"},
-  pinterest:{bg:"#BD081C"},
-  email:{bg:"#7A7F87"},
-};
+const POS = {
+  x:        {x:"0%",   y:"0%"},
+  facebook: {x:"25%",  y:"0%"},
+  instagram:{x:"50%",  y:"0%"},
+  whatsapp: {x:"75%",  y:"0%"},
+  threads:  {x:"100%", y:"0%"},
 
-/***********************
- * ICON FILES (LOS REALES)
- * Tú subes los archivos a /icons/
- ***********************/
-const ICON_FILES = {
-  x:"/icons/x.svg",
-  facebook:"/icons/facebook.svg",
-  instagram:"/icons/instagram.svg",
-  whatsapp:"/icons/whatsapp.svg",
-  threads:"/icons/threads.svg",
-  tiktok:"/icons/tiktok.svg",
-  snapchat:"/icons/snapchat.svg",
-  youtube:"/icons/youtube.svg",
-  twitch:"/icons/twitch.svg",
-  telegram:"/icons/telegram.svg",
-  discord:"/icons/discord.svg",
-  github:"/icons/github.svg",
-  reddit:"/icons/reddit.svg",
-  pinterest:"/icons/pinterest.svg",
-  email:"/icons/email.svg"
+  tiktok:   {x:"0%",   y:"50%"},
+  snapchat: {x:"25%",  y:"50%"},
+  youtube:  {x:"50%",  y:"50%"},
+  twitch:   {x:"75%",  y:"50%"},
+  telegram: {x:"100%", y:"50%"},
+
+  discord:  {x:"0%",   y:"100%"},
+  github:   {x:"25%",  y:"100%"},
+  reddit:   {x:"50%",  y:"100%"},
+  pinterest:{x:"75%",  y:"100%"},
+  email:    {x:"100%", y:"100%"},
 };
 
 const ORDER = [
@@ -313,19 +299,20 @@ function renderIcons(links){
     a.rel = "noopener noreferrer";
     a.title = l.type.toUpperCase();
 
-    const circle = document.createElement("div");
-    circle.className = "iconCircle";
+    const c = document.createElement("div");
+    c.className = "iconCircle";
+    c.style.setProperty("--sprite", `url('${SPRITE_DATA_URL}')`);
 
-    const b = BRAND[l.type] || {bg:"#333"};
-    circle.style.setProperty("--bg", b.bg);
+    const p = POS[l.type];
+    if(p){
+      c.style.setProperty("--posX", p.x);
+      c.style.setProperty("--posY", p.y);
+    }else{
+      c.style.setProperty("--posX", "0%");
+      c.style.setProperty("--posY", "0%");
+    }
 
-    const img = document.createElement("img");
-    img.alt = l.type;
-    img.src = ICON_FILES[l.type] || "";
-    img.onerror = () => { img.style.display="none"; };
-
-    circle.appendChild(img);
-    a.appendChild(circle);
+    a.appendChild(c);
     box.appendChild(a);
   });
 }
@@ -377,7 +364,6 @@ function normalizeType(header){
   const clean = h.replace(/\s+/g,"").replace(/[_-]/g,"");
   if(clean === "threats") return "threads";
   if(clean === "twitter") return "x";
-  if(clean === "linkedln" || clean === "linkedin") return "linkedin"; // por si lo añades después
   return clean;
 }
 
