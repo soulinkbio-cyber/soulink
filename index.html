@@ -4,6 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0b0f14" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>soulink.bio</title>
 
   <style>
@@ -11,7 +14,6 @@
       --radius:22px;
       --maxw:520px;
 
-      /* Dark */
       --bg0:#05070a; --bg1:#0b0f14;
       --card:#0e141b; --card2:#0b1117;
       --text:#e9eef5; --muted:#9aa7b5;
@@ -60,7 +62,6 @@
     }
 
     .wrap{width:100%; max-width:var(--maxw);}
-
     .card{
       border-radius:var(--radius);
       border:1px solid var(--stroke2);
@@ -94,33 +95,14 @@
     .toggleBtn:hover{ transform:translateY(-1px); border-color:rgba(255,255,255,.16); }
     .toggleBtn svg{width:18px;height:18px;display:block}
 
-    .profile{
-      padding:18px 16px 10px;
-      text-align:center;
-    }
-    .username{
-      margin:0;
-      font-size:22px;
-      line-height:1.05;
-      font-weight:950;
-      letter-spacing:.2px;
-      word-break:break-word;
-    }
-    .handle{
-      margin:6px 0 0;
-      font-size:12.5px;
-      color:var(--muted);
-    }
+    .profile{ padding:18px 16px 10px; text-align:center; }
+    .username{ margin:0; font-size:22px; line-height:1.05; font-weight:950; letter-spacing:.2px; word-break:break-word; }
+    .handle{ margin:6px 0 0; font-size:12.5px; color:var(--muted); }
 
     .iconsWrap{padding:10px 16px 18px;}
-    .icons{
-      display:grid;
-      grid-template-columns:repeat(5, 1fr);
-      gap:12px;
-      justify-items:center;
-    }
-    @media(max-width:420px){
-      .icons{grid-template-columns:repeat(4, 1fr);}
+    .icons{ display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; justify-items:center; }
+    @media(min-width:420px){
+      .icons{ grid-template-columns:repeat(5, 1fr); }
     }
 
     .iconBtn{
@@ -141,7 +123,7 @@
       background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
     }
 
-    /* ✅ TU IMAGEN recortada (5 columnas x 3 filas) */
+    /* ✅ aquí es donde se ve EXACTO como tu imagen */
     .iconCircle{
       width:var(--circle);
       height:var(--circle);
@@ -149,8 +131,10 @@
       overflow:hidden;
       background-image: var(--sprite);
       background-repeat:no-repeat;
-      background-size: 500% 300%;
+      background-size: 500% 300%; /* 5 columnas x 3 filas */
       background-position: var(--posX) var(--posY);
+      /* por si iOS decide no pintar, verás el borde */
+      border: 1px solid rgba(255,255,255,.08);
     }
 
     .state{padding:0 16px 14px; color:var(--muted); font-size:13px; text-align:center;}
@@ -180,25 +164,13 @@
   </div>
 
 <script>
-/***********************
- * CONFIG
- ***********************/
 const DEFAULT_USERNAME = "soulink";
 const SHEETS_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
 
-/***********************
- * ✅ SPRITE = TU IMAGEN (EMBEBIDA)
- * Esto ES lo que hace que los logos salgan EXACTOS como tu imagen.
- ***********************/
-const SPRITE_B64 =
-  "/9j/4QEIRXhpZgAATU0AKgAAAAgABgESAAMAAAABAAEAAAEaAAUAAAABAAAAVgEbAAUAAAABAAAAXgEoAAMAAAABAAIAAAExAAIAAAAUAAAAZodpAAQAAAABAAAAegAAAAAAAABIAAAAAQAAAEgAAAAB/9sAQwACAQEBAQECAQEBAgICAgIEAwICAgIFBAQDBAYFBgYGBQYGBgcICAcHBwoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoK/9sAQwECAgICAgIFBAQFCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoK/8AAEQgC2wQmAwERAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCUrHB8BVCYnKSwfAVM1OCkqKy4SNDc5Oi/8QAGQEAAwEBAQAAAAAAAAAAAAAAAAECAwQF/8QAJREAAwEAAQQCAgMBAAAAAAAAAAECERIDITEEQRMiUWEFMlKB/9oADAMBAAIRAxEAPwD9yKiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKYzY4FPqJ+tAH/9k=";
+// ✅ tu sprite en el repo (sube el archivo a esta ruta)
+const SPRITE_URL = "/assets/social-sprite.jpg?v=" + Date.now();
 
-const SPRITE_URL = "data:image/jpeg;base64," + SPRITE_B64;
-
-/***********************
- * THEME
- ***********************/
 const THEME_KEY = "soulink_theme";
 function svgSun(){ return `<svg viewBox="0 0 24 24" fill="none">
   <path d="M12 18a6 6 0 1 0 0-12a6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/>
@@ -220,9 +192,7 @@ document.getElementById("themeBtn").addEventListener("click", ()=>{
   setTheme(cur === "dark" ? "light" : "dark");
 });
 
-/***********************
- * POSICIONES EXACTAS (5x3) según tu imagen
- ***********************/
+// posiciones: 3 filas x 5 columnas EXACTO como tu imagen
 const POS = {
   x:{x:"0%",y:"0%"},
   facebook:{x:"25%",y:"0%"},
@@ -266,7 +236,7 @@ async function loadProfile(username){
   document.getElementById("handleText").textContent = `soulink.bio/@${safeU}`;
 
   try{
-    const row = await fetchUserRowFromCSV(SHEETS_CSV_URL, safeU);
+    const row = await fetchUserRowFromCSV(SHEETS_CSV_URL + "&v=" + Date.now(), safeU);
     if(!row){
       setState("Este usuario todavía no existe en la base de datos.");
       return;
@@ -333,7 +303,6 @@ function extractLinksFromRow(row){
       if(mail.includes("@")) links.push({ type:"email", url:"mailto:" + mail });
       continue;
     }
-
     if(ORDER.includes(type)){
       links.push({ type, url: normalizeUrl(val) });
     }
