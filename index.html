@@ -9,7 +9,7 @@
   <style>
     :root{
       --radius:22px;
-      --maxw:540px;
+      --maxw:520px;
 
       /* Dark */
       --bg0:#05070a; --bg1:#0b0f14;
@@ -20,11 +20,11 @@
       --grainA:rgba(255,255,255,.06);
       --grainB:rgba(255,255,255,.016);
 
-      --iconBox:56px;
-      --iconCircle:38px;
+      --btn:56px;
+      --circle:44px;
+      --glyph:22px;
     }
     html[data-theme="light"]{
-      /* Light */
       --bg0:#f7f9fb; --bg1:#eef3f7;
       --card:#ffffff; --card2:#f7f9fb;
       --text:#0b0f14; --muted:#566474;
@@ -37,21 +37,18 @@
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color:var(--text);
       min-height:100svh;
       background:
         radial-gradient(1200px 650px at 18% 12%, rgba(120,170,255,.14), transparent 55%),
         radial-gradient(900px 520px at 82% 18%, rgba(220,240,255,.18), transparent 50%),
-        radial-gradient(900px 520px at 50% 90%, rgba(255,255,255,.10), transparent 52%),
-        linear-gradient(160deg, var(--bg0), var(--bg1) 55%, var(--bg0));
-      overflow-x:hidden;
-
-      /* ✅ más centrado */
+        linear-gradient(160deg, var(--bg0), var(--bg1));
       display:flex;
       align-items:center;
       justify-content:center;
       padding:26px 16px;
+      overflow-x:hidden;
     }
     body::before{
       content:"";
@@ -81,11 +78,8 @@
     .topTools{
       position:absolute;
       top:12px; right:12px;
-      display:flex; gap:10px; align-items:center;
       z-index:5;
     }
-
-    /* ✅ toggle pro: solo ícono */
     .toggleBtn{
       width:42px; height:42px;
       border-radius:16px;
@@ -102,15 +96,9 @@
     .toggleBtn svg{width:18px;height:18px;display:block}
 
     .profile{
-      padding:22px 18px 10px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:8px;
+      padding:18px 16px 10px;
       text-align:center;
     }
-
-    /* ✅ más proporcional */
     .username{
       margin:0;
       font-size:22px;
@@ -120,7 +108,7 @@
       word-break:break-word;
     }
     .handle{
-      margin:0;
+      margin:6px 0 0;
       font-size:12.5px;
       color:var(--muted);
     }
@@ -128,17 +116,17 @@
     .iconsWrap{padding:10px 16px 18px;}
     .icons{
       display:grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns:repeat(5, 1fr);
       gap:12px;
       justify-items:center;
     }
-    @media (max-width: 420px){
-      .icons{grid-template-columns: repeat(4, 1fr);}
+    @media(max-width:420px){
+      .icons{grid-template-columns:repeat(4, 1fr);}
     }
 
     .iconBtn{
-      width:var(--iconBox);
-      height:var(--iconBox);
+      width:var(--btn);
+      height:var(--btn);
       border-radius:18px;
       border:1px solid var(--stroke2);
       background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
@@ -146,47 +134,29 @@
       display:grid;
       place-items:center;
       text-decoration:none;
-      position:relative;
-      overflow:hidden;
       transition: transform .12s ease, border-color .12s ease, background .12s ease;
     }
     .iconBtn:hover{
-      transform: translateY(-1px);
+      transform:translateY(-1px);
       border-color: rgba(255,255,255,.16);
       background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
     }
+
+    /* ✅ EXACTO estilo “tu imagen”: círculo sólido */
     .iconCircle{
-      width:var(--iconCircle);
-      height:var(--iconCircle);
+      width:var(--circle);
+      height:var(--circle);
       border-radius:999px;
       display:grid;
       place-items:center;
-      background: radial-gradient(circle at 40% 20%, rgba(255,255,255,.18), rgba(255,255,255,.06));
-      border:1px solid rgba(255,255,255,.10);
-      position:relative;
+      background: var(--bg, #333);
     }
-    html[data-theme="light"] .iconCircle{
-      background: radial-gradient(circle at 40% 20%, rgba(10,15,20,.10), rgba(10,15,20,.04));
-      border:1px solid rgba(10,15,20,.12);
-    }
-
-    .iconCircle::before{
-      content:"";
-      position:absolute;
-      inset:-30%;
-      background: radial-gradient(circle at 50% 50%, var(--brandGlow, rgba(255,255,255,.10)), transparent 55%);
-      opacity:.85;
-      pointer-events:none;
-    }
-
     .iconCircle svg{
-      width:18px;
-      height:18px;
+      width:var(--glyph);
+      height:var(--glyph);
       display:block;
-      color: var(--brandColor, var(--text));
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,.22));
-      position:relative;
-      z-index:1;
+      color: var(--fg, #fff);
+      fill: currentColor;
     }
 
     .state{padding:0 16px 14px; color:var(--muted); font-size:13px; text-align:center;}
@@ -215,366 +185,272 @@
     </div>
   </div>
 
-  <script>
-    /***********************
-     * CONFIG
-     ***********************/
-    const DEFAULT_USERNAME = "soulink";
+<script>
+/***********************
+ * CONFIG
+ ***********************/
+const DEFAULT_USERNAME = "soulink";
+const SHEETS_CSV_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
 
-    // ✅ Tu Google Sheet publicado (CSV)
-    const SHEETS_CSV_URL =
-      "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
+/***********************
+ * THEME TOGGLE
+ ***********************/
+const THEME_KEY = "soulink_theme";
+function svgSun(){ return `<svg viewBox="0 0 24 24" fill="none">
+  <path d="M12 18a6 6 0 1 0 0-12a6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/>
+  <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>`; }
+function svgMoon(){ return `<svg viewBox="0 0 24 24" fill="none">
+  <path d="M21 13.6A8.2 8.2 0 0 1 10.4 3a6.9 6.9 0 1 0 10.6 10.6Z"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`; }
 
-    /***********************
-     * THEME TOGGLE (solo iconos)
-     ***********************/
-    const THEME_KEY = "soulink_theme";
+function getTheme(){
+  return localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute("data-theme") || "dark";
+}
+function setTheme(t){
+  document.documentElement.setAttribute("data-theme", t);
+  localStorage.setItem(THEME_KEY, t);
+  document.getElementById("themeBtn").innerHTML = (t === "dark") ? svgMoon() : svgSun();
+}
+document.getElementById("themeBtn").addEventListener("click", ()=>{
+  const cur = getTheme();
+  setTheme(cur === "dark" ? "light" : "dark");
+});
 
-    function setTheme(theme){
-      document.documentElement.setAttribute("data-theme", theme);
-      localStorage.setItem(THEME_KEY, theme);
-      renderThemeIcon(theme);
-    }
-    function getTheme(){
-      return localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute("data-theme") || "dark";
-    }
-    function renderThemeIcon(theme){
-      const btn = document.getElementById("themeBtn");
-      btn.innerHTML = (theme === "dark") ? svgMoon() : svgSun();
-    }
-    document.getElementById("themeBtn").addEventListener("click", ()=>{
-      const cur = getTheme();
-      setTheme(cur === "dark" ? "light" : "dark");
-    });
+/***********************
+ * BRAND COLORS (como tu imagen)
+ ***********************/
+const BRAND = {
+  x:{bg:"#000000", fg:"#ffffff"},
+  facebook:{bg:"#1877F2", fg:"#ffffff"},
+  instagram:{bg:"#C13584", fg:"#ffffff"},
+  whatsapp:{bg:"#25D366", fg:"#ffffff"},
+  threads:{bg:"#000000", fg:"#ffffff"},
+  tiktok:{bg:"#000000", fg:"#ffffff"},
+  snapchat:{bg:"#FFFC00", fg:"#000000"},   // 👈 ghost negro
+  youtube:{bg:"#FF0000", fg:"#ffffff"},
+  twitch:{bg:"#9146FF", fg:"#ffffff"},
+  telegram:{bg:"#2AABEE", fg:"#ffffff"},
+  discord:{bg:"#5865F2", fg:"#ffffff"},
+  github:{bg:"#1F2328", fg:"#ffffff"},
+  reddit:{bg:"#FF4500", fg:"#ffffff"},
+  pinterest:{bg:"#BD081C", fg:"#ffffff"},
+  email:{bg:"#7A7F87", fg:"#ffffff"},
+};
 
-    /***********************
-     * BRAND COLORS
-     ***********************/
-    const BRAND = {
-      email:      { color:"#E9EEF5", glow:"rgba(233,238,245,.18)" },
-      x:          { color:"#E9EEF5", glow:"rgba(233,238,245,.18)" },
-      facebook:   { color:"#1877F2", glow:"rgba(24,119,242,.28)" },
-      instagram:  { color:"#E1306C", glow:"rgba(225,48,108,.30)" },
-      whatsapp:   { color:"#25D366", glow:"rgba(37,211,102,.26)" },
-      threads:    { color:"#E9EEF5", glow:"rgba(233,238,245,.18)" },
-      tiktok:     { color:"#00F2EA", glow:"rgba(0,242,234,.26)" },
-      snapchat:   { color:"#FFFC00", glow:"rgba(255,252,0,.18)" },
-      youtube:    { color:"#FF0033", glow:"rgba(255,0,51,.26)" },
-      twitch:     { color:"#9146FF", glow:"rgba(145,70,255,.26)" },
-      telegram:   { color:"#26A5E4", glow:"rgba(38,165,228,.26)" },
-      discord:    { color:"#5865F2", glow:"rgba(88,101,242,.26)" },
-      github:     { color:"#E9EEF5", glow:"rgba(233,238,245,.18)" },
-      linkedin:   { color:"#0A66C2", glow:"rgba(10,102,194,.26)" },
-      reddit:     { color:"#FF4500", glow:"rgba(255,69,0,.26)" },
-      pinterest:  { color:"#E60023", glow:"rgba(230,0,35,.26)" },
-      generic:    { color:"#E9EEF5", glow:"rgba(233,238,245,.18)" },
-    };
+/***********************
+ * ICONS (flat + centrados como tu imagen)
+ * Nota: estos SVG están hechos para verse “flat” en blanco/negro.
+ ***********************/
+const ICONS = {
+  x: svgX(),
+  facebook: svgFacebook(),
+  instagram: svgInstagram(),
+  whatsapp: svgWhatsApp(),
+  threads: svgThreads(),
+  tiktok: svgTikTok(),
+  snapchat: svgSnapchat(),
+  youtube: svgYouTube(),
+  twitch: svgTwitch(),
+  telegram: svgTelegram(),
+  discord: svgDiscord(),
+  github: svgGithub(),
+  reddit: svgReddit(),
+  pinterest: svgPinterest(),
+  email: svgMail(),
+};
 
-    /***********************
-     * ICONS (más “originales”)
-     ***********************/
-    const ICONS = {
-      email: svgMail(),
-      x: svgTwitterX(),
-      facebook: svgFacebook(),
-      instagram: svgInstagram(),
-      whatsapp: svgWhatsApp(),
-      threads: svgThreads(),
-      tiktok: svgTikTok(),
-      snapchat: svgSnapchat(),
-      youtube: svgYouTube(),
-      twitch: svgTwitch(),
-      telegram: svgTelegram(),
-      discord: svgDiscord(),
-      github: svgGithub(),
-      linkedin: svgLinkedIn(),
-      reddit: svgReddit(),
-      pinterest: svgPinterest(),
-      generic: svgGeneric(),
-    };
+const ORDER = [
+  "x","facebook","instagram","whatsapp","threads",
+  "tiktok","snapchat","youtube","twitch","telegram",
+  "discord","github","reddit","pinterest","email"
+];
 
-    const ORDER = [
-      "email","x","facebook","instagram","whatsapp","threads","tiktok","snapchat",
-      "youtube","twitch","telegram","discord","github","linkedin","reddit","pinterest"
-    ];
+(async function init(){
+  setTheme(getTheme());
+  const u = sanitizeUsername(getParam("u") || getUserFromPath() || DEFAULT_USERNAME);
+  await loadProfile(u);
+})();
 
-    (async function init(){
-      // ✅ tema
-      setTheme(getTheme());
+window.loadProfile = loadProfile;
 
-      // ✅ detectar usuario por ?u= o por /@usuario (por si abren index directo)
-      const fromQuery = getParam("u");
-      const fromPath = getUserFromPath();
-      const u = sanitizeUsername(fromQuery || fromPath || DEFAULT_USERNAME);
+async function loadProfile(username){
+  const safeU = sanitizeUsername(username);
 
-      await loadProfile(u);
-    })();
+  // ✅ limpia SIEMPRE
+  renderIcons([]);
+  setState("Cargando…");
 
-    window.loadProfile = loadProfile;
+  document.title = `@${safeU} • soulink.bio`;
+  document.getElementById("nameText").textContent = `@${safeU}`;
+  document.getElementById("handleText").textContent = `soulink.bio/@${safeU}`;
 
-    async function loadProfile(username){
-      const safeU = sanitizeUsername(username);
-
-      // ✅ IMPORTANTÍSIMO: limpia todo ANTES de cargar (evita “se quedó el de soulink”)
+  try{
+    const row = await fetchUserRowFromCSV(SHEETS_CSV_URL, safeU);
+    if(!row){
       renderIcons([]);
-      setState("Cargando…");
-
-      document.title = `@${safeU} • soulink.bio`;
-      document.getElementById("nameText").textContent = `@${safeU}`;
-      document.getElementById("handleText").textContent = `soulink.bio/@${safeU}`;
-
-      try{
-        const row = await fetchUserRowFromCSV(SHEETS_CSV_URL, safeU);
-        if(!row){
-          renderIcons([]);
-          setState("Este usuario todavía no existe en la base de datos.");
-          return;
-        }
-
-        const links = extractLinksFromRow(row);
-        const sorted = sortLinks(links);
-
-        renderIcons(sorted);
-        setState(sorted.length ? "" : "No hay redes sociales guardadas todavía.");
-      }catch(e){
-        console.error(e);
-        renderIcons([]);
-        setState("No pude cargar la data. Verifica que el Sheet esté publicado.");
-      }
+      setState("Este usuario todavía no existe en la base de datos.");
+      return;
     }
 
-    function renderIcons(links){
-      const box = document.getElementById("icons");
-      box.innerHTML = "";
+    const links = extractLinksFromRow(row);
+    const sorted = sortLinks(links);
 
-      links.forEach(l=>{
-        const a = document.createElement("a");
-        a.className = "iconBtn";
-        a.href = l.url;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        a.title = l.type.toUpperCase();
+    renderIcons(sorted);
+    setState(sorted.length ? "" : "No hay redes sociales guardadas todavía.");
+  }catch(e){
+    console.error(e);
+    renderIcons([]);
+    setState("No pude cargar la data. Verifica que el Sheet esté publicado.");
+  }
+}
 
-        const b = BRAND[l.type] || BRAND.generic;
-        a.style.setProperty("--brandColor", b.color);
-        a.style.setProperty("--brandGlow", b.glow);
+function renderIcons(links){
+  const box = document.getElementById("icons");
+  box.innerHTML = "";
 
-        const inner = document.createElement("div");
-        inner.className = "iconCircle";
-        inner.innerHTML = ICONS[l.type] || ICONS.generic;
+  links.forEach(l=>{
+    const a = document.createElement("a");
+    a.className = "iconBtn";
+    a.href = l.url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.title = l.type.toUpperCase();
 
-        a.appendChild(inner);
-        box.appendChild(a);
-      });
+    const inner = document.createElement("div");
+    inner.className = "iconCircle";
+
+    const b = BRAND[l.type] || {bg:"#333", fg:"#fff"};
+    inner.style.setProperty("--bg", b.bg);
+    inner.style.setProperty("--fg", b.fg);
+
+    inner.innerHTML = ICONS[l.type] || "";
+    a.appendChild(inner);
+    box.appendChild(a);
+  });
+}
+
+async function fetchUserRowFromCSV(csvUrl, username){
+  const res = await fetch(csvUrl, { cache:"no-store" });
+  if(!res.ok) throw new Error("CSV fetch failed: " + res.status);
+  const text = await res.text();
+  const { headers, rows } = parseCSV(text);
+
+  const objs = rows.map(r=>{
+    const o={}; headers.forEach((h,i)=> o[h]=(r[i]??"").trim()); return o;
+  });
+
+  const key = username.toLowerCase();
+  return objs.find(o => (o.username || o.user || o.handle || o.usuario || "").toLowerCase().trim() === key) || null;
+}
+
+function extractLinksFromRow(row){
+  const want = ["email","x","facebook","instagram","whatsapp","threads","threats","tiktok","snapchat","youtube","twitch","telegram","discord","github","reddit","pinterest"];
+  const links = [];
+
+  for(const k in row){
+    const type = normalizeType(k);
+    if(!want.includes(type)) continue;
+    const val = String(row[k]||"").trim();
+    if(!val) continue;
+
+    if(type === "email"){
+      const mail = val.replace(/^mailto:/i,"").trim();
+      if(mail.includes("@")) links.push({ type:"email", url:"mailto:" + mail });
+      continue;
     }
 
-    async function fetchUserRowFromCSV(csvUrl, username){
-      const res = await fetch(csvUrl, { cache:"no-store" });
-      if(!res.ok) throw new Error("CSV fetch failed: " + res.status);
-      const text = await res.text();
-      const { headers, rows } = parseCSV(text);
+    links.push({ type, url: normalizeUrl(val) });
+  }
 
-      const objs = rows.map(r=>{
-        const o={}; headers.forEach((h,i)=> o[h]=(r[i]??"").trim()); return o;
-      });
+  // dedupe
+  const seen = new Set();
+  return links.filter(l=>{
+    const id = l.type + "|" + l.url;
+    if(seen.has(id)) return false;
+    seen.add(id);
+    return true;
+  });
+}
 
-      const key = username.toLowerCase();
+function sortLinks(links){
+  const rank = (t)=> {
+    const i = ORDER.indexOf(t);
+    return i === -1 ? 999 : i;
+  };
+  return links.slice().sort((a,b)=> rank(a.type) - rank(b.type));
+}
 
-      // ✅ acepta varias columnas para username
-      return objs.find(o => {
-        const v = (o.username || o.user || o.handle || o.usuario || o.u || "").toLowerCase().trim();
-        return v === key;
-      }) || null;
-    }
+function normalizeType(header){
+  const h = String(header||"").trim().toLowerCase();
+  const clean = h.replace(/\s+/g,"").replace(/[_-]/g,"");
+  if(clean === "threats") return "threads";
+  if(clean === "twitter") return "x";
+  return clean;
+}
 
-    function extractLinksFromRow(row){
-      // ✅ Solo saca estas columnas (las que tú listaste)
-      const wanted = [
-        "email","x","facebook","instagram","whatsapp","threats","threads",
-        "tiktok","snapchat","youtube","twitch","telegram","discord","github","linkedln","linkedin","reddit","pinterest"
-      ];
+function parseCSV(text){
+  const lines=text.replace(/\r/g,"").split("\n").filter(Boolean);
+  const rows=[]; let headers=[];
+  for(let i=0;i<lines.length;i++){
+    const row=splitCSVLine(lines[i]);
+    if(i===0) headers=row.map(h=>String(h||"").trim().toLowerCase());
+    else rows.push(row);
+  }
+  return { headers, rows };
+}
+function splitCSVLine(line){
+  const out=[]; let cur=""; let q=false;
+  for(let i=0;i<line.length;i++){
+    const ch=line[i];
+    if(ch === '"' && line[i+1] === '"'){ cur+='"'; i++; continue; }
+    if(ch === '"'){ q=!q; continue; }
+    if(ch === "," && !q){ out.push(cur); cur=""; continue; }
+    cur += ch;
+  }
+  out.push(cur);
+  return out;
+}
 
-      const links = [];
-      for(const k in row){
-        const rawKey = String(k||"");
-        const norm = normalizeType(rawKey);
-        if(!wanted.includes(norm) && norm !== "threads" && norm !== "email") continue;
+function normalizeUrl(u){
+  const s=String(u||"").trim();
+  if(!s) return "";
+  if(/^https?:\/\//i.test(s)) return s;
+  return "https://" + s;
+}
 
-        const val = String(row[k]||"").trim();
-        if(!val) continue;
+function sanitizeUsername(u){
+  return String(u||"").trim().replace(/^@/,"").replace(/[^\w.-]/g,"").slice(0,40) || "usuario";
+}
+function setState(msg){ document.getElementById("state").textContent = msg || ""; }
+function getParam(name){ try{ return new URL(location.href).searchParams.get(name); } catch(e){ return null; } }
+function getUserFromPath(){
+  try{
+    const path = decodeURIComponent(location.pathname || "/");
+    const m = path.match(/^\/@([^\/?#]+)/);
+    return m ? m[1].replace(/^@/,"") : null;
+  }catch(e){ return null; }
+}
 
-        // email: si viene como correo suelto, conviértelo a mailto:
-        if(norm === "email"){
-          const mail = val.replace(/^mailto:/i,"").trim();
-          if(mail.includes("@")) links.push({ type:"email", url: "mailto:" + mail });
-          continue;
-        }
-
-        if(isValidUrl(val)){
-          links.push({ type: norm, url: normalizeUrl(val) });
-        }
-      }
-
-      // dedupe
-      const seen = new Set();
-      return links.filter(l=>{
-        const key = l.type + "|" + l.url;
-        if(seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      });
-    }
-
-    function sortLinks(links){
-      const rank = (t)=> {
-        const i = ORDER.indexOf(t);
-        return i === -1 ? 999 : i;
-      };
-      return links.slice().sort((a,b)=> rank(a.type) - rank(b.type));
-    }
-
-    function normalizeType(header){
-      const h = String(header||"").trim().toLowerCase();
-      const clean = h.replace(/\s+/g,"").replace(/_/g,"").replace(/-/g,"");
-
-      if(clean === "email") return "email";
-      if(clean === "x" || clean === "twitter") return "x";
-      if(clean === "facebook" || clean === "fb") return "facebook";
-      if(clean === "instagram" || clean === "ig") return "instagram";
-      if(clean === "whatsapp" || clean === "wa") return "whatsapp";
-
-      // tu columna dice THREATS, lo trato como Threads:
-      if(clean === "threads" || clean === "threats") return "threads";
-
-      if(clean === "tiktok") return "tiktok";
-      if(clean === "snapchat" || clean === "snap") return "snapchat";
-      if(clean === "youtube" || clean === "yt") return "youtube";
-      if(clean === "twitch") return "twitch";
-      if(clean === "telegram" || clean === "tg") return "telegram";
-      if(clean === "discord") return "discord";
-      if(clean === "github") return "github";
-      if(clean === "linkedln" || clean === "linkedin") return "linkedin";
-      if(clean === "reddit") return "reddit";
-      if(clean === "pinterest") return "pinterest";
-
-      return "generic";
-    }
-
-    function parseCSV(text){
-      const lines=text.replace(/\r/g,"").split("\n").filter(Boolean);
-      const rows=[]; let headers=[];
-      for(let i=0;i<lines.length;i++){
-        const row=splitCSVLine(lines[i]);
-        if(i===0) headers=row.map(h=>normalizeHeader(h));
-        else rows.push(row);
-      }
-      return { headers, rows };
-    }
-
-    function splitCSVLine(line){
-      const out=[]; let cur=""; let q=false;
-      for(let i=0;i<line.length;i++){
-        const ch=line[i];
-        if(ch === '"' && line[i+1] === '"'){ cur+='"'; i++; continue; }
-        if(ch === '"'){ q=!q; continue; }
-        if(ch === "," && !q){ out.push(cur); cur=""; continue; }
-        cur += ch;
-      }
-      out.push(cur);
-      return out;
-    }
-
-    function normalizeHeader(h){
-      return String(h||"").trim().toLowerCase()
-        .replace(/\s+/g,"_")
-        .replace(/[^\w]/g,"");
-    }
-
-    function normalizeUrl(u){
-      const s=String(u||"").trim();
-      if(!s) return "";
-      if(/^https?:\/\//i.test(s)) return s;
-      if(/^mailto:/i.test(s)) return s;
-      return "https://" + s;
-    }
-
-    function isValidUrl(u){
-      const s=String(u||"").trim();
-      if(!s) return false;
-      if(/^mailto:/i.test(s)) return true;
-      try{ new URL(normalizeUrl(s)); return true; }catch(e){ return false; }
-    }
-
-    function sanitizeUsername(u){
-      return String(u||"").trim().replace(/^@/,"").replace(/[^\w.-]/g,"").slice(0,40) || "usuario";
-    }
-
-    function setState(msg){ document.getElementById("state").textContent = msg || ""; }
-
-    function getParam(name){
-      try{ return new URL(location.href).searchParams.get(name); }
-      catch(e){ return null; }
-    }
-
-    function getUserFromPath(){
-      try{
-        const path = decodeURIComponent(location.pathname || "/");
-        const m = path.match(/^\/@([^\/?#]+)/);
-        return m ? m[1].replace(/^@/,"") : null;
-      }catch(e){
-        return null;
-      }
-    }
-
-    /***********************
-     * SVGs
-     ***********************/
-    function svgSun(){
-      return `<svg viewBox="0 0 24 24" fill="none">
-        <path d="M12 18a6 6 0 1 0 0-12a6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/>
-        <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>`;
-    }
-    function svgMoon(){
-      return `<svg viewBox="0 0 24 24" fill="none">
-        <path d="M21 13.6A8.2 8.2 0 0 1 10.4 3a6.9 6.9 0 1 0 10.6 10.6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>`;
-    }
-
-    function svgMail(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16v10H4V7Z" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
-
-    // Bootstrap Icons (copy html) — “más iguales”
-    function svgTwitterX(){ return `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/></svg>`; }
-    function svgFacebook(){ return `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/></svg>`; }
-    function svgWhatsApp(){ return `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/></svg>`; }
-    function svgTelegram(){ return `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.287 5.906q-1.168.486-4.666 2.01-.567.225-.595.442c-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294q.39.01.868-.32 3.269-2.206 3.374-2.23c.05-.012.12-.026.166.016s.042.12.037.141c-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8 8 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629q.14.092.27.187c.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.4 1.4 0 0 0-.013-.315.34.34 0 0 0-.114-.217.53.53 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09"/></svg>`; }
-    function svgTwitch(){ return `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.857 0 1 2.857v10.286h3.429V16l2.857-2.857H9.57L14.714 8V0zm9.714 7.429-2.285 2.285H9l-2 2v-2H4.429V1.143h9.142z"/><path d="M11.857 3.143h-1.143V6.57h1.143zm-3.143 0H7.571V6.57h1.143z"/></svg>`; }
-    function svgGithub(){ return `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg>`; }
-    function svgLinkedIn(){ return `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg>`; }
-
-    // Estos ya los abriste (quedan bien):
-    function svgPinterest(){ return `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 0 0-2.73 15.52c-.1-.64-.2-1.62 0-2.32l1.38-5.5s-.35-.73-.35-1.8c0-1.69.98-2.95 2.2-2.95 1.04 0 1.54.78 1.54 1.72 0 1.05-.67 2.62-1.02 4.08-.29 1.23.62 2.24 1.83 2.24 2.2 0 3.89-2.32 3.89-5.66 0-2.96-2.12-5.03-5.15-5.03-3.51 0-5.57 2.63-5.57 5.35 0 1.06.41 2.2.92 2.82.1.13.12.24.09.37l-.34 1.36c-.06.22-.2.27-.46.16C2.63 12.2 2 10.58 2 8.96 2 6.2 4 2.9 8.64 2.9c3.74 0 6.65 2.67 6.65 6.23 0 3.72-2.35 6.72-5.6 6.72-1.09 0-2.12-.57-2.47-1.24l-.67 2.55c-.24.93-.9 2.1-1.35 2.8A8 8 0 0 0 16 8a8 8 0 0 0-8-8"/></svg>`; }
-    function svgSnapchat(){ return `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0c2.2 0 4 1.8 4 4v3c0 .6.3 1.1.9 1.3l.8.3c.5.2.5 1 0 1.2l-1.1.5c-.6.3-1.1.9-1.1 1.6-.1.8-.7 1.4-1.4 1.4H6.1c-.8 0-1.4-.6-1.4-1.4-.1-.7-.5-1.3-1.1-1.6l-1.1-.5c-.5-.2-.5-1 0-1.2l.8-.3C3.7 8.1 4 7.6 4 7V4c0-2.2 1.8-4 4-4Z"/></svg>`; }
-
-    // Estos 4 vienen de tus páginas abiertas (ya mejoran mucho)
-    function svgTikTok(){ return `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M9 1h2c.1 1 1 2.1 2.4 2.4V5c-1.1-.1-2-.6-2.4-1.2V10a4 4 0 1 1-4-4v2a2 2 0 1 0 2 2z"/></svg>`; }
-    function svgReddit(){ return `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.167 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3.666 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/><path d="M12 0a2 2 0 0 0-1.985 2.245c-.97-.27-2.1-.45-3.348-.5l.58-2.5 2.138.5a1.5 1.5 0 1 0 .2-1l-2.5-.6a.5.5 0 0 0-.6.37L5.87 1.73c-1.23.06-2.35.23-3.307.5A2 2 0 1 0 2 6.5c0 .06.004.12.01.18C1.39 7.27 1 8.08 1 9c0 2.21 3.134 4 7 4s7-1.79 7-4c0-.92-.39-1.73-1.01-2.32.006-.06.01-.12.01-.18A2 2 0 0 0 12 2zm-4 11c-1.67 0-3.1-.68-3.5-1.6a.5.5 0 0 1 .92-.4c.24.55 1.25 1 2.58 1s2.34-.45 2.58-1a.5.5 0 0 1 .92.4C11.1 10.32 9.67 11 8 11"/></svg>`; }
-    function svgDiscord(){ return `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.545 2.907a13.2 13.2 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.2 12.2 0 0 0-3.658 0 8 8 0 0 0-.412-.833.05.05 0 0 0-.052-.025 13.1 13.1 0 0 0-3.257 1.011.04.04 0 0 0-.021.018C.356 6.32-.213 9.58.066 12.804c.001.012.008.023.02.03a13.3 13.3 0 0 0 4.02 2.028.05.05 0 0 0 .056-.019c.309-.424.582-.873.812-1.34a.05.05 0 0 0-.027-.067 8.7 8.7 0 0 1-1.248-.595.05.05 0 0 1-.005-.084c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.197 5.454 1.197 8.042 0a.05.05 0 0 1 .053.007c.08.066.164.132.248.195a.05.05 0 0 1-.004.084 8 8 0 0 1-1.249.594.05.05 0 0 0-.026.068c.23.466.503.915.811 1.339a.05.05 0 0 0 .056.019 13.2 13.2 0 0 0 4.021-2.028.05.05 0 0 0 .02-.03c.334-3.727-.57-6.957-2.46-9.862a.03.03 0 0 0-.02-.018M5.5 10.5c-.828 0-1.5-.756-1.5-1.689 0-.932.664-1.688 1.5-1.688.844 0 1.516.764 1.5 1.688 0 .933-.664 1.689-1.5 1.689m5 0c-.828 0-1.5-.756-1.5-1.689 0-.932.664-1.688 1.5-1.688.844 0 1.516.764 1.5 1.688 0 .933-.656 1.689-1.5 1.689"/></svg>`; }
-    function svgThreads(){ return `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M6.12 1.39C3.2 2.45 1.2 5.17 1.2 8.17c0 3.94 3.22 7.12 7.17 7.12 3.95 0 7.17-3.18 7.17-7.12 0-3.6-2.69-6.6-6.2-7.08-.32-.04-.57.25-.5.56.17.79.2 1.65.02 2.47-.06.27.13.53.41.56 2.04.23 3.62 1.94 3.62 4.08 0 2.3-1.84 4.17-4.12 4.17-2.28 0-4.12-1.86-4.12-4.17 0-1.83 1.16-3.4 2.8-3.99.23-.08.36-.32.31-.56-.18-.86-.18-1.74-.02-2.56.06-.31-.2-.6-.51-.49z"/></svg>`; }
-
-    function svgInstagram(){
-      // Si quieres 100% exacto de IG (multicolor) no se puede con 1 color.
-      // Esto es el ícono limpio tipo “original” en 1 color.
-      return `<svg viewBox="0 0 16 16" fill="currentColor">
-        <path d="M8 5.2A2.8 2.8 0 1 0 8 10.8 2.8 2.8 0 0 0 8 5.2Zm0 4.6A1.8 1.8 0 1 1 8 6.2a1.8 1.8 0 0 1 0 3.6Z"/>
-        <path d="M11 1H5a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4Zm3 10a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3Z"/>
-        <path d="M12.2 4.1a.8.8 0 1 1-1.6 0 .8.8 0 0 1 1.6 0Z"/>
-      </svg>`;
-    }
-
-    function svgYouTube(){ return `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z"/></svg>`; }
-
-    function svgGeneric(){ return `<svg viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`; }
-  </script>
+/******** ICONS (flat) ********/
+function svgX(){ return `<svg viewBox="0 0 24 24"><path d="M18.3 2.9h2.9l-6.3 7.2L22 21.1h-6.4l-5-6.7-5.9 6.7H1.8l6.8-7.8L1.8 2.9h6.6l4.5 6 5.4-6z"/></svg>`; }
+function svgFacebook(){ return `<svg viewBox="0 0 24 24"><path d="M13.8 21v-7h2.3l.5-3h-2.8V9.1c0-.8.4-1.4 1.4-1.4H16.7V5.1c-.3 0-1.3-.1-2.5-.1-2.4 0-4 1.5-4 4.1V11H7.8v3h2.4v7h3.6z"/></svg>`; }
+function svgInstagram(){ return `<svg viewBox="0 0 24 24"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9A3.5 3.5 0 0 0 20 16.5v-9A3.5 3.5 0 0 0 16.5 4h-9Z"/><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z"/><path d="M17.6 6.4a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0Z"/></svg>`; }
+function svgWhatsApp(){ return `<svg viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5Zm0 2a6.5 6.5 0 0 1 5.6 9.8l-.2.3.5 2.8-2.7-.7-.3.2A6.5 6.5 0 1 1 12 5.5Z"/><path d="M10.1 9.2c.2-.3.4-.3.6-.2l.8.4c.2.1.3.3.2.6-.1.3-.2.6-.1.9.2.6 1.2 1.7 2.2 2.1.3.1.6.1.8-.1l.6-.6c.2-.2.4-.2.6-.1l.9.4c.2.1.3.3.2.6-.1.6-.6 1.3-1.6 1.4-1.7.2-4-1.1-5.5-2.8-1.3-1.4-2.4-3.8-2.2-5.4.1-1 .9-1.4 1.1-1.6Z"/></svg>`; }
+function svgThreads(){ return `<svg viewBox="0 0 24 24"><path d="M12 3.6c4.7 0 8.4 3.3 8.4 8 0 5-3.2 8.8-8.5 8.8-4 0-6.4-2.1-7.2-5.2-.7-2.8.9-6.3 6-6.3 2.7 0 4.8 1.2 5.6 3.3.9 2.4-.3 5-3.4 5.8-1.8.5-3.7.2-4.8-1.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`; }
+function svgTikTok(){ return `<svg viewBox="0 0 24 24"><path d="M14 3v9.3a4.3 4.3 0 1 1-2.8-4V3H14Z"/><path d="M14 3c.8 2.2 2.5 3.7 5 4.1v2.8c-2-.2-3.7-1-5-2.3V3z" opacity=".55"/></svg>`; }
+function svgSnapchat(){ return `<svg viewBox="0 0 24 24"><path d="M12 3c2.6 0 4.7 2.1 4.7 4.7v3.3c0 .7.4 1.3 1.1 1.6l.9.4c.6.3.6 1.1 0 1.4l-1.3.6c-.7.3-1.2 1-1.3 1.8-.1.9-.8 1.6-1.7 1.6H9.6c-.9 0-1.6-.7-1.7-1.6-.1-.8-.6-1.5-1.3-1.8l-1.3-.6c-.6-.3-.6-1.1 0-1.4l.9-.4c.7-.3 1.1-.9 1.1-1.6V7.7C7.3 5.1 9.4 3 12 3Z"/></svg>`; }
+function svgYouTube(){ return `<svg viewBox="0 0 24 24"><path d="M21 12c0 3.8-.4 5.3-1.3 6.2-.9.9-2.5 1.1-5 1.2H9.3c-2.5-.1-4.1-.3-5-1.2C3.4 17.3 3 15.8 3 12s.4-5.3 1.3-6.2c.9-.9 2.5-1.1 5-1.2h5.4c2.5.1 4.1.3 5 1.2C20.6 6.7 21 8.2 21 12z" opacity=".2"/><path d="M10.5 9.7v4.6l4.3-2.3-4.3-2.3z"/></svg>`; }
+function svgTwitch(){ return `<svg viewBox="0 0 24 24"><path d="M6 4h15v10l-4 4h-4l-2 2H9v-2H6V4z"/><path d="M15 8v4M18 8v4" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" opacity=".35"/></svg>`; }
+function svgTelegram(){ return `<svg viewBox="0 0 24 24"><path d="M20.7 5.6 18 19.2c-.2 1-1 .9-1.6.6l-4.6-3.4-2.2 2.1c-.2.2-.4.4-.8.4l.3-5.1 9.3-8.4c.4-.3-.1-.5-.6-.2l-11.5 7.2-5-1.6c-1.1-.3-1.1-1.1.2-1.6l17.7-6.8c.8-.3 1.5.2 1.3 1.2z"/></svg>`; }
+function svgDiscord(){ return `<svg viewBox="0 0 24 24"><path d="M19.3 6.4A15.4 15.4 0 0 0 16 5.1l-.4.8a12.8 12.8 0 0 0-3.2-.4c-1.1 0-2.2.1-3.2.4l-.4-.8a15.4 15.4 0 0 0-3.3 1.3C3.9 9 3.5 11.6 3.7 14.2c1.4 1 2.8 1.7 4.3 2l.5-1a9.7 9.7 0 0 1-1.4-.7l.3-.2c2.8 1.2 5.9 1.2 8.7 0l.3.2c-.5.3-.9.5-1.4.7l.5 1c1.5-.3 2.9-1 4.3-2 .2-2.6-.2-5.2-1.9-7.8z"/><circle cx="9.4" cy="12.5" r="1.1" fill="#000" opacity=".30"/><circle cx="14.6" cy="12.5" r="1.1" fill="#000" opacity=".30"/></svg>`; }
+function svgGithub(){ return `<svg viewBox="0 0 24 24"><path d="M12 2.7c-5.2 0-9.4 4.2-9.4 9.4 0 4.1 2.7 7.6 6.4 8.8.5.1.7-.2.7-.5v-1.8c-2.6.6-3.2-1.1-3.2-1.1-.4-1.1-1-1.4-1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.4 1.1 3 .8.1-.6.3-1.1.6-1.3-2.1-.2-4.3-1.1-4.3-4.7 0-1 .3-1.9 1-2.6-.1-.2-.4-1.2.1-2.5 0 0 .8-.2 2.6 1a9.5 9.5 0 0 1 4.9 0c1.8-1.2 2.6-1 2.6-1 .5 1.3.2 2.3.1 2.5.6.7 1 1.6 1 2.6 0 3.6-2.2 4.5-4.3 4.7.3.3.6.9.6 1.8v2.6c0 .3.2.6.7.5a9.4 9.4 0 0 0 6.4-8.8c0-5.2-4.2-9.4-9.4-9.4z"/></svg>`; }
+function svgReddit(){ return `<svg viewBox="0 0 24 24"><path d="M12 7.2c-3.6 0-6.6 2.1-6.6 4.8 0 2.7 3 4.8 6.6 4.8s6.6-2.1 6.6-4.8c0-2.7-3-4.8-6.6-4.8z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9.7" cy="12" r="1.1"/><circle cx="14.3" cy="12" r="1.1"/><path d="M10 14.1c1.1.9 2.9.9 4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M14.8 6.4 15.8 4l2.2.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="18.3" cy="4.9" r="1.1"/></svg>`; }
+function svgPinterest(){ return `<svg viewBox="0 0 24 24"><path d="M12 3.2a8.8 8.8 0 0 0-3 17.1c-.1-.7-.2-1.8 0-2.6l1.5-6.1s-.4-.8-.4-2c0-1.9 1.1-3.3 2.4-3.3 1.1 0 1.7.8 1.7 1.8 0 1.1-.7 2.7-1 4.2-.3 1.3.6 2.3 1.9 2.3 2.2 0 3.9-2.3 3.9-5.6 0-2.9-2.1-5-5.1-5z"/></svg>`; }
+function svgMail(){ return `<svg viewBox="0 0 24 24"><path d="M4 7.5h16v9H4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4.2 8.2 12 13.8 19.8 8.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`; }
+</script>
 </body>
 </html>
