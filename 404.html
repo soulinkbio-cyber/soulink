@@ -4,17 +4,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0b0f14" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>soulink.bio</title>
 </head>
 <body>
   <script>
     (async function(){
       try{
-        const res = await fetch("/index.html", { cache:"no-store" });
+        const res = await fetch("/index.html?v=" + Date.now(), { cache:"no-store" });
         const html = await res.text();
-        document.open();
-        document.write(html);
-        document.close();
+        document.open(); document.write(html); document.close();
 
         const path = decodeURIComponent(location.pathname || "/");
         const m = path.match(/^\/@([^\/?#]+)/);
