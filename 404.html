@@ -1,31 +1,23 @@
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<base href="/">
-<title>soulink.bio</title>
-</head>
-<body>
+<style>
+  /* Botones redondos (pastilla) */
+  .links a,
+  .btn,
+  .link-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    border-radius: 9999px;          /* <- hace el botón redondo */
+    text-decoration: none;
+    font-weight: 600;
+  }
 
-<script>
-(async ()=>{
-  const res = await fetch("/index.html",{cache:"no-store"});
-  const html = await res.text();
-  document.open();
-  document.write(html);
-  document.close();
+  /* Asegura que nada lo sobreescriba */
+  .links a, .btn, .link-btn { border-radius: 9999px !important; }
 
-  const match = location.pathname.match(/^\/@([^\/]+)/);
-  const user = match ? match[1] : "soulink";
-
-  const wait = ()=>{
-    if(window.loadProfile) window.loadProfile(user);
-    else setTimeout(wait,30);
-  };
-  wait();
-})();
-</script>
-
-</body>
-</html>
+  /* Avatar circular por si acaso */
+  .avatar, img.avatar { border-radius: 50%; }
+  
+  /* Iconos dentro del botón */
+  .btn .icon { width: 22px; height: 22px; display:inline-block; }
+</style>
