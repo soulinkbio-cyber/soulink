@@ -11,9 +11,7 @@
         const path = decodeURIComponent(location.pathname || "/");
         const m = path.match(/^\/@([^\/?#]+)/);
         const u = m ? m[1].replace(/^@/, "") : "";
-        // ✅ Redirige siempre al index con query param
-        if (u) location.replace("/?u=" + encodeURIComponent(u));
-        else location.replace("/");
+        location.replace(u ? ("/?u=" + encodeURIComponent(u)) : "/");
       } catch (e) {
         location.replace("/");
       }
