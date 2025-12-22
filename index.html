@@ -4,46 +4,42 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0b0f14" />
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
   <title>soulink.bio</title>
 
   <style>
     :root{
       --radius:22px;
-      --maxw:520px;
+      --maxw:540px;
 
+      /* Dark */
       --bg0:#05070a; --bg1:#0b0f14;
       --card:#0e141b; --card2:#0b1117;
       --text:#e9eef5; --muted:#9aa7b5;
       --stroke:rgba(255,255,255,.10); --stroke2:rgba(255,255,255,.06);
       --shadow:0 18px 60px rgba(0,0,0,.55);
-      --grainA:rgba(255,255,255,.06);
-      --grainB:rgba(255,255,255,.016);
 
       --btn:56px;
-      --circle:44px;
+      --icon:44px;
     }
     html[data-theme="light"]{
+      /* Light */
       --bg0:#f7f9fb; --bg1:#eef3f7;
       --card:#ffffff; --card2:#f7f9fb;
       --text:#0b0f14; --muted:#566474;
       --stroke:rgba(10,15,20,.14); --stroke2:rgba(10,15,20,.08);
       --shadow:0 18px 50px rgba(0,0,0,.12);
-      --grainA:rgba(0,0,0,.05);
-      --grainB:rgba(0,0,0,.018);
     }
 
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color:var(--text);
       min-height:100svh;
       background:
         radial-gradient(1200px 650px at 18% 12%, rgba(120,170,255,.14), transparent 55%),
         radial-gradient(900px 520px at 82% 18%, rgba(220,240,255,.18), transparent 50%),
+        radial-gradient(900px 520px at 50% 90%, rgba(255,255,255,.08), transparent 52%),
         linear-gradient(160deg, var(--bg0), var(--bg1));
       display:flex;
       align-items:center;
@@ -51,17 +47,9 @@
       padding:26px 16px;
       overflow-x:hidden;
     }
-    body::before{
-      content:"";
-      position:fixed; inset:0; pointer-events:none;
-      background:
-        linear-gradient(115deg, var(--grainA), transparent 35%, rgba(255,255,255,.04) 60%, transparent),
-        repeating-linear-gradient(90deg, var(--grainB) 0 1px, transparent 1px 4px);
-      mix-blend-mode:overlay;
-      opacity:.55;
-    }
 
     .wrap{width:100%; max-width:var(--maxw);}
+
     .card{
       border-radius:var(--radius);
       border:1px solid var(--stroke2);
@@ -75,11 +63,7 @@
       position:relative;
     }
 
-    .topTools{
-      position:absolute;
-      top:12px; right:12px;
-      z-index:5;
-    }
+    .topTools{position:absolute; top:12px; right:12px; z-index:5;}
     .toggleBtn{
       width:42px; height:42px;
       border-radius:16px;
@@ -95,14 +79,26 @@
     .toggleBtn:hover{ transform:translateY(-1px); border-color:rgba(255,255,255,.16); }
     .toggleBtn svg{width:18px;height:18px;display:block}
 
-    .profile{ padding:18px 16px 10px; text-align:center; }
-    .username{ margin:0; font-size:22px; line-height:1.05; font-weight:950; letter-spacing:.2px; word-break:break-word; }
-    .handle{ margin:6px 0 0; font-size:12.5px; color:var(--muted); }
+    .profile{padding:18px 16px 10px; text-align:center;}
+    .username{
+      margin:0;
+      font-size:22px;
+      line-height:1.05;
+      font-weight:950;
+      letter-spacing:.2px;
+      word-break:break-word;
+    }
+    .handle{margin:6px 0 0; font-size:12.5px; color:var(--muted);}
 
     .iconsWrap{padding:10px 16px 18px;}
-    .icons{ display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; justify-items:center; }
-    @media(min-width:420px){
-      .icons{ grid-template-columns:repeat(5, 1fr); }
+    .icons{
+      display:grid;
+      grid-template-columns:repeat(5, 1fr);
+      gap:12px;
+      justify-items:center;
+    }
+    @media(max-width:420px){
+      .icons{grid-template-columns:repeat(4, 1fr);}
     }
 
     .iconBtn{
@@ -115,26 +111,20 @@
       display:grid;
       place-items:center;
       text-decoration:none;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      transition:transform .12s ease, border-color .12s ease, background .12s ease;
     }
     .iconBtn:hover{
       transform:translateY(-1px);
-      border-color: rgba(255,255,255,.16);
+      border-color:rgba(255,255,255,.16);
       background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
     }
 
-    /* ✅ aquí es donde se ve EXACTO como tu imagen */
-    .iconCircle{
-      width:var(--circle);
-      height:var(--circle);
+    .iconImg{
+      width:var(--icon);
+      height:var(--icon);
       border-radius:999px;
-      overflow:hidden;
-      background-image: var(--sprite);
-      background-repeat:no-repeat;
-      background-size: 500% 300%; /* 5 columnas x 3 filas */
-      background-position: var(--posX) var(--posY);
-      /* por si iOS decide no pintar, verás el borde */
-      border: 1px solid rgba(255,255,255,.08);
+      object-fit:cover;
+      display:block;
     }
 
     .state{padding:0 16px 14px; color:var(--muted); font-size:13px; text-align:center;}
@@ -164,13 +154,23 @@
   </div>
 
 <script>
+/***********************
+ * CONFIG
+ ***********************/
 const DEFAULT_USERNAME = "soulink";
 const SHEETS_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
 
-// ✅ tu sprite en el repo (sube el archivo a esta ruta)
-const SPRITE_URL = "/assets/social-sprite.jpg?v=" + Date.now();
+/* Orden exacto como tu imagen */
+const ORDER = [
+  "x","facebook","instagram","whatsapp","threads",
+  "tiktok","snapchat","youtube","twitch","telegram",
+  "discord","github","reddit","pinterest","email"
+];
 
+/***********************
+ * THEME
+ ***********************/
 const THEME_KEY = "soulink_theme";
 function svgSun(){ return `<svg viewBox="0 0 24 24" fill="none">
   <path d="M12 18a6 6 0 1 0 0-12a6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/>
@@ -192,33 +192,9 @@ document.getElementById("themeBtn").addEventListener("click", ()=>{
   setTheme(cur === "dark" ? "light" : "dark");
 });
 
-// posiciones: 3 filas x 5 columnas EXACTO como tu imagen
-const POS = {
-  x:{x:"0%",y:"0%"},
-  facebook:{x:"25%",y:"0%"},
-  instagram:{x:"50%",y:"0%"},
-  whatsapp:{x:"75%",y:"0%"},
-  threads:{x:"100%",y:"0%"},
-
-  tiktok:{x:"0%",y:"50%"},
-  snapchat:{x:"25%",y:"50%"},
-  youtube:{x:"50%",y:"50%"},
-  twitch:{x:"75%",y:"50%"},
-  telegram:{x:"100%",y:"50%"},
-
-  discord:{x:"0%",y:"100%"},
-  github:{x:"25%",y:"100%"},
-  reddit:{x:"50%",y:"100%"},
-  pinterest:{x:"75%",y:"100%"},
-  email:{x:"100%",y:"100%"},
-};
-
-const ORDER = [
-  "email","x","facebook","instagram","whatsapp","threads",
-  "tiktok","snapchat","youtube","twitch","telegram",
-  "discord","github","reddit","pinterest"
-];
-
+/***********************
+ * INIT
+ ***********************/
 (async function init(){
   setTheme(getTheme());
   const u = sanitizeUsername(getParam("u") || getUserFromPath() || DEFAULT_USERNAME);
@@ -226,6 +202,9 @@ const ORDER = [
 })();
 window.loadProfile = loadProfile;
 
+/***********************
+ * MAIN
+ ***********************/
 async function loadProfile(username){
   const safeU = sanitizeUsername(username);
   renderIcons([]);
@@ -236,11 +215,12 @@ async function loadProfile(username){
   document.getElementById("handleText").textContent = `soulink.bio/@${safeU}`;
 
   try{
-    const row = await fetchUserRowFromCSV(SHEETS_CSV_URL + "&v=" + Date.now(), safeU);
+    const row = await fetchUserRowFromCSV(SHEETS_CSV_URL, safeU);
     if(!row){
       setState("Este usuario todavía no existe en la base de datos.");
       return;
     }
+
     const links = extractLinksFromRow(row);
     const sorted = sortLinks(links);
     renderIcons(sorted);
@@ -264,19 +244,26 @@ function renderIcons(links){
     a.rel = "noopener noreferrer";
     a.title = l.type.toUpperCase();
 
-    const c = document.createElement("div");
-    c.className = "iconCircle";
-    c.style.setProperty("--sprite", `url('${SPRITE_URL}')`);
+    const img = document.createElement("img");
+    img.className = "iconImg";
+    img.alt = l.type;
 
-    const p = POS[l.type] || POS.x;
-    c.style.setProperty("--posX", p.x);
-    c.style.setProperty("--posY", p.y);
+    /* ✅ Iconos individuales: /icons/{type}.svg */
+    img.src = `/icons/${l.type}.svg?v=1`;
 
-    a.appendChild(c);
+    /* fallback si falta el archivo */
+    img.onerror = () => {
+      img.src = "/icons/generic.svg?v=1";
+    };
+
+    a.appendChild(img);
     box.appendChild(a);
   });
 }
 
+/***********************
+ * SHEETS
+ ***********************/
 async function fetchUserRowFromCSV(csvUrl, username){
   const res = await fetch(csvUrl, { cache:"no-store" });
   if(!res.ok) throw new Error("CSV fetch failed: " + res.status);
@@ -303,6 +290,7 @@ function extractLinksFromRow(row){
       if(mail.includes("@")) links.push({ type:"email", url:"mailto:" + mail });
       continue;
     }
+
     if(ORDER.includes(type)){
       links.push({ type, url: normalizeUrl(val) });
     }
@@ -321,11 +309,30 @@ function sortLinks(links){
 function normalizeType(header){
   const h = String(header||"").trim().toLowerCase();
   const clean = h.replace(/\s+/g,"").replace(/[_-]/g,"");
-  if(clean === "threats") return "threads";
-  if(clean === "twitter") return "x";
-  return clean;
+
+  if(clean === "email") return "email";
+  if(clean === "x" || clean === "twitter") return "x";
+  if(clean === "facebook" || clean === "fb") return "facebook";
+  if(clean === "instagram" || clean === "ig") return "instagram";
+  if(clean === "whatsapp" || clean === "wa") return "whatsapp";
+  if(clean === "threads" || clean === "threats") return "threads"; /* tu sheet dice THREATS */
+  if(clean === "tiktok") return "tiktok";
+  if(clean === "snapchat" || clean === "snap") return "snapchat";
+  if(clean === "youtube" || clean === "yt") return "youtube";
+  if(clean === "twitch") return "twitch";
+  if(clean === "telegram" || clean === "tg") return "telegram";
+  if(clean === "discord") return "discord";
+  if(clean === "github") return "github";
+  if(clean === "linkedln" || clean === "linkedin") return "linkedin";
+  if(clean === "reddit") return "reddit";
+  if(clean === "pinterest") return "pinterest";
+
+  return "generic";
 }
 
+/***********************
+ * UTILS
+ ***********************/
 function parseCSV(text){
   const lines=text.replace(/\r/g,"").split("\n").filter(Boolean);
   const rows=[]; let headers=[];
@@ -348,11 +355,11 @@ function splitCSVLine(line){
   out.push(cur);
   return out;
 }
-
 function normalizeUrl(u){
   const s=String(u||"").trim();
   if(!s) return "";
   if(/^https?:\/\//i.test(s)) return s;
+  if(/^mailto:/i.test(s)) return s;
   return "https://" + s;
 }
 function sanitizeUsername(u){
@@ -370,3 +377,5 @@ function getUserFromPath(){
 </script>
 </body>
 </html>
+
+
