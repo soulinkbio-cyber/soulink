@@ -1,23 +1,17 @@
-<style>
-  /* Botones redondos (pastilla) */
-  .links a,
-  .btn,
-  .link-btn {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 20px;
-    border-radius: 9999px;          /* <- hace el botón redondo */
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  /* Asegura que nada lo sobreescriba */
-  .links a, .btn, .link-btn { border-radius: 9999px !important; }
-
-  /* Avatar circular por si acaso */
-  .avatar, img.avatar { border-radius: 50%; }
-  
-  /* Iconos dentro del botón */
-  .btn .icon { width: 22px; height: 22px; display:inline-block; }
-</style>
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<title>Redirigiendo…</title>
+<script>
+  (function () {
+    var m = location.pathname.match(/\/@([^\/?#]+)/);
+    if (m) {
+      var u = decodeURIComponent(m[1]);
+      location.replace(location.origin + "/?u=" + u);
+    } else {
+      location.replace(location.origin + "/");
+    }
+  })();
+</script>
+<body>Redirigiendo…</body>
+</html>
