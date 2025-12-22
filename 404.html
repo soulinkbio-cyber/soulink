@@ -1,40 +1,31 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#0b0f14" />
-  <title>soulink.bio</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="/">
+<title>soulink.bio</title>
 </head>
 <body>
-  <script>
-    (async function(){
-      try{
-        // Carga el index real
-        const res = await fetch("/index.html", { cache:"no-store" });
-        const html = await res.text();
 
-        // Renderiza index dentro del 404
-        document.open();
-        document.write(html);
-        document.close();
+<script>
+(async ()=>{
+  const res = await fetch("/index.html",{cache:"no-store"});
+  const html = await res.text();
+  document.open();
+  document.write(html);
+  document.close();
 
-        // Username desde /@usuario
-        const path = decodeURIComponent(location.pathname || "/");
-        const m = path.match(/^\/@([^\/?#]+)/);
-        const username = m ? m[1].replace(/^@/,"") : "soulink";
+  const match = location.pathname.match(/^\/@([^\/]+)/);
+  const user = match ? match[1] : "soulink";
 
-        // Espera a que index defina loadProfile()
-        const run = () => {
-          if (typeof window.loadProfile === "function") window.loadProfile(username);
-          else setTimeout(run, 30);
-        };
-        run();
-      }catch(e){
-        document.body.innerHTML =
-          "<div style='color:#e9eef5;font-family:system-ui;padding:22px;background:#0b0f14'>Error cargando perfil.</div>";
-      }
-    })();
-  </script>
+  const wait = ()=>{
+    if(window.loadProfile) window.loadProfile(user);
+    else setTimeout(wait,30);
+  };
+  wait();
+})();
+</script>
+
 </body>
 </html>
