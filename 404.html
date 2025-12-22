@@ -1,36 +1,24 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex" />
   <title>soulink.bio</title>
-</head>
-<body>
-<script>
-(async function () {
-  try {
-    const res = await fetch("/index.html", { cache: "no-store" });
-    const html = await res.text();
-    document.open();
-    document.write(html);
-    document.close();
-
-    const path = decodeURIComponent(location.pathname || "/");
-    const match = path.match(/^\/@([^\/?#]+)/);
-    const username = match ? match[1] : null;
-
-    function run() {
-      if (typeof window.loadProfile === "function") {
-        window.loadProfile(username);
-      } else {
-        setTimeout(run, 30);
+  <script>
+    (function () {
+      try {
+        const path = decodeURIComponent(location.pathname || "/");
+        const m = path.match(/^\/@([^\/?#]+)/);
+        const u = m ? m[1].replace(/^@/, "") : "";
+        // ✅ Redirige siempre al index con query param
+        if (u) location.replace("/?u=" + encodeURIComponent(u));
+        else location.replace("/");
+      } catch (e) {
+        location.replace("/");
       }
-    }
-    run();
-  } catch (e) {
-    document.body.innerHTML = "<h2 style='color:white'>Error cargando perfil</h2>";
-  }
-})();
-</script>
-</body>
+    })();
+  </script>
+</head>
+<body></body>
 </html>
