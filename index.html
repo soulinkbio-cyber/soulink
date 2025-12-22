@@ -43,7 +43,6 @@
       align-items:center;
       justify-content:center;
       padding:26px 16px;
-      overflow-x:hidden;
     }
 
     .wrap{width:100%; max-width:var(--maxw);}
@@ -117,6 +116,7 @@
       place-items:center;
       text-decoration:none;
       transition:transform .12s ease, border-color .12s ease, background .12s ease;
+      position:relative;
     }
     .iconBtn:hover{
       transform:translateY(-1px);
@@ -131,6 +131,20 @@
       object-fit:cover;
       display:block;
     }
+
+    /* Debug label si falla (solo aparece en fallback) */
+    .debugTag{
+      position:absolute;
+      bottom:6px;
+      left:6px;
+      right:6px;
+      font-size:9px;
+      color:rgba(233,238,245,.75);
+      text-align:center;
+      pointer-events:none;
+      display:none;
+    }
+    .iconBtn.fallback .debugTag{ display:block; }
 
     .state{margin-top:10px; text-align:center; font-size:13px; color:var(--muted);}
     .footer{margin-top:18px; text-align:center; font-size:12px; color:rgba(154,167,181,.85);}
@@ -161,13 +175,17 @@
   const SHEETS_CSV_URL =
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
 
+  // ✅ Base ABSOLUTA: NO depende del path /@user
+  const ICON_BASE = "https://soulink.bio/icons/";
+
+  // Orden exacto como tu imagen:
   const ORDER = [
     "x","facebook","instagram","whatsapp","threads",
     "tiktok","snapchat","youtube","twitch","telegram",
-    "discord","github","linkedin","reddit","pinterest","email"
+    "discord","github","reddit","pinterest","email"
   ];
 
-  // ✅ Theme
+  // Theme
   const THEME_KEY = "soulink_theme";
   const getTheme = () => localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute("data-theme") || "dark";
   const setTheme = (t) => {
@@ -179,7 +197,6 @@
     setTheme(getTheme() === "dark" ? "light" : "dark");
   });
 
-  // init
   (async function init(){
     setTheme(getTheme());
     const u = sanitizeUsername(getParam("u") || DEFAULT_USERNAME);
@@ -230,20 +247,41 @@
       img.className = "iconImg";
       img.alt = l.type;
 
-      // ✅ CLAVE: SIEMPRE rutas ABSOLUTAS (no ./icons)
-      // Cambia .png por .svg si tus archivos son SVG
-      const base = `/icons/${l.type}`;
-      img.src = `${base}.png?v=7`;
+      // ✅ intenta PNG primero (lo que tú ya hiciste)
+      // cache-bust para Safari
+      img.src = `${ICON_BASE}${l.type}.png?v=99`;
 
-      // fallback: primero intenta svg, luego generic
+      // fallback inline (si NO existe el PNG)
       img.onerror = () => {
-        img.onerror = () => img.src = `/icons/generic.png?v=7`;
-        img.src = `${base}.svg?v=7`;
+        a.classList.add("fallback");
+        img.src = inlineFallbackIcon(l.type);
       };
 
+      const tag = document.createElement("div");
+      tag.className = "debugTag";
+      tag.textContent = `${l.type}.png`;
+
       a.appendChild(img);
+      a.appendChild(tag);
       box.appendChild(a);
     });
+  }
+
+  function inlineFallbackIcon(type){
+    const letter = (type || "?").slice(0,1).toUpperCase();
+    const svg =
+      `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96">
+        <defs>
+          <radialGradient id="g" cx="30%" cy="25%" r="80%">
+            <stop offset="0" stop-color="rgba(255,255,255,.20)"/>
+            <stop offset="1" stop-color="rgba(255,255,255,.05)"/>
+          </radialGradient>
+        </defs>
+        <circle cx="48" cy="48" r="46" fill="#1b2430"/>
+        <circle cx="48" cy="48" r="46" fill="url(#g)"/>
+        <text x="48" y="60" text-anchor="middle" font-size="38" font-family="system-ui" fill="rgba(233,238,245,.9)" font-weight="800">${letter}</text>
+      </svg>`;
+    return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
   }
 
   async function fetchUserRowFromCSV(csvUrl, username){
