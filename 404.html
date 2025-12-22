@@ -1,25 +1,36 @@
-<!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<!doctype html>
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>404 • TuMarca</title>
-  <style>
-    :root{--bg:#05070a;--text:#e9eef5;--muted:#9aa7b5;--accent:#78aaff;}
-    html[data-theme="light"]{--bg:#eef3f7;--text:#0b0f14;--muted:#566474;}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,Arial,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:20px;box-sizing:border-box;}
-    .container{max-width:500px;}
-    h1{font-size:6rem;margin:0;font-weight:900;}
-    p{font-size:1.3rem;margin:20px 0;color:var(--muted);}
-    a{color:var(--accent);text-decoration:none;font-size:1.2rem;font-weight:600;}
-    a:hover{text-decoration:underline;}
-  </style>
+  <title>soulink.bio</title>
 </head>
 <body>
-  <div class="container">
-    <h1>404</h1>
-    <p>Ups... La página que buscas no existe.</p>
-    <p><a href="/">← Volver a TuMarca NFC</a></p>
-  </div>
+<script>
+(async function () {
+  try {
+    const res = await fetch("/index.html", { cache: "no-store" });
+    const html = await res.text();
+    document.open();
+    document.write(html);
+    document.close();
+
+    const path = decodeURIComponent(location.pathname || "/");
+    const match = path.match(/^\/@([^\/?#]+)/);
+    const username = match ? match[1] : null;
+
+    function run() {
+      if (typeof window.loadProfile === "function") {
+        window.loadProfile(username);
+      } else {
+        setTimeout(run, 30);
+      }
+    }
+    run();
+  } catch (e) {
+    document.body.innerHTML = "<h2 style='color:white'>Error cargando perfil</h2>";
+  }
+})();
+</script>
 </body>
 </html>
