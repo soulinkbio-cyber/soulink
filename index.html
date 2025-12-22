@@ -1,176 +1,357 @@
 <!doctype html>
 <html lang="es" data-theme="dark">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>soulink.bio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b0f14" />
+  <title>soulink.bio</title>
 
-<style>
-:root{
-  --bg:#0b0f14;
-  --card:#111827;
-  --text:#e5e7eb;
-  --muted:#9ca3af;
-  --radius:26px;
-}
+  <style>
+    :root{
+      --radius:26px;
+      --maxw:560px;
 
-html[data-theme="light"]{
-  --bg:#f3f4f6;
-  --card:#ffffff;
-  --text:#111827;
-  --muted:#6b7280;
-}
+      --bg0:#05070a; --bg1:#0b0f14;
+      --card:#0e141b; --card2:#0b1117;
+      --text:#e9eef5; --muted:#9aa7b5;
+      --stroke:rgba(255,255,255,.10); --stroke2:rgba(255,255,255,.07);
+      --shadow:0 18px 60px rgba(0,0,0,.55);
 
-body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:radial-gradient(circle at top, #1f2937, var(--bg));
-  font-family:system-ui,-apple-system,BlinkMacSystemFont;
-  color:var(--text);
-}
+      --btn:64px;
+      --icon:46px;
+    }
+    html[data-theme="light"]{
+      --bg0:#f7f9fb; --bg1:#eef3f7;
+      --card:#ffffff; --card2:#f7f9fb;
+      --text:#0b0f14; --muted:#566474;
+      --stroke:rgba(10,15,20,.14); --stroke2:rgba(10,15,20,.09);
+      --shadow:0 18px 50px rgba(0,0,0,.12);
+    }
 
-.card{
-  width:100%;
-  max-width:420px;
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:28px 22px 30px;
-  box-shadow:0 30px 80px rgba(0,0,0,.45);
-  text-align:center;
-  position:relative;
-}
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      min-height:100svh;
+      background:
+        radial-gradient(1200px 650px at 18% 12%, rgba(120,170,255,.14), transparent 55%),
+        radial-gradient(900px 520px at 82% 18%, rgba(220,240,255,.18), transparent 50%),
+        radial-gradient(900px 520px at 50% 90%, rgba(255,255,255,.10), transparent 52%),
+        linear-gradient(160deg, var(--bg0), var(--bg1));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:26px 16px;
+      overflow-x:hidden;
+    }
 
-.theme-btn{
-  position:absolute;
-  top:16px;
-  right:16px;
-  background:none;
-  border:none;
-  color:var(--text);
-  font-size:18px;
-  cursor:pointer;
-}
+    .wrap{width:100%; max-width:var(--maxw);}
+    .card{
+      border-radius:var(--radius);
+      border:1px solid var(--stroke2);
+      background:
+        radial-gradient(700px 240px at 40% 0%, rgba(255,255,255,.10), transparent 50%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+        linear-gradient(180deg, var(--card), var(--card2));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      backdrop-filter:blur(12px);
+      position:relative;
+      padding:22px 18px 22px;
+    }
 
-.username{
-  font-size:26px;
-  font-weight:800;
-  margin:10px 0 4px;
-}
+    .topTools{position:absolute; top:14px; right:14px; z-index:5;}
+    .toggleBtn{
+      width:44px; height:44px;
+      border-radius:16px;
+      border:1px solid var(--stroke2);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      color:var(--text);
+      box-shadow:0 10px 18px rgba(0,0,0,.18);
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      transition:transform .12s ease, border-color .12s ease;
+    }
+    .toggleBtn:hover{ transform:translateY(-1px); border-color:rgba(255,255,255,.18); }
 
-.handle{
-  font-size:13px;
-  color:var(--muted);
-  margin-bottom:22px;
-}
+    .profile{
+      text-align:center;
+      padding:4px 10px 10px;
+    }
+    .username{
+      margin:18px 0 0;
+      font-size:28px;
+      line-height:1.05;
+      font-weight:950;
+      letter-spacing:.2px;
+      word-break:break-word;
+    }
+    .handle{
+      margin:8px 0 0;
+      font-size:13px;
+      color:var(--muted);
+    }
 
-.icons{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:16px;
-}
+    .icons{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(5, 1fr);
+      gap:14px;
+      justify-items:center;
+      padding:8px 10px 6px;
+    }
+    @media(max-width:420px){
+      .icons{ grid-template-columns:repeat(4, 1fr); }
+    }
 
-.icon{
-  width:64px;
-  height:64px;
-  border-radius:18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(255,255,255,.04);
-}
+    .iconBtn{
+      width:var(--btn);
+      height:var(--btn);
+      border-radius:22px;
+      border:1px solid var(--stroke2);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow:0 12px 24px rgba(0,0,0,.18);
+      display:grid;
+      place-items:center;
+      text-decoration:none;
+      transition:transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .iconBtn:hover{
+      transform:translateY(-1px);
+      border-color:rgba(255,255,255,.18);
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+    }
 
-.icon img{
-  width:44px;
-  height:44px;
-}
+    .iconImg{
+      width:var(--icon);
+      height:var(--icon);
+      border-radius:999px;
+      object-fit:cover;
+      display:block;
+    }
 
-.footer{
-  margin-top:22px;
-  font-size:12px;
-  color:var(--muted);
-}
-</style>
+    .state{margin-top:10px; text-align:center; font-size:13px; color:var(--muted);}
+    .footer{margin-top:18px; text-align:center; font-size:12px; color:rgba(154,167,181,.85);}
+  </style>
 </head>
 
 <body>
-<div class="card">
+  <div class="wrap">
+    <div class="card">
+      <div class="topTools">
+        <button class="toggleBtn" id="themeBtn" type="button" aria-label="Cambiar tema">☾</button>
+      </div>
 
-<button class="theme-btn" onclick="toggleTheme()">🌙</button>
+      <div class="profile">
+        <h1 class="username" id="nameText">@soulink</h1>
+        <div class="handle" id="handleText">soulink.bio/@soulink</div>
+      </div>
 
-<div class="username" id="username">@soulink</div>
-<div class="handle" id="handle">soulink.bio/@soulink</div>
-
-<div class="icons" id="icons"></div>
-
-<div class="footer">© soulink.bio</div>
-</div>
+      <div class="icons" id="icons"></div>
+      <div class="state" id="state"></div>
+      <div class="footer">© soulink.bio</div>
+    </div>
+  </div>
 
 <script>
-const SHEETS =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
+  const DEFAULT_USERNAME = "soulink";
 
-const ICONS = {
-  email:"email",
-  x:"x",
-  facebook:"facebook",
-  instagram:"instagram",
-  whatsapp:"whatsapp",
-  threads:"threads",
-  tiktok:"tiktok",
-  snapchat:"snapchat",
-  youtube:"youtube",
-  twitch:"twitch",
-  telegram:"telegram",
-  discord:"discord",
-  github:"github",
-  reddit:"reddit",
-  pinterest:"pinterest",
-};
+  const SHEETS_CSV_URL =
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
 
-window.loadProfile = async function(user){
-  const username = user || new URLSearchParams(location.search).get("u") || "soulink";
-  document.getElementById("username").textContent = "@"+username;
-  document.getElementById("handle").textContent = "soulink.bio/@"+username;
+  const ORDER = [
+    "x","facebook","instagram","whatsapp","threads",
+    "tiktok","snapchat","youtube","twitch","telegram",
+    "discord","github","linkedin","reddit","pinterest","email"
+  ];
 
-  const res = await fetch(SHEETS);
-  const text = await res.text();
-  const rows = text.split("\n").map(r=>r.split(","));
-  const headers = rows.shift().map(h=>h.trim().toLowerCase());
-
-  const data = rows.map(r=>{
-    let o={}; headers.forEach((h,i)=>o[h]=r[i]); return o;
+  // ✅ Theme
+  const THEME_KEY = "soulink_theme";
+  const getTheme = () => localStorage.getItem(THEME_KEY) || document.documentElement.getAttribute("data-theme") || "dark";
+  const setTheme = (t) => {
+    document.documentElement.setAttribute("data-theme", t);
+    localStorage.setItem(THEME_KEY, t);
+    document.getElementById("themeBtn").textContent = (t === "dark") ? "☾" : "☀";
+  };
+  document.getElementById("themeBtn").addEventListener("click", () => {
+    setTheme(getTheme() === "dark" ? "light" : "dark");
   });
 
-  const row = data.find(r=>(r.username||"").toLowerCase()===username.toLowerCase());
-  if(!row) return;
+  // init
+  (async function init(){
+    setTheme(getTheme());
+    const u = sanitizeUsername(getParam("u") || DEFAULT_USERNAME);
+    await loadProfile(u);
+  })();
 
-  const box = document.getElementById("icons");
-  box.innerHTML="";
+  window.loadProfile = loadProfile;
 
-  for(const key in ICONS){
-    if(row[key]){
-      const a=document.createElement("a");
-      a.href=row[key].startsWith("http")?row[key]:"https://"+row[key];
-      a.target="_blank";
-      a.className="icon";
+  async function loadProfile(username){
+    const safeU = sanitizeUsername(username);
+    document.title = `@${safeU} • soulink.bio`;
+    document.getElementById("nameText").textContent = `@${safeU}`;
+    document.getElementById("handleText").textContent = `soulink.bio/@${safeU}`;
 
-      const img=document.createElement("img");
-      img.src="/icons/"+ICONS[key]+".svg";
-      img.alt=key;
+    setState("Cargando…");
+    renderIcons([]);
+
+    try{
+      const row = await fetchUserRowFromCSV(SHEETS_CSV_URL, safeU);
+      if(!row){
+        setState("Este usuario todavía no existe en la base de datos.");
+        return;
+      }
+
+      const links = extractLinksFromRow(row);
+      const sorted = sortLinks(links);
+      renderIcons(sorted);
+      setState(sorted.length ? "" : "No hay redes sociales guardadas todavía.");
+    }catch(e){
+      console.error(e);
+      setState("No pude cargar la data. Verifica que el Sheet esté publicado.");
+    }
+  }
+
+  function renderIcons(links){
+    const box = document.getElementById("icons");
+    box.innerHTML = "";
+
+    links.forEach(l=>{
+      const a = document.createElement("a");
+      a.className = "iconBtn";
+      a.href = l.url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.title = l.type.toUpperCase();
+
+      const img = document.createElement("img");
+      img.className = "iconImg";
+      img.alt = l.type;
+
+      // ✅ CLAVE: SIEMPRE rutas ABSOLUTAS (no ./icons)
+      // Cambia .png por .svg si tus archivos son SVG
+      const base = `/icons/${l.type}`;
+      img.src = `${base}.png?v=7`;
+
+      // fallback: primero intenta svg, luego generic
+      img.onerror = () => {
+        img.onerror = () => img.src = `/icons/generic.png?v=7`;
+        img.src = `${base}.svg?v=7`;
+      };
 
       a.appendChild(img);
       box.appendChild(a);
-    }
+    });
   }
-};
 
-function toggleTheme(){
-  const html=document.documentElement;
-  html.dataset.theme = html.dataset.theme==="dark"?"light":"dark";
-}
+  async function fetchUserRowFromCSV(csvUrl, username){
+    const res = await fetch(csvUrl, { cache:"no-store" });
+    if(!res.ok) throw new Error("CSV fetch failed: " + res.status);
+    const text = await res.text();
+    const { headers, rows } = parseCSV(text);
+
+    const objs = rows.map(r=>{
+      const o={}; headers.forEach((h,i)=> o[h]=(r[i]??"").trim()); return o;
+    });
+
+    const key = username.toLowerCase();
+    return objs.find(o => (o.username || o.user || o.handle || o.usuario || "").toLowerCase().trim() === key) || null;
+  }
+
+  function extractLinksFromRow(row){
+    const links = [];
+    for(const k in row){
+      const type = normalizeType(k);
+      const val = String(row[k]||"").trim();
+      if(!val) continue;
+
+      if(type === "email"){
+        const mail = val.replace(/^mailto:/i,"").trim();
+        if(mail.includes("@")) links.push({ type:"email", url:"mailto:" + mail });
+        continue;
+      }
+
+      if(ORDER.includes(type)){
+        links.push({ type, url: normalizeUrl(val) });
+      }
+    }
+    return links;
+  }
+
+  function sortLinks(links){
+    const rank = (t)=> {
+      const i = ORDER.indexOf(t);
+      return i === -1 ? 999 : i;
+    };
+    return links.slice().sort((a,b)=> rank(a.type) - rank(b.type));
+  }
+
+  function normalizeType(header){
+    const h = String(header||"").trim().toLowerCase();
+    const clean = h.replace(/\s+/g,"").replace(/[_-]/g,"");
+
+    if(clean === "email") return "email";
+    if(clean === "x" || clean === "twitter") return "x";
+    if(clean === "facebook" || clean === "fb") return "facebook";
+    if(clean === "instagram" || clean === "ig") return "instagram";
+    if(clean === "whatsapp" || clean === "wa") return "whatsapp";
+    if(clean === "threads" || clean === "threats") return "threads";
+    if(clean === "tiktok") return "tiktok";
+    if(clean === "snapchat" || clean === "snap") return "snapchat";
+    if(clean === "youtube" || clean === "yt") return "youtube";
+    if(clean === "twitch") return "twitch";
+    if(clean === "telegram" || clean === "tg") return "telegram";
+    if(clean === "discord") return "discord";
+    if(clean === "github") return "github";
+    if(clean === "linkedln" || clean === "linkedin") return "linkedin";
+    if(clean === "reddit") return "reddit";
+    if(clean === "pinterest") return "pinterest";
+    return "generic";
+  }
+
+  function parseCSV(text){
+    const lines=text.replace(/\r/g,"").split("\n").filter(Boolean);
+    const rows=[]; let headers=[];
+    for(let i=0;i<lines.length;i++){
+      const row=splitCSVLine(lines[i]);
+      if(i===0) headers=row.map(h=>String(h||"").trim().toLowerCase());
+      else rows.push(row);
+    }
+    return { headers, rows };
+  }
+  function splitCSVLine(line){
+    const out=[]; let cur=""; let q=false;
+    for(let i=0;i<line.length;i++){
+      const ch=line[i];
+      if(ch === '"' && line[i+1] === '"'){ cur+='"'; i++; continue; }
+      if(ch === '"'){ q=!q; continue; }
+      if(ch === "," && !q){ out.push(cur); cur=""; continue; }
+      cur += ch;
+    }
+    out.push(cur);
+    return out;
+  }
+
+  function normalizeUrl(u){
+    const s=String(u||"").trim();
+    if(!s) return "";
+    if(/^https?:\/\//i.test(s)) return s;
+    if(/^mailto:/i.test(s)) return s;
+    return "https://" + s;
+  }
+
+  function sanitizeUsername(u){
+    return String(u||"").trim().replace(/^@/,"").replace(/[^\w.-]/g,"").slice(0,40) || "usuario";
+  }
+
+  function setState(msg){ document.getElementById("state").textContent = msg || ""; }
+
+  function getParam(name){
+    try{ return new URL(location.href).searchParams.get(name); }
+    catch(e){ return null; }
+  }
 </script>
 </body>
 </html>
