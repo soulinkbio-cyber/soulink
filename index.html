@@ -1,149 +1,175 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>soulink.bio</title>
+<title>Soulink • Perfil</title>
+
+<!-- FONT AWESOME ICONS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-:root{
-  --bg:#0b1220;
-  --card:#141c2b;
-  --text:#e9eef5;
-  --muted:#9aa7b5;
+:root {
+  --bg: #fff;
+  --text: #111;
+  --muted: #666;
 }
-
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:radial-gradient(1200px 600px at 50% -10%, #1a2540, #070b12);
-  color:var(--text);
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-
-.card{
-  width:360px;
-  background:linear-gradient(180deg,#1a2336,#0f1625);
-  border-radius:28px;
-  padding:28px 22px 26px;
-  box-shadow:0 40px 90px rgba(0,0,0,.6);
-  text-align:center;
+body {
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
 }
-
-.username{
-  font-size:28px;
-  font-weight:800;
-  margin:0;
+.wrap {
+  width: 100%;
+  max-width: 430px;
+  padding: 40px 18px;
+  text-align: center;
 }
-
-.handle{
-  margin:6px 0 22px;
-  font-size:14px;
-  color:var(--muted);
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+  margin-bottom: 10px;
 }
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
+.uname {
+  font-size: 24px;
+  font-weight: 700;
 }
-
-.icon{
-  width:64px;
-  height:64px;
-  border-radius:18px;
-  background:rgba(255,255,255,.04);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:transform .15s ease, background .15s ease;
+.name {
+  color: var(--muted);
+  font-size: 15px;
+  margin-bottom: 30px;
 }
-
-.icon:hover{
-  transform:translateY(-2px);
-  background:rgba(255,255,255,.08);
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
-
-.icon img{
-  width:38px;
-  height:38px;
+.link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 9999px;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  transition: transform 0.2s, opacity 0.2s;
 }
-
-.footer{
-  margin-top:18px;
-  font-size:12px;
-  color:var(--muted);
+.link-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+.ig { background: #d62976; }
+.fb { background: #1877f2; }
+.tt { background: #000000; }
+.yt { background: #ff0000; }
+.wa { background: #25d366; }
+.em { background: #6d6d6d; }
+.icon { font-size: 20px; }
+.msg {
+  margin-top: 20px;
+  color: #b00020;
+  background: #fff7f7;
+  border: 1px solid #ffd6d6;
+  border-radius: 10px;
+  padding: 12px;
+}
+.foot {
+  margin-top: 30px;
+  color: #aaa;
+  font-size: 12px;
 }
 </style>
 </head>
 
 <body>
+<div class="wrap">
+  <img id="avatar" class="avatar" src="https://i.pravatar.cc/300?img=12" alt="avatar">
+  <div id="uname" class="uname">@usuario</div>
+  <div id="realname" class="name">Cargando...</div>
 
-<div class="card">
-  <h1 class="username" id="username">@soulink</h1>
-  <div class="handle" id="handle">soulink.bio/@soulink</div>
+  <div class="links">
+    <a id="btn-ig" class="link-btn ig" href="#" target="_blank" style="display:none;"><i class="fab fa-instagram icon"></i>Instagram</a>
+    <a id="btn-fb" class="link-btn fb" href="#" target="_blank" style="display:none;"><i class="fab fa-facebook-f icon"></i>Facebook</a>
+    <a id="btn-tt" class="link-btn tt" href="#" target="_blank" style="display:none;"><i class="fab fa-tiktok icon"></i>TikTok</a>
+    <a id="btn-yt" class="link-btn yt" href="#" target="_blank" style="display:none;"><i class="fab fa-youtube icon"></i>YouTube</a>
+    <a id="btn-wa" class="link-btn wa" href="#" target="_blank" style="display:none;"><i class="fab fa-whatsapp icon"></i>WhatsApp</a>
+    <a id="btn-em" class="link-btn em" href="#" style="display:none;"><i class="fas fa-envelope icon"></i>Email</a>
+  </div>
 
-  <div class="grid" id="icons"></div>
-
-  <div class="footer">© soulink.bio</div>
+  <div id="msg" class="msg" style="display:none;"></div>
+  <div class="foot">© Soulink NFC</div>
 </div>
 
 <script>
-const ICONS = {
-  x: "/assets/icons/x.png",
-  facebook: "/assets/icons/facebook.png",
-  instagram: "/assets/icons/instagram.png",
-  whatsapp: "/assets/icons/whatsapp.png",
-  threads: "/assets/icons/threads.png",
-  tiktok: "/assets/icons/tiktok.png",
-  snapchat: "/assets/icons/snapchat.png",
-  youtube: "/assets/icons/youtube.png",
-  twitch: "/assets/icons/twitch.png",
-  telegram: "/assets/icons/telegram.png",
-  discord: "/assets/icons/discord.png",
-  github: "/assets/icons/github.png",
-  reddit: "/assets/icons/reddit.png",
-  pinterest: "/assets/icons/pinterest.png",
-  email: "/assets/icons/email.png"
-};
-
-const ORDER = [
-  "x","facebook","instagram","whatsapp",
-  "threads","tiktok","snapchat","youtube",
-  "twitch","telegram","discord","github",
-  "reddit","pinterest","email"
-];
-
-const DEFAULT_USER = "soulink";
-
-window.loadProfile = function(user){
-  const u = user || DEFAULT_USER;
-  document.getElementById("username").textContent = "@"+u;
-  document.getElementById("handle").textContent = "soulink.bio/@"+u;
-  renderIcons();
-};
-
-function renderIcons(){
-  const box = document.getElementById("icons");
-  box.innerHTML = "";
-  ORDER.forEach(key=>{
-    const a = document.createElement("a");
-    a.href = "#";
-    a.className = "icon";
-    a.innerHTML = `<img src="${ICONS[key]}" alt="${key}">`;
-    box.appendChild(a);
-  });
+function getUsername() {
+  const q = new URLSearchParams(location.search);
+  const u = q.get('u');
+  if (u) return u.trim().toLowerCase();
+  const m = location.pathname.match(/\/@([^\/?#]+)/);
+  if (m) return decodeURIComponent(m[1]).trim().toLowerCase();
+  return "";
 }
 
-// carga normal /
-const p = new URLSearchParams(location.search);
-loadProfile(p.get("u") || DEFAULT_USER);
-</script>
+const SHEET_TSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=tsv";
 
+async function loadTSV() {
+  const res = await fetch(SHEET_TSV, { cache: 'no-store' });
+  if (!res.ok) throw new Error('no_tsv');
+  const txt = await res.text();
+  const lines = txt.split(/\r?\n/).filter(l => l.trim() !== "");
+  const rows = lines.map(l => l.split('\t'));
+  const headers = rows[0].map(h => h.trim().toLowerCase());
+  const data = rows.slice(1).map(r => {
+    const o = {};
+    headers.forEach((h, i) => o[h] = r[i] ? r[i].trim() : "");
+    return o;
+  });
+  const map = {};
+  data.forEach(o => { if (o.username) map[o.username.toLowerCase()] = o });
+  return map;
+}
+
+const $ = id => document.getElementById(id);
+const showMsg = t => { const m = $('msg'); m.textContent = t; m.style.display = 'block'; };
+const setHref = (id, url) => { const el = $(id); if (url) { el.href = url; el.style.display = 'flex'; } };
+const setMail = (id, email) => { const el = $(id); if (email) { el.href = 'mailto:' + email; el.style.display = 'flex'; } };
+
+(async () => {
+  try {
+    const u = getUsername();
+    if (!u) { showMsg('Falta el usuario en el enlace. Usa ?u=manu360 o /@manu360'); return; }
+    const map = await loadTSV();
+    const p = map[u];
+    if (!p) { showMsg('No encontré este usuario en la hoja.'); return; }
+
+    $('uname').textContent = '@' + (p.username || u);
+    $('realname').textContent = p.name || p.username || u;
+    $('avatar').src = p.avatar || 'https://i.pravatar.cc/300?img=12';
+
+    setHref('btn-ig', p.instagram);
+    setHref('btn-fb', p.facebook);
+    setHref('btn-tt', p.tiktok);
+    setHref('btn-yt', p.youtube);
+    setHref('btn-wa', p.whatsapp || p.wa);
+    setMail('btn-em', p.email);
+  } catch (e) {
+    showMsg('No pude leer datos. Verifica que la hoja esté publicada.');
+    console.error(e);
+  }
+})();
+</script>
 </body>
 </html>
