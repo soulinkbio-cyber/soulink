@@ -1,17 +1,52 @@
 <!doctype html>
 <html lang="es">
-<meta charset="utf-8">
-<title>Redirigiendo…</title>
-<script>
-  (function () {
-    var m = location.pathname.match(/\/@([^\/?#]+)/);
-    if (m) {
-      var u = decodeURIComponent(m[1]);
-      location.replace(location.origin + "/?u=" + u);
-    } else {
-      location.replace(location.origin + "/");
-    }
-  })();
-</script>
-<body>Redirigiendo…</body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b0f14" />
+  <title>Soulink • Perfil</title>
+</head>
+<body>
+  <!-- Reutiliza el MISMO diseño del index -->
+  <script>
+    // 1) si la ruta es /@usuario, lo convertimos a “?u=usuario”
+    const path = decodeURIComponent(location.pathname || "/");
+    const match = path.match(/^\/@([^\/?#]+)/);
+    const u = match ? match[1] : "";
+    // 2) redirige internamente SIN cambiar dominio (solo recarga en index si existe)
+    // Pero como estamos en 404, lo más seguro es inyectar el mismo HTML del index.
+  </script>
+
+  <!-- PEGAR AQUÍ EXACTAMENTE el mismo contenido del index.html -->
+  <!-- Para hacerlo simple: copia TODO el index.html y reemplaza el init() por el username del path. -->
+
+  <script>
+    // HACK simple: cargamos el index desde el mismo dominio y lo inyectamos,
+    // luego setea username del path.
+    (async function(){
+      try{
+        const res = await fetch("/index.html", { cache:"no-store" });
+        const html = await res.text();
+        document.open();
+        document.write(html);
+        document.close();
+
+        // Espera un tick y llama loadProfile(u)
+        const path2 = decodeURIComponent(location.pathname || "/");
+        const m2 = path2.match(/^\/@([^\/?#]+)/);
+        const username = m2 ? m2[1].replace(/^@/,"") : "soulink";
+
+        // loadProfile existe en el index; lo ejecutamos.
+        const tryRun = () => {
+          if(typeof window.loadProfile === "function") window.loadProfile(username);
+          else setTimeout(tryRun, 30);
+        };
+        tryRun();
+
+      }catch(e){
+        document.body.innerHTML = "<p style='color:#fff;font-family:system-ui;padding:20px'>Error cargando perfil.</p>";
+      }
+    })();
+  </script>
+</body>
 </html>
