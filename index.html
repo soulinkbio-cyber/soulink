@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0b0f14" />
-  <title>Soulink • Perfil</title>
+  <title>soulink.bio</title>
 
   <style>
     :root{
@@ -14,7 +14,7 @@
       --stroke:rgba(255,255,255,.10); --stroke2:rgba(255,255,255,.06);
       --shadow:0 18px 60px rgba(0,0,0,.55);
       --radius:22px;
-      --avatar:74px; /* tamaño avatar */
+      --avatar:92px;
       --maxw:540px;
     }
 
@@ -31,7 +31,7 @@
         linear-gradient(160deg, var(--bg0), var(--bg1) 55%, #060a10);
       overflow-x:hidden;
     }
-    /* “metal grain” */
+
     body::before{
       content:"";
       position:fixed; inset:0; pointer-events:none;
@@ -43,23 +43,6 @@
     }
 
     .wrap{max-width:var(--maxw); margin:0 auto; padding:28px 16px 26px;}
-    .topbar{display:flex; justify-content:center; margin-bottom:16px; user-select:none;}
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      padding:10px 12px;
-      border:1px solid var(--stroke2);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border-radius:999px;
-      box-shadow:0 8px 25px rgba(0,0,0,.35);
-      backdrop-filter:blur(10px);
-    }
-    .brandMark{
-      width:28px; height:28px; border-radius:10px;
-      background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), rgba(255,255,255,.05));
-      border:1px solid var(--stroke);
-      display:grid; place-items:center;
-    }
-    .brandText{font-weight:900; letter-spacing:.2px; font-size:14px;}
 
     .card{
       border-radius:var(--radius);
@@ -73,168 +56,168 @@
       backdrop-filter:blur(12px);
     }
 
-    .header{
-      padding:20px 18px 10px;
+    .profile{
+      padding:22px 18px 14px;
       display:flex;
+      flex-direction:column;
       align-items:center;
-      gap:14px;
+      gap:12px;
+      text-align:center;
     }
 
     .avatar{
       width:var(--avatar);
       height:var(--avatar);
-      border-radius:18px;
+      border-radius:26px;
       background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
       border:1px solid var(--stroke);
-      box-shadow:0 12px 26px rgba(0,0,0,.45);
+      box-shadow:0 16px 32px rgba(0,0,0,.45);
       overflow:hidden;
-      flex:0 0 auto;
       position:relative;
     }
     .avatar::after{
       content:"";
       position:absolute; inset:-1px;
-      border-radius:18px;
+      border-radius:26px;
       border:1px solid rgba(255,255,255,.08);
       pointer-events:none;
     }
     .avatar img{width:100%; height:100%; object-fit:cover; display:block;}
 
-    .id{min-width:0; display:flex; flex-direction:column; gap:6px;}
     .username{
-      font-size:22px;
-      line-height:1.1;
-      font-weight:950;
       margin:0;
-      word-break:break-word;
+      font-size:24px;
+      line-height:1.05;
+      font-weight:950;
       letter-spacing:.2px;
+      word-break:break-word;
     }
-    .handle{color:var(--muted); font-size:13px; margin:0;}
 
-    .socialRow{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      padding:0 18px 14px;
-      align-items:center;
+    .handle{
+      margin:0;
+      font-size:13px;
+      color:var(--muted);
     }
-    .iconBtn{
-      width:42px; height:42px;
-      border-radius:14px;
-      border:1px solid var(--stroke2);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      display:grid; place-items:center;
-      color:rgba(233,238,245,.92);
-      text-decoration:none;
-      box-shadow:0 10px 18px rgba(0,0,0,.30);
-      transition:transform .12s ease, background .12s ease, border-color .12s ease;
-    }
-    .iconBtn:hover{
-      transform:translateY(-1px);
-      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
-      border-color:rgba(255,255,255,.14);
-    }
-    .iconBtn svg{width:20px; height:20px; display:block}
 
-    .links{
-      padding:0 12px 14px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
+    .iconsWrap{
+      padding: 10px 16px 18px;
     }
-    .link{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+
+    /* grid de icons */
+    .icons{
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
       gap:12px;
-      padding:14px 14px;
+    }
+
+    @media (max-width: 420px){
+      .icons{grid-template-columns: repeat(4, 1fr);}
+    }
+
+    .iconBtn{
+      height:54px;
       border-radius:18px;
       border:1px solid var(--stroke2);
-      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
-      text-decoration:none;
-      color:var(--text);
-      box-shadow:0 12px 22px rgba(0,0,0,.30);
-      transition:transform .12s ease, background .12s ease, border-color .12s ease;
-    }
-    .link:hover{
-      transform:translateY(-1px);
-      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
-      border-color:rgba(255,255,255,.14);
-    }
-    .linkLeft{display:flex; align-items:center; gap:10px; min-width:0;}
-    .pill{
-      width:40px; height:40px;
-      border-radius:14px;
-      border:1px solid var(--stroke2);
       background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      display:grid; place-items:center;
-      color:rgba(233,238,245,.92);
-      flex:0 0 auto;
-    }
-    .pill svg{width:18px; height:18px}
-    .linkTitle{
-      font-weight:900;
-      font-size:15px;
-      margin:0;
+      box-shadow:0 12px 22px rgba(0,0,0,.30);
+      display:grid;
+      place-items:center;
+      text-decoration:none;
+      position:relative;
       overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      max-width:340px;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
     }
-    .chev{opacity:.7; flex:0 0 auto;}
+    .iconBtn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.14);
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+    }
 
-    .state{padding:14px 16px; color:var(--muted); font-size:13px; text-align:center;}
-    .footer{padding:14px 16px 16px; color:rgba(154,167,181,.85); font-size:12px; text-align:center;}
+    /* “glow” con color de la red */
+    .iconBtn::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: radial-gradient(circle at 50% 50%, var(--brandGlow, rgba(255,255,255,.10)), transparent 55%);
+      opacity:.75;
+      pointer-events:none;
+    }
+
+    .iconBtn svg{
+      width:24px;
+      height:24px;
+      display:block;
+      color: var(--brandColor, rgba(233,238,245,.92));
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,.45));
+    }
+
+    .state{
+      padding: 0 16px 16px;
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+    }
+
+    .footer{
+      padding: 14px 16px 16px;
+      color:rgba(154,167,181,.85);
+      font-size:12px;
+      text-align:center;
+    }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <div class="brandMark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M7 12c0-4 3-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <path d="M17 12c0 4-3 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>
-            <path d="M9 12h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>
-          </svg>
-        </div>
-        <div class="brandText">Soulink</div>
-      </div>
-    </div>
-
     <div class="card">
-      <div class="header">
+      <div class="profile">
         <div class="avatar"><img id="avatarImg" alt="Avatar" /></div>
-        <div class="id">
-          <h1 class="username" id="nameText">@soulink</h1>
-          <p class="handle" id="handleText">soulink.bio/@soulink</p>
-        </div>
+        <h1 class="username" id="nameText">@soulink</h1>
+        <p class="handle" id="handleText">soulink.bio/@soulink</p>
       </div>
 
-      <div class="socialRow" id="socialRow"></div>
-      <div class="links" id="links"></div>
+      <div class="iconsWrap">
+        <div class="icons" id="icons"></div>
+      </div>
 
       <div class="state" id="state"></div>
-      <div class="footer">© Soulink NFC</div>
+      <div class="footer">© soulink.bio</div>
     </div>
   </div>
 
   <script>
     /***********************
-     * CONFIG (YA ACTIVO)
+     * CONFIG
      ***********************/
     const DEFAULT_USERNAME = "soulink";
 
-    // ✅ TU GOOGLE SHEETS PUBLICADO EN CSV (usando tu /pubhtml -> /pub?output=csv)
+    // ✅ tu Google Sheets publicado
     const SHEETS_CSV_URL =
       "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
 
-    /***********************
-     * ICONOS
-     ***********************/
+    // Brand colors (para glow)
+    const BRAND = {
+      instagram:  { color: "#E1306C", glow: "rgba(225,48,108,.28)" },
+      tiktok:     { color: "#00F2EA", glow: "rgba(0,242,234,.22)" },
+      x:          { color: "#E9EEF5", glow: "rgba(233,238,245,.14)" },
+      twitter:    { color: "#E9EEF5", glow: "rgba(233,238,245,.14)" },
+      youtube:    { color: "#FF0033", glow: "rgba(255,0,51,.22)" },
+      facebook:   { color: "#1877F2", glow: "rgba(24,119,242,.22)" },
+      linkedin:   { color: "#0A66C2", glow: "rgba(10,102,194,.22)" },
+      telegram:   { color: "#26A5E4", glow: "rgba(38,165,228,.22)" },
+      whatsapp:   { color: "#25D366", glow: "rgba(37,211,102,.22)" },
+      snapchat:   { color: "#FFFC00", glow: "rgba(255,252,0,.16)" },
+      discord:    { color: "#5865F2", glow: "rgba(88,101,242,.22)" },
+      spotify:    { color: "#1DB954", glow: "rgba(29,185,84,.22)" },
+      twitch:     { color: "#9146FF", glow: "rgba(145,70,255,.22)" },
+      github:     { color: "#E9EEF5", glow: "rgba(233,238,245,.14)" },
+      website:    { color: "#E9EEF5", glow: "rgba(233,238,245,.14)" },
+      email:      { color: "#E9EEF5", glow: "rgba(233,238,245,.14)" },
+      generic:    { color: "#E9EEF5", glow: "rgba(233,238,245,.14)" },
+    };
+
+    // Icon SVGs (estilo “logo” con color por brand)
     const ICONS = {
-      website: svgLink(),
       instagram: svgInstagram(),
       tiktok: svgTikTok(),
       x: svgX(),
@@ -242,128 +225,104 @@
       youtube: svgYouTube(),
       facebook: svgFacebook(),
       linkedin: svgLinkedIn(),
-      telegram: svgTelegram(), // ✅ FIX telegram visible
+      telegram: svgTelegram(),
       whatsapp: svgWhatsApp(),
+      snapchat: svgSnapchat(),
+      discord: svgDiscord(),
+      spotify: svgSpotify(),
+      twitch: svgTwitch(),
+      github: svgGithub(),
+      website: svgLink(),
       email: svgMail(),
+      generic: svgLink(),
     };
 
-    const SOCIAL_ORDER = ["instagram","tiktok","x","youtube","telegram","facebook","linkedin","whatsapp","website","email"];
+    const ORDER = [
+      "instagram","tiktok","x","twitter","youtube","telegram","whatsapp","facebook","linkedin",
+      "snapchat","discord","spotify","twitch","github","website","email"
+    ];
 
     /***********************
-     * INIT
+     * INIT (lee ?u=usuario)
      ***********************/
     (async function init(){
-      await loadProfile(DEFAULT_USERNAME);
+      const u = getParam("u") || DEFAULT_USERNAME;
+      await loadProfile(u);
     })();
 
-    // EXPUESTO para que 404.html pueda llamarlo:
+    // expuesto para 404
     window.loadProfile = loadProfile;
 
-    /***********************
-     * PERFIL
-     ***********************/
     async function loadProfile(username){
-      setState("Cargando perfil…");
+      setState("Cargando…");
 
       const safeU = sanitizeUsername(username);
-      document.title = `Soulink • @${safeU}`;
+      document.title = `@${safeU} • soulink.bio`;
       document.getElementById("nameText").textContent = `@${safeU}`;
       document.getElementById("handleText").textContent = `soulink.bio/@${safeU}`;
-      setAvatar(makeFallbackAvatar(safeU));
+
+      // Avatar: si falla, muestra Soulink mark
+      setAvatar(makeSoulinkFallbackAvatar());
 
       try{
         const row = await fetchUserRowFromCSV(SHEETS_CSV_URL, safeU);
         if(!row){
+          renderIcons([]);
           setState("Este usuario todavía no existe en la base de datos.");
-          renderSocial([]); renderLinks([]);
           return;
         }
 
-        const avatar = row.avatar || row.avatar_url || row.pfp || row.profile_picture || "";
+        // avatar
+        const avatar = row.avatar || row.avatar_url || row.pfp || row.profile_picture || row.photo || "";
         if(avatar) setAvatar(avatar);
 
-        const links = normalizeLinks(row);
-        renderSocial(links);
-        renderLinks(links);
+        // construir lista de links desde columnas del sheet
+        const links = extractLinksFromRow(row);
 
-        setState("");
-      }catch(err){
-        console.error(err);
-        setState("No pude cargar la data ahora mismo. Verifica que el Sheet esté publicado.");
-        renderSocial([]); renderLinks([]);
+        // ordenar (los conocidos primero)
+        const sorted = sortLinks(links);
+
+        renderIcons(sorted);
+        setState(sorted.length ? "" : "No hay redes sociales guardadas todavía.");
+      }catch(e){
+        console.error(e);
+        renderIcons([]);
+        setState("No pude cargar la data. Verifica que el Sheet esté publicado.");
       }
     }
 
-    function renderSocial(links){
-      const row = document.getElementById("socialRow");
-      row.innerHTML = "";
+    /***********************
+     * ICON RENDER
+     ***********************/
+    function renderIcons(links){
+      const box = document.getElementById("icons");
+      box.innerHTML = "";
 
-      const socials = links
-        .filter(l => isSocialType(l.type))
-        .sort((a,b) => (SOCIAL_ORDER.indexOf(a.type) - SOCIAL_ORDER.indexOf(b.type)));
-
-      socials.forEach(l=>{
+      links.forEach(l=>{
         const a = document.createElement("a");
         a.className = "iconBtn";
         a.href = l.url;
         a.target = "_blank";
         a.rel = "noopener noreferrer";
         a.title = l.type;
-        a.innerHTML = ICONS[l.type] || svgLink();
-        row.appendChild(a);
-      });
-    }
 
-    function renderLinks(links){
-      const box = document.getElementById("links");
-      box.innerHTML = "";
+        const b = BRAND[l.type] || BRAND.generic;
+        a.style.setProperty("--brandColor", b.color);
+        a.style.setProperty("--brandGlow", b.glow);
 
-      if(!links.length){
-        const div = document.createElement("div");
-        div.className = "state";
-        div.textContent = "No hay links todavía.";
-        box.appendChild(div);
-        return;
-      }
-
-      links.forEach(l=>{
-        const a = document.createElement("a");
-        a.className = "link";
-        a.href = l.url;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-
-        const left = document.createElement("div");
-        left.className = "linkLeft";
-
-        const pill = document.createElement("div");
-        pill.className = "pill";
-        pill.innerHTML = ICONS[l.type] || svgLink();
-
-        const title = document.createElement("p");
-        title.className = "linkTitle";
-        title.textContent = l.label || prettifyLabel(l.type);
-
-        left.appendChild(pill);
-        left.appendChild(title);
-
-        const chev = document.createElement("div");
-        chev.className = "chev";
-        chev.innerHTML = svgChevron();
-
-        a.appendChild(left);
-        a.appendChild(chev);
+        a.innerHTML = ICONS[l.type] || ICONS.generic;
 
         box.appendChild(a);
       });
     }
 
     /***********************
-     * DATA: CSV -> row
+     * DATA
      ***********************/
     async function fetchUserRowFromCSV(csvUrl, username){
       const res = await fetch(csvUrl, { cache: "no-store" });
       if(!res.ok) throw new Error("CSV fetch failed: " + res.status);
+
       const text = await res.text();
       const { headers, rows } = parseCSV(text);
 
@@ -375,6 +334,68 @@
 
       const key = username.toLowerCase();
       return objs.find(o => (o.username || o.user || o.handle || "").toLowerCase() === key) || null;
+    }
+
+    function extractLinksFromRow(row){
+      const links = [];
+      for(const k in row){
+        const key = String(k || "").toLowerCase().trim();
+        const val = String(row[k] || "").trim();
+        if(!val) continue;
+
+        // ignorar campos no-red
+        if(["username","user","handle","avatar","avatar_url","pfp","profile_picture","photo","display_name","name"].includes(key)) continue;
+
+        // si parece URL o mailto
+        if(isValidUrl(val)){
+          const type = normalizeType(key);
+          links.push({
+            type,
+            url: normalizeUrl(val),
+          });
+        }
+      }
+
+      // dedupe por url
+      const seen = new Set();
+      return links.filter(l=>{
+        if(seen.has(l.url)) return false;
+        seen.add(l.url);
+        return true;
+      });
+    }
+
+    function sortLinks(links){
+      const rank = (t) => {
+        const i = ORDER.indexOf(t);
+        return i === -1 ? 999 : i;
+      };
+      return links.slice().sort((a,b)=> rank(a.type) - rank(b.type));
+    }
+
+    function normalizeType(key){
+      // mapas comunes
+      const k = key.replace(/\s+/g,"").replace(/_/g,"").replace(/-/g,"");
+      if(k === "twitter" || k === "x") return "x";
+      if(k === "yt" || k === "youtube") return "youtube";
+      if(k === "ig" || k === "instagram") return "instagram";
+      if(k === "tiktok") return "tiktok";
+      if(k === "fb" || k === "facebook") return "facebook";
+      if(k === "li" || k === "linkedin") return "linkedin";
+      if(k === "tg" || k === "telegram") return "telegram";
+      if(k === "wa" || k === "whatsapp") return "whatsapp";
+      if(k === "snap" || k === "snapchat") return "snapchat";
+      if(k === "discord") return "discord";
+      if(k === "spotify") return "spotify";
+      if(k === "twitch") return "twitch";
+      if(k === "github") return "github";
+      if(k.includes("mail")) return "email";
+      if(k.includes("web") || k.includes("site") || k.includes("url")) return "website";
+
+      // si el key coincide con un icon conocido
+      if(ICONS[k]) return k;
+
+      return "generic";
     }
 
     function parseCSV(text){
@@ -405,55 +426,9 @@
     }
 
     function normalizeHeader(h){
-      return h.trim().toLowerCase()
+      return String(h||"").trim().toLowerCase()
         .replace(/\s+/g,"_")
         .replace(/[^\w]/g,"");
-    }
-
-    function normalizeLinks(row){
-      // 1) JSON column (si existe)
-      const raw = row.links || row.links_json || row.socials || "";
-      if(raw){
-        try{
-          const arr = JSON.parse(raw);
-          if(Array.isArray(arr)){
-            return arr
-              .map(x => ({
-                type: (x.type||x.platform||"website").toLowerCase(),
-                label: x.label || x.title || "",
-                url: x.url || x.link || ""
-              }))
-              .filter(x => isValidUrl(x.url));
-          }
-        }catch(e){ /* ignore */ }
-      }
-
-      // 2) columns direct (instagram, tiktok, telegram, etc.)
-      const candidates = {};
-      for(const k in row){
-        const v = (row[k]||"").trim();
-        if(!v) continue;
-        if(ICONS[k] && isValidUrl(v)) candidates[k] = v;
-      }
-
-      const links = [];
-      const used = new Set();
-
-      SOCIAL_ORDER.forEach(type=>{
-        if(candidates[type] && !used.has(candidates[type])){
-          used.add(candidates[type]);
-          links.push({ type, label: prettifyLabel(type), url: normalizeUrl(candidates[type]) });
-        }
-      });
-
-      Object.keys(candidates).forEach(type=>{
-        if(!used.has(candidates[type])){
-          used.add(candidates[type]);
-          links.push({ type, label: prettifyLabel(type), url: normalizeUrl(candidates[type]) });
-        }
-      });
-
-      return links;
     }
 
     function normalizeUrl(u){
@@ -472,11 +447,6 @@
       catch(e){ return false; }
     }
 
-    function isSocialType(t){
-      const type = (t||"").toLowerCase();
-      return ["instagram","tiktok","x","twitter","youtube","facebook","linkedin","telegram","whatsapp","email","website"].includes(type);
-    }
-
     function sanitizeUsername(u){
       return String(u || "")
         .trim()
@@ -488,26 +458,30 @@
     function setAvatar(url){
       const img = document.getElementById("avatarImg");
       img.src = url;
-      img.onerror = () => {
-        img.src = makeFallbackAvatar(document.getElementById("nameText").textContent.replace("@",""));
-      };
+      img.onerror = () => { img.src = makeSoulinkFallbackAvatar(); };
     }
 
-    function makeFallbackAvatar(seed){
-      const text = encodeURIComponent((seed||"S").slice(0,2).toUpperCase());
+    function makeSoulinkFallbackAvatar(){
+      // fallback “Soulink” (en vez de “so”)
       const svg =
-        `<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160">
+        `<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240">
           <defs>
-            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#ffffff" stop-opacity=".18"/>
-              <stop offset="1" stop-color="#ffffff" stop-opacity=".05"/>
+            <radialGradient id="rg" cx="30%" cy="25%" r="75%">
+              <stop offset="0" stop-color="rgba(255,255,255,.22)"/>
+              <stop offset="1" stop-color="rgba(255,255,255,.05)"/>
+            </radialGradient>
+            <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#0f1720"/>
+              <stop offset="1" stop-color="#070b10"/>
             </linearGradient>
           </defs>
-          <rect width="160" height="160" rx="36" fill="#0f1720"/>
-          <rect width="160" height="160" rx="36" fill="url(#g)"/>
-          <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle"
-            font-family="system-ui, -apple-system, Segoe UI, Roboto" font-size="56"
-            fill="rgba(233,238,245,.92)" font-weight="900">${decodeURIComponent(text)}</text>
+          <rect width="240" height="240" rx="58" fill="url(#lg)"/>
+          <rect width="240" height="240" rx="58" fill="url(#rg)"/>
+          <g fill="none" stroke="rgba(233,238,245,.92)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M82 122c0-34 26-60 60-60"/>
+            <path d="M158 118c0 34-26 60-60 60" opacity=".9"/>
+            <path d="M94 120h52" opacity=".9"/>
+          </g>
         </svg>`;
       return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
     }
@@ -516,88 +490,131 @@
       document.getElementById("state").textContent = msg || "";
     }
 
-    function prettifyLabel(type){
-      const t = (type||"").toLowerCase();
-      if(t==="x"||t==="twitter") return "X";
-      if(t==="tiktok") return "TikTok";
-      if(t==="youtube") return "YouTube";
-      if(t==="instagram") return "Instagram";
-      if(t==="telegram") return "Telegram";
-      if(t==="whatsapp") return "WhatsApp";
-      if(t==="linkedin") return "LinkedIn";
-      if(t==="facebook") return "Facebook";
-      if(t==="email") return "Email";
-      if(t==="website") return "Website";
-      return "Link";
+    function getParam(name){
+      try{
+        const url = new URL(location.href);
+        return url.searchParams.get(name);
+      }catch(e){
+        return null;
+      }
     }
 
     /***********************
      * SVG ICONS
+     * (se colorean con --brandColor)
      ***********************/
-    function svgChevron(){
-      return `<svg viewBox="0 0 24 24" fill="none">
-        <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    function svgX(){
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M18.2 3H21l-6.6 7.6L22 21h-6.6l-5.2-6.8L4.7 21H2l7.2-8.3L2 3h6.8l4.7 6.2L18.2 3Z"
+          fill="currentColor"/>
       </svg>`;
     }
+
+    function svgInstagram(){
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M7.4 2h9.2A5.4 5.4 0 0 1 22 7.4v9.2A5.4 5.4 0 0 1 16.6 22H7.4A5.4 5.4 0 0 1 2 16.6V7.4A5.4 5.4 0 0 1 7.4 2Z" stroke="currentColor" stroke-width="2"/>
+        <path d="M12 8.2A3.8 3.8 0 1 0 12 15.8A3.8 3.8 0 0 0 12 8.2Z" stroke="currentColor" stroke-width="2"/>
+        <path d="M17.2 6.8h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      </svg>`;
+    }
+
+    function svgTikTok(){
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M14 3v9.2a3.8 3.8 0 1 1-2.6-3.6V3H14Z" fill="currentColor"/>
+        <path d="M14 3c1.2 2.4 3.1 3.9 5.6 4.3v2.6c-2.3-.3-4.2-1.4-5.6-3V3Z" fill="currentColor" opacity=".55"/>
+      </svg>`;
+    }
+
+    function svgYouTube(){
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M21.5 12c0 3.6-.5 5.1-1.4 6-.9.9-2.5 1.1-4.9 1.2H9.8c-2.4-.1-4-.3-4.9-1.2C4 17.1 3.5 15.6 3.5 12s.5-5.1 1.4-6C5.8 5.1 7.4 4.9 9.8 4.8h5.4c2.4.1 4 .3 4.9 1.2.9.9 1.4 2.4 1.4 6Z"
+          fill="currentColor" opacity=".22"/>
+        <path d="M10.5 9.5v5l5-2.5-5-2.5Z" fill="currentColor"/>
+      </svg>`;
+    }
+
+    function svgFacebook(){
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M14 8h3V5h-3c-2.2 0-4 1.8-4 4v3H7v3h3v6h3v-6h3l1-3h-4V9c0-.6.4-1 1-1Z"
+          fill="currentColor"/>
+      </svg>`;
+    }
+
+    function svgLinkedIn(){
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M6.3 9.7H3.6V20.4h2.7V9.7Z" fill="currentColor"/>
+        <path d="M5 3.6a1.6 1.6 0 1 0 0 3.2a1.6 1.6 0 0 0 0-3.2Z" fill="currentColor"/>
+        <path d="M20.4 20.4h-2.7v-5.8c0-1.4-.6-2.3-1.8-2.3-1 0-1.6.7-1.8 1.3-.1.2-.1.6-.1.9v5.9H11.3V9.7H14v1.5c.5-.8 1.4-1.8 3.2-1.8 2.3 0 3.9 1.5 3.9 4.6v6.4Z"
+          fill="currentColor" opacity=".9"/>
+      </svg>`;
+    }
+
+    function svgTelegram(){
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M20.7 5.6 18 19.2c-.2 1-1 .9-1.6.6l-4.6-3.4-2.2 2.1c-.2.2-.4.4-.8.4l.3-5.1 9.3-8.4c.4-.3-.1-.5-.6-.2l-11.5 7.2-5-1.6c-1.1-.3-1.1-1.1.2-1.6l17.7-6.8c.8-.3 1.5.2 1.3 1.2Z"
+          fill="currentColor"/>
+      </svg>`;
+    }
+
+    function svgWhatsApp(){
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.5-1.1A8.5 8.5 0 1 0 12 3.5Z"
+          stroke="currentColor" stroke-width="2" opacity=".9"/>
+        <path d="M9.7 9.5c.2-.3.4-.3.6-.2l.7.4c.2.1.3.3.2.6-.1.3-.2.6-.1.8.2.5 1.1 1.6 2.1 2 .3.1.6.1.8-.1l.5-.5c.2-.2.4-.2.6-.1l.8.4c.2.1.3.3.2.6-.1.5-.5 1.2-1.4 1.3-1.5.2-3.6-1-5-2.6-1.2-1.3-2.2-3.4-2-4.9.1-.9.8-1.2 1-1.4Z"
+          fill="currentColor"/>
+      </svg>`;
+    }
+
+    function svgSnapchat(){
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 3c2.6 0 4.7 2.1 4.7 4.7v3.3c0 .7.4 1.3 1.1 1.6l.9.4c.6.3.6 1.1 0 1.4l-1.3.6c-.7.3-1.2 1-1.3 1.8-.1.9-.8 1.6-1.7 1.6H9.6c-.9 0-1.6-.7-1.7-1.6-.1-.8-.6-1.5-1.3-1.8l-1.3-.6c-.6-.3-.6-1.1 0-1.4l.9-.4c.7-.3 1.1-.9 1.1-1.6V7.7C7.3 5.1 9.4 3 12 3Z"
+          fill="currentColor"/>
+      </svg>`;
+    }
+
+    function svgDiscord(){
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M19.5 6.3A15.2 15.2 0 0 0 16 5l-.4.8a13.3 13.3 0 0 0-3.2-.4c-1.1 0-2.2.1-3.2.4L8.8 5A15.2 15.2 0 0 0 5.3 6.3C3.6 9 3.2 11.6 3.4 14.2c1.4 1.1 2.8 1.7 4.2 2l.5-1a9.8 9.8 0 0 1-1.4-.7l.3-.2c2.7 1.2 5.7 1.2 8.4 0l.3.2c-.5.3-.9.5-1.4.7l.5 1c1.4-.3 2.8-.9 4.2-2 .2-2.6-.2-5.2-1.9-7.9Z"
+          fill="currentColor"/>
+        <path d="M9.3 13.2a1.3 1.3 0 1 1 0-2.6a1.3 1.3 0 0 1 0 2.6Zm5.4 0a1.3 1.3 0 1 1 0-2.6a1.3 1.3 0 0 1 0 2.6Z"
+          fill="#05070a" opacity=".55"/>
+      </svg>`;
+    }
+
+    function svgSpotify(){
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 3.5a8.5 8.5 0 1 0 0 17a8.5 8.5 0 0 0 0-17Z" fill="currentColor" opacity=".25"/>
+        <path d="M7.6 10.2c2.9-1 6.2-.8 8.8.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M8.2 12.8c2.4-.8 5.1-.6 7.2.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+        <path d="M8.8 15c1.8-.6 3.8-.4 5.4.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".85"/>
+      </svg>`;
+    }
+
+    function svgTwitch(){
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M6 4h15v10l-4 4h-4l-2 2H9v-2H6V4Z" fill="currentColor" opacity=".92"/>
+        <path d="M15 8v4M18 8v4" stroke="#05070a" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+      </svg>`;
+    }
+
+    function svgGithub(){
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 3.5a8.8 8.8 0 0 0-2.8 17.2c.4.1.6-.2.6-.4v-1.4c-2.4.6-2.9-1-2.9-1-.4-1.1-1-1.4-1-1.4-.8-.6.1-.6.1-.6.9.1 1.4 1 1.4 1 .8 1.4 2.2 1 2.7.8.1-.6.3-1 .6-1.3-1.9-.2-3.8-1-3.8-4.2 0-.9.3-1.7.9-2.3-.1-.2-.4-1.1.1-2.2 0 0 .7-.2 2.4.9a8.2 8.2 0 0 1 4.4 0c1.7-1.1 2.4-.9 2.4-.9.5 1.1.2 2 .1 2.2.6.6.9 1.4.9 2.3 0 3.2-1.9 4-3.8 4.2.3.2.6.8.6 1.6v2.4c0 .2.2.5.6.4A8.8 8.8 0 0 0 12 3.5Z"
+          fill="currentColor"/>
+      </svg>`;
+    }
+
     function svgLink(){
-      return `<svg viewBox="0 0 24 24" fill="none">
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
         <path d="M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>`;
     }
-    function svgX(){
-      return `<svg viewBox="0 0 24 24" fill="none">
-        <path d="M8 6h3l5 12h-3L8 6Z" fill="currentColor" opacity=".92"/>
-        <path d="M16 6h-3L8 18h3l5-12Z" fill="currentColor" opacity=".55"/>
-      </svg>`;
-    }
-    function svgInstagram(){
-      return `<svg viewBox="0 0 24 24" fill="none">
-        <rect x="6" y="6" width="12" height="12" rx="4" stroke="currentColor" stroke-width="2"/>
-        <path d="M12 10a2 2 0 1 0 0 4a2 2 0 0 0 0-4Z" stroke="currentColor" stroke-width="2"/>
-        <path d="M16.2 7.8h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-      </svg>`;
-    }
-    function svgTikTok(){
-      return `<svg viewBox="0 0 24 24" fill="none">
-        <path d="M14 6v9.2a3.2 3.2 0 1 1-2-3V6h2Z" fill="currentColor" opacity=".9"/>
-        <path d="M14 6c.9 1.8 2.2 2.9 4 3.3V11c-1.7-.2-3.1-.9-4-2V6Z" fill="currentColor" opacity=".55"/>
-      </svg>`;
-    }
-    function svgYouTube(){
-      return `<svg viewBox="0 0 24 24" fill="none">
-        <path d="M21 12c0 3.3-.4 4.6-1.1 5.3-.7.7-2 .9-3.9 1H8c-1.9-.1-3.2-.3-3.9-1C3.4 16.6 3 15.3 3 12s.4-4.6 1.1-5.3C4.8 6 6.1 5.8 8 5.7h8c1.9.1 3.2.3 3.9 1C20.6 7.4 21 8.7 21 12Z" stroke="currentColor" stroke-width="2" opacity=".95"/>
-        <path d="M11 10l4 2-4 2v-4Z" fill="currentColor"/>
-      </svg>`;
-    }
-    function svgFacebook(){
-      return `<svg viewBox="0 0 24 24" fill="none">
-        <path d="M13 10h3V7h-3c-2.2 0-4 1.8-4 4v3H7v3h2v4h3v-4h3l1-3h-4v-3c0-.6.4-1 1-1Z" fill="currentColor" opacity=".9"/>
-      </svg>`;
-    }
-    function svgLinkedIn(){
-      return `<svg viewBox="0 0 24 24" fill="none">
-        <path d="M7 10v10H4V10h3Z" fill="currentColor" opacity=".9"/>
-        <path d="M5.5 4.5A1.5 1.5 0 1 0 5.5 7.5A1.5 1.5 0 0 0 5.5 4.5Z" fill="currentColor" opacity=".9"/>
-        <path d="M20 20h-3v-5.4c0-1.3-.5-2.2-1.7-2.2-1 0-1.6.7-1.8 1.3-.1.2-.1.6-.1.9V20h-3s.04-8.7 0-10h3v1.4c.4-.7 1.2-1.7 3-1.7 2.2 0 3.6 1.4 3.6 4.4V20Z" fill="currentColor" opacity=".75"/>
-      </svg>`;
-    }
-    function svgWhatsApp(){
-      return `<svg viewBox="0 0 24 24" fill="none">
-        <path d="M12 4a8 8 0 0 0-6.9 12l-1.1 4 4-1.1A8 8 0 1 0 12 4Z" stroke="currentColor" stroke-width="2" opacity=".95"/>
-        <path d="M9.7 9.5c.2-.3.4-.3.6-.2l.7.4c.2.1.3.3.2.6-.1.3-.2.6-.1.8.2.5 1.1 1.6 2.1 2 .3.1.6.1.8-.1l.5-.5c.2-.2.4-.2.6-.1l.8.4c.2.1.3.3.2.6-.1.5-.5 1.2-1.4 1.3-1.5.2-3.6-1-5-2.6-1.2-1.3-2.2-3.4-2-4.9.1-.9.8-1.2 1-1.4Z" fill="currentColor" opacity=".85"/>
-      </svg>`;
-    }
+
     function svgMail(){
-      return `<svg viewBox="0 0 24 24" fill="none">
+      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M4 7h16v10H4V7Z" stroke="currentColor" stroke-width="2"/>
         <path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>`;
-    }
-    function svgTelegram(){
-      return `<svg viewBox="0 0 24 24" fill="none">
-        <path d="M20.7 5.6 18 19.2c-.2 1-1 .9-1.6.6l-4.6-3.4-2.2 2.1c-.2.2-.4.4-.8.4l.3-5.1 9.3-8.4c.4-.3-.1-.5-.6-.2l-11.5 7.2-5-1.6c-1.1-.3-1.1-1.1.2-1.6l17.7-6.8c.8-.3 1.5.2 1.3 1.2Z"
-          fill="currentColor" opacity=".92"/>
       </svg>`;
     }
   </script>
