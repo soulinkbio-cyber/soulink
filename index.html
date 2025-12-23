@@ -1,176 +1,308 @@
 <!doctype html>
 <html lang="es" data-theme="dark">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="theme-color" content="#0b0f14" />
-<title>soulink.bio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b0f14" />
+  <title>soulink.bio</title>
 
-<style>
-:root{
-  --bg0:#05070a; --bg1:#0b0f14;
-  --card:#0e141b; --card2:#0b1117;
-  --text:#e9eef5; --muted:#9aa7b5;
-  --stroke:rgba(255,255,255,.10); --stroke2:rgba(255,255,255,.06);
-  --shadow:0 18px 60px rgba(0,0,0,.55);
-  --radius:22px; --maxw:540px;
-}
-html[data-theme="light"]{
-  --bg0:#f7f9fb; --bg1:#eef3f7;
-  --card:#ffffff; --card2:#f7f9fb;
-  --text:#0b0f14; --muted:#566474;
-  --stroke:rgba(10,15,20,.14); --stroke2:rgba(10,15,20,.08);
-  --shadow:0 18px 50px rgba(0,0,0,.12);
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-  color:var(--text);
-  min-height:100svh;
-  background:
-    radial-gradient(1200px 650px at 18% 12%, rgba(120,170,255,.14), transparent 55%),
-    radial-gradient(900px 520px at 82% 18%, rgba(220,240,255,.18), transparent 50%),
-    linear-gradient(160deg, var(--bg0), var(--bg1));
-}
-.wrap{max-width:var(--maxw); margin:0 auto; padding:26px 16px;}
-.card{
-  border-radius:var(--radius);
-  border:1px solid var(--stroke2);
-  background:linear-gradient(180deg, var(--card), var(--card2));
-  box-shadow:var(--shadow);
-  position:relative;
-}
-.topTools{position:absolute;top:12px;right:12px;}
-.toggleBtn{
-  width:36px;height:36px;border-radius:12px;
-  border:1px solid var(--stroke2);background:transparent;
-  color:var(--text);cursor:pointer;
-}
-.profile{text-align:center;padding:26px 18px 6px;}
-.username{margin:0;font-size:22px;font-weight:900;}
-.handle{margin:4px 0 0;font-size:12px;color:var(--muted);}
+  <style>
+    :root{
+      --bg0:#05070a; --bg1:#0b0f14;
+      --card:#0e141b; --card2:#0b1117;
+      --text:#e9eef5; --muted:#9aa7b5;
+      --stroke2:rgba(255,255,255,.06);
+      --shadow:0 18px 60px rgba(0,0,0,.55);
+      --radius:22px; --maxw:540px;
+    }
+    html[data-theme="light"]{
+      --bg0:#f7f9fb; --bg1:#eef3f7;
+      --card:#ffffff; --card2:#f7f9fb;
+      --text:#0b0f14; --muted:#566474;
+      --stroke2:rgba(10,15,20,.08);
+      --shadow:0 18px 50px rgba(0,0,0,.12);
+    }
 
-.iconsWrap{padding:18px;}
-.icons{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
-@media(max-width:420px){.icons{grid-template-columns:repeat(4,1fr);}}
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      color:var(--text);
+      min-height:100svh;
+      background:
+        radial-gradient(1200px 650px at 18% 12%, rgba(120,170,255,.14), transparent 55%),
+        radial-gradient(900px 520px at 82% 18%, rgba(220,240,255,.18), transparent 50%),
+        linear-gradient(160deg, var(--bg0), var(--bg1));
+    }
 
-/* ICONOS CIRCULARES */
-.iconBtn{
-  width:64px;height:64px;border-radius:999px;
-  display:grid;place-items:center;
-  text-decoration:none;
-  background:var(--bgColor,#111827);
-  transition:.15s;
-  box-shadow:
-    0 10px 22px rgba(0,0,0,.25),
-    inset 0 0 0 1px rgba(255,255,255,.08);
-}
-html[data-theme="light"] .iconBtn{
-  box-shadow:
-    0 10px 22px rgba(0,0,0,.12),
-    inset 0 0 0 1px rgba(10,15,20,.08);
-}
-.iconBtn:hover{transform:translateY(-2px);filter:brightness(1.06);}
-.iconBtn:active{transform:scale(.96);}
-.iconBtn svg{
-  width:28px;height:28px;
-  color:var(--fgColor,#fff);
-}
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:26px 16px;}
+    .card{
+      border-radius:var(--radius);
+      border:1px solid var(--stroke2);
+      background:linear-gradient(180deg, var(--card), var(--card2));
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
 
-.state{text-align:center;font-size:13px;color:var(--muted);}
-.footer{text-align:center;font-size:12px;color:var(--muted);padding:14px;}
-</style>
+    .topTools{ position:absolute; top:12px; right:12px; }
+    .toggleBtn{
+      width:36px; height:36px;
+      border-radius:12px;
+      border:1px solid var(--stroke2);
+      background:transparent;
+      color:var(--text);
+      cursor:pointer;
+      font-size:16px;
+    }
+
+    .profile{ padding:26px 18px 6px; text-align:center; }
+    .username{ margin:0; font-size:22px; font-weight:900; letter-spacing:.2px; }
+    .handle{ margin:4px 0 0; font-size:12px; color:var(--muted); }
+
+    .iconsWrap{ padding:18px 18px 22px; }
+    .icons{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:14px;
+      justify-items:center;
+    }
+    @media(max-width:420px){ .icons{grid-template-columns:repeat(4,1fr);} }
+
+    /* ICONOS CIRCULARES SOLIDOS (como tu referencia) */
+    .iconBtn{
+      width:64px; height:64px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      text-decoration:none;
+      background:var(--bgColor,#111827);
+      transition:transform .15s, filter .15s, box-shadow .15s;
+      box-shadow:
+        0 10px 22px rgba(0,0,0,.25),
+        inset 0 0 0 1px rgba(255,255,255,.08);
+    }
+    html[data-theme="light"] .iconBtn{
+      box-shadow:
+        0 10px 22px rgba(0,0,0,.12),
+        inset 0 0 0 1px rgba(10,15,20,.08);
+    }
+    .iconBtn:hover{ transform:translateY(-2px); filter:brightness(1.06); }
+    .iconBtn:active{
+      transform:scale(.96);
+      box-shadow:
+        0 0 0 6px rgba(120,170,255,.18),
+        0 10px 22px rgba(0,0,0,.25),
+        inset 0 0 0 1px rgba(255,255,255,.10);
+    }
+    .iconBtn svg{ width:28px; height:28px; color:var(--fgColor,#fff); }
+
+    .state{ padding:0 16px 16px; text-align:center; font-size:13px; color:var(--muted); }
+    .footer{ padding:14px 16px 18px; text-align:center; font-size:12px; color:var(--muted); }
+  </style>
 </head>
 
 <body>
 <div class="wrap">
-<div class="card">
-  <div class="topTools">
-    <button class="toggleBtn" id="themeBtn">🌓</button>
-  </div>
+  <div class="card">
+    <div class="topTools">
+      <button class="toggleBtn" id="themeBtn" aria-label="Cambiar tema">🌓</button>
+    </div>
 
-  <div class="profile">
-    <h1 class="username" id="nameText">@soulink</h1>
-    <p class="handle" id="handleText">soulink.bio/@soulink</p>
-  </div>
+    <div class="profile">
+      <h1 class="username" id="nameText">@soulink</h1>
+      <p class="handle" id="handleText">soulink.bio/@soulink</p>
+    </div>
 
-  <div class="iconsWrap">
-    <div class="icons" id="icons"></div>
-  </div>
+    <div class="iconsWrap">
+      <div class="icons" id="icons"></div>
+    </div>
 
-  <div class="state" id="state"></div>
-  <div class="footer">© soulink.bio</div>
-</div>
+    <div class="state" id="state"></div>
+    <div class="footer">© soulink.bio</div>
+  </div>
 </div>
 
 <script>
-const DEFAULT_USERNAME="soulink";
-const SHEETS_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
+/*** CONFIG ***/
+const DEFAULT_USERNAME = "soulink";
+const SHEETS_CSV_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
 
-/* COLORES */
-const BRAND_BG={
- email:"#6b7280",x:"#000",facebook:"#1877F2",instagram:"#E1306C",
- whatsapp:"#25D366",threads:"#000",tiktok:"#000",snapchat:"#FFFC00",
- youtube:"#FF0000",twitch:"#9146FF",telegram:"#229ED9",
- discord:"#5865F2",github:"#111827",linkedin:"#0A66C2",
- reddit:"#FF4500",pinterest:"#E60023"
+/*** COLORES (BG/FG) ***/
+const BRAND_BG = {
+  email:"#6b7280",
+  x:"#000000",
+  facebook:"#1877F2",
+  instagram:"#E1306C",
+  whatsapp:"#25D366",
+  threads:"#000000",
+  tiktok:"#000000",
+  snapchat:"#FFFC00",
+  youtube:"#FF0000",
+  twitch:"#9146FF",
+  telegram:"#229ED9",
+  discord:"#5865F2",
+  github:"#111827",
+  linkedin:"#0A66C2",
+  reddit:"#FF4500",
+  pinterest:"#E60023"
 };
-const BRAND_FG={snapchat:"#000"};
+const BRAND_FG = { snapchat:"#000000" };
 
-const ICONS={
- email:`<svg viewBox="0 0 24 24"><path d="M4 7h16v10H4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="2"/></svg>`,
- x:`<svg viewBox="0 0 24 24"><path d="M18.2 3H21l-6.6 7.6L22 21h-6.6l-5.2-6.8L4.7 21H2l7.2-8.3L2 3h6.8l4.7 6.2Z" fill="currentColor"/></svg>`,
- facebook:`<svg viewBox="0 0 24 24"><path d="M14 8h3V5h-3c-2.2 0-4 1.8-4 4v3H7v3h3v6h3v-6h3l1-3h-4V9c0-.6.4-1 1-1Z" fill="currentColor"/></svg>`,
- instagram:`<svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/></svg>`,
- whatsapp:`<svg viewBox="0 0 24 24"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.5-1.1A8.5 8.5 0 1 0 12 3.5Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.7 9.5c.2-.3.4-.3.6-.2l.7.4c.2.1.3.3.2.6-.1.3-.2.6-.1.8.2.5 1.1 1.6 2.1 2 .3.1.6.1.8-.1l.5-.5c.2-.2.4-.2.6-.1l.8.4c.2.1.3.3.2.6-.1.5-.5 1.2-1.4 1.3-1.5.2-3.6-1-5-2.6Z" fill="currentColor"/></svg>`,
- threads:`<svg viewBox="0 0 24 24"><path d="M12 3.5c4.7 0 8.5 3.4 8.5 8.1 0 4.8-3 8.9-8.4 8.9-3.9 0-6.4-2-7.2-5.1" fill="none" stroke="currentColor" stroke-width="2"/></svg>`
+/*** ICONOS SVG (nítidos) ***/
+const ICONS = {
+  email: `<svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16v10H4V7Z" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  x: `<svg viewBox="0 0 24 24"><path d="M18.2 3H21l-6.6 7.6L22 21h-6.6l-5.2-6.8L4.7 21H2l7.2-8.3L2 3h6.8l4.7 6.2L18.2 3Z" fill="currentColor"/></svg>`,
+  facebook: `<svg viewBox="0 0 24 24"><path d="M14 8h3V5h-3c-2.2 0-4 1.8-4 4v3H7v3h3v6h3v-6h3l1-3h-4V9c0-.6.4-1 1-1Z" fill="currentColor"/></svg>`,
+  instagram: `<svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path d="M17.2 6.8h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`,
+  whatsapp: `<svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.5-1.1A8.5 8.5 0 1 0 12 3.5Z" stroke="currentColor" stroke-width="2" opacity=".9"/><path d="M9.7 9.5c.2-.3.4-.3.6-.2l.7.4c.2.1.3.3.2.6-.1.3-.2.6-.1.8.2.5 1.1 1.6 2.1 2 .3.1.6.1.8-.1l.5-.5c.2-.2.4-.2.6-.1l.8.4c.2.1.3.3.2.6-.1.5-.5 1.2-1.4 1.3-1.5.2-3.6-1-5-2.6-1.2-1.3-2.2-3.4-2-4.9.1-.9.8-1.2 1-1.4Z" fill="currentColor"/></svg>`,
+  threads: `<svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5c4.7 0 8.5 3.4 8.5 8.1 0 4.8-3 8.9-8.4 8.9-3.9 0-6.4-2-7.2-5.1-.3-1.1-.2-2.2.1-3.1.8-2.5 3.2-3.7 5.8-3.7 2.5 0 4.6 1.1 5.4 3.1.8 2.2-.2 4.7-3.2 5.6-1.8.5-3.8.2-4.9-1.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+  tiktok: `<svg viewBox="0 0 24 24" fill="none"><path d="M14 3v9.2a3.8 3.8 0 1 1-2.6-3.6V3H14Z" fill="currentColor"/><path d="M14 3c1.2 2.4 3.1 3.9 5.6 4.3v2.6c-2.3-.3-4.2-1.4-5.6-3V3Z" fill="currentColor" opacity=".55"/></svg>`,
+  snapchat: `<svg viewBox="0 0 24 24"><path d="M12 3c2.6 0 4.7 2.1 4.7 4.7v3.3c0 .7.4 1.3 1.1 1.6l.9.4c.6.3.6 1.1 0 1.4l-1.3.6c-.7.3-1.2 1-1.3 1.8-.1.9-.8 1.6-1.7 1.6H9.6c-.9 0-1.6-.7-1.7-1.6-.1-.8-.6-1.5-1.3-1.8l-1.3-.6c-.6-.3-.6-1.1 0-1.4l.9-.4c.7-.3 1.1-.9 1.1-1.6V7.7C7.3 5.1 9.4 3 12 3Z" fill="currentColor"/></svg>`,
+  youtube: `<svg viewBox="0 0 24 24" fill="none"><path d="M21.5 12c0 3.6-.5 5.1-1.4 6-.9.9-2.5 1.1-4.9 1.2H9.8c-2.4-.1-4-.3-4.9-1.2C4 17.1 3.5 15.6 3.5 12s.5-5.1 1.4-6C5.8 5.1 7.4 4.9 9.8 4.8h5.4c2.4.1 4 .3 4.9 1.2.9.9 1.4 2.4 1.4 6Z" fill="currentColor" opacity=".25"/><path d="M10.5 9.5v5l5-2.5-5-2.5Z" fill="currentColor"/></svg>`,
+  twitch: `<svg viewBox="0 0 24 24" fill="none"><path d="M6 4h15v10l-4 4h-4l-2 2H9v-2H6V4Z" fill="currentColor" opacity=".92"/><path d="M15 8v4M18 8v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".35"/></svg>`,
+  telegram: `<svg viewBox="0 0 24 24" fill="none"><path d="M20.7 5.6 18 19.2c-.2 1-1 .9-1.6.6l-4.6-3.4-2.2 2.1c-.2.2-.4.4-.8.4l.3-5.1 9.3-8.4c.4-.3-.1-.5-.6-.2l-11.5 7.2-5-1.6c-1.1-.3-1.1-1.1.2-1.6l17.7-6.8c.8-.3 1.5.2 1.3 1.2Z" fill="currentColor"/></svg>`,
+  discord: `<svg viewBox="0 0 24 24" fill="none"><path d="M19.5 6.3A15.2 15.2 0 0 0 16 5l-.4.8a13.3 13.3 0 0 0-3.2-.4c-1.1 0-2.2.1-3.2.4L8.8 5A15.2 15.2 0 0 0 5.3 6.3C3.6 9 3.2 11.6 3.4 14.2c1.4 1.1 2.8 1.7 4.2 2l.5-1a9.8 9.8 0 0 1-1.4-.7l.3-.2c2.7 1.2 5.7 1.2 8.4 0l.3.2c-.5.3-.9.5-1.4.7l.5 1c1.4-.3 2.8-.9 4.2-2 .2-2.6-.2-5.2-1.9-7.9Z" fill="currentColor"/></svg>`,
+  github: `<svg viewBox="0 0 24 24"><path d="M12 3.5a8.8 8.8 0 0 0-2.8 17.2c.4.1.6-.2.6-.4v-1.4c-2.4.6-2.9-1-2.9-1-.4-1.1-1-1.4-1-1.4-.8-.6.1-.6.1-.6.9.1 1.4 1 1.4 1 .8 1.4 2.2 1 2.7.8.1-.6.3-1 .6-1.3-1.9-.2-3.8-1-3.8-4.2 0-.9.3-1.7.9-2.3-.1-.2-.4-1.1.1-2.2 0 0 .7-.2 2.4.9a8.2 8.2 0 0 1 4.4 0c1.7-1.1 2.4-.9 2.4-.9.5 1.1.2 2 .1 2.2.6.6.9 1.4.9 2.3 0 3.2-1.9 4-3.8 4.2.3.2.6.8.6 1.6v2.4c0 .2.2.5.6.4A8.8 8.8 0 0 0 12 3.5Z" fill="currentColor"/></svg>`,
+  linkedin: `<svg viewBox="0 0 24 24"><path d="M6.3 9.7H3.6V20.4h2.7V9.7Z" fill="currentColor"/><path d="M5 3.6a1.6 1.6 0 1 0 0 3.2a1.6 1.6 0 0 0 0-3.2Z" fill="currentColor"/><path d="M20.4 20.4h-2.7v-5.8c0-1.4-.6-2.3-1.8-2.3-1 0-1.6.7-1.8 1.3-.1.2-.1.6-.1.9v5.9H11.3V9.7H14v1.5c.5-.8 1.4-1.8 3.2-1.8 2.3 0 3.9 1.5 3.9 4.6v6.4Z" fill="currentColor" opacity=".95"/></svg>`,
+  reddit: `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="6.2" fill="currentColor" opacity=".25"/><path d="M8.2 14.1c1.2 1.2 2.6 1.6 3.8 1.6s2.6-.4 3.8-1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9.6" cy="12" r="1" fill="currentColor"/><circle cx="14.4" cy="12" r="1" fill="currentColor"/></svg>`,
+  pinterest: `<svg viewBox="0 0 24 24" fill="none"><path d="M12 3.2a8.8 8.8 0 0 0-3 17.1c-.1-.7-.2-1.8 0-2.6l1.5-6.1s-.4-.8-.4-2c0-1.9 1.1-3.3 2.4-3.3 1.1 0 1.7.8 1.7 1.8 0 1.1-.7 2.7-1 4.2-.3 1.3.6 2.3 1.9 2.3 2.2 0 3.9-2.3 3.9-5.6 0-2.9-2.1-5-5.1-5-3.5 0-5.5 2.6-5.5 5.3 0 1.1.4 2.2.9 2.8.1.1.1.2.1.4l-.3 1.2c-.1.4-.4.5-.7.3-1-.5-1.6-2.1-1.6-3.4 0-2.8 2-6.7 7.2-6.7 3.8 0 6.7 2.7 6.7 6.3 0 3.8-2.4 6.9-5.7 6.9-1.1 0-2.2-.6-2.6-1.3l-.7 2.7c-.2.8-.8 1.9-1.2 2.6.9.3 1.9.5 2.9.5a8.8 8.8 0 0 0 0-17.6Z" fill="currentColor"/></svg>`
 };
 
-const ORDER=["email","x","facebook","instagram","whatsapp","threads","tiktok","snapchat","youtube","twitch","telegram","discord","github","linkedin","reddit","pinterest"];
+/*** ORDER (columnas) ***/
+const ORDER = [
+  "email","x","facebook","instagram","whatsapp","threads","tiktok","snapchat",
+  "youtube","twitch","telegram","discord","github","linkedin","reddit","pinterest"
+];
 
-document.addEventListener("DOMContentLoaded",init);
+/*** INIT ***/
+document.addEventListener("DOMContentLoaded", () => init());
 
-function getUser(){
-  const m=location.pathname.match(/^\/@([^\/?#]+)/);
-  return (m?m[1]:DEFAULT_USERNAME).replace("@","");
+function usernameFromPath(){
+  const path = decodeURIComponent(location.pathname || "/");
+  const match = path.match(/^\/@([^\/?#]+)/);
+  return match ? match[1].replace(/^@/,"") : null;
 }
 
-async function init(){
-  const u=getUser();
-  nameText.textContent="@"+u;
-  handleText.textContent="soulink.bio/@"+u;
-  loadLinks(u);
+async function init(forceUser){
+  const u = (forceUser
+      || new URL(location.href).searchParams.get("u")
+      || usernameFromPath()
+      || DEFAULT_USERNAME
+    ).toString().trim().replace(/^@/,"");
+
+  document.getElementById("nameText").textContent = "@"+u;
+  document.getElementById("handleText").textContent = "soulink.bio/@"+u;
+
+  await loadLinks(u);
 }
 
 async function loadLinks(u){
-  state.textContent="Cargando…";
-  const res=await fetch(SHEETS_CSV_URL,{cache:"no-store"});
-  const txt=await res.text();
-  const lines=txt.split("\n").map(l=>l.split(","));
-  const headers=lines[0];
-  const row=lines.find(r=>(r[headers.indexOf("username")]||"").toLowerCase()===u.toLowerCase());
-  if(!row){state.textContent="Usuario no encontrado";return;}
-  icons.innerHTML="";
-  ORDER.forEach(type=>{
-    const i=headers.indexOf(type);
-    if(i===-1||!row[i])return;
-    const a=document.createElement("a");
-    a.className="iconBtn";
-    a.href=row[i].startsWith("http")?row[i]:"https://"+row[i];
-    a.target="_blank";
-    a.style.setProperty("--bgColor",BRAND_BG[type]||"#111");
-    a.style.setProperty("--fgColor",BRAND_FG[type]||"#fff");
-    a.innerHTML=ICONS[type]||"";
-    icons.appendChild(a);
-  });
-  state.textContent="";
+  setState("Cargando…");
+
+  const res = await fetch(SHEETS_CSV_URL, {cache:"no-store"});
+  const txt = await res.text();
+
+  const {headers, rows} = parseCSV(txt);
+  const idxUser = headers.indexOf("username");
+
+  if(idxUser === -1){
+    setState("Error: falta columna username");
+    return;
+  }
+
+  const row = rows.find(r => (r[idxUser]||"").toLowerCase() === u.toLowerCase());
+
+  if(!row){
+    renderIcons([]);
+    setState("Usuario no encontrado");
+    return;
+  }
+
+  const links = [];
+  for(const type of ORDER){
+    const idx = headers.indexOf(type);
+    if(idx === -1) continue;
+
+    const raw = (row[idx] || "").trim();
+    if(!raw) continue;
+
+    let url = raw;
+    if(type === "email"){
+      if(!/^mailto:/i.test(url)) url = "mailto:"+url;
+    }else{
+      if(!/^https?:\/\//i.test(url)) url = "https://"+url;
+    }
+    links.push({type, url});
+  }
+
+  renderIcons(links);
+  setState(links.length ? "" : "No hay redes guardadas todavía.");
 }
 
-themeBtn.onclick=()=>{
-  document.documentElement.dataset.theme=
-    document.documentElement.dataset.theme==="dark"?"light":"dark";
+function renderIcons(links){
+  const box = document.getElementById("icons");
+  box.innerHTML = "";
+
+  links.forEach(l=>{
+    const a = document.createElement("a");
+    a.className = "iconBtn";
+    a.href = l.url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.title = l.type.toUpperCase();
+
+    a.style.setProperty("--bgColor", BRAND_BG[l.type] || "#111827");
+    a.style.setProperty("--fgColor", BRAND_FG[l.type] || "#ffffff");
+    a.innerHTML = ICONS[l.type] || "";
+
+    box.appendChild(a);
+  });
+}
+
+function setState(msg){
+  document.getElementById("state").textContent = msg || "";
+}
+
+document.getElementById("themeBtn").onclick = ()=>{
+  const h = document.documentElement;
+  h.dataset.theme = (h.dataset.theme === "dark") ? "light" : "dark";
 };
+
+/*** CSV PARSER ROBUSTO ***/
+function parseCSV(text){
+  const lines = text.replace(/\r/g,"").split("\n").filter(l => l.trim().length);
+  if(!lines.length) return {headers:[], rows:[]};
+
+  const headers = splitCSVLine(lines[0]).map(h => normalizeHeader(h));
+  const rows = lines.slice(1).map(splitCSVLine).map(r => r.map(v => (v||"").trim()));
+  return {headers, rows};
+}
+
+function splitCSVLine(line){
+  const out=[]; let cur=""; let q=false;
+  for(let i=0;i<line.length;i++){
+    const ch=line[i];
+    if(ch === '"' && line[i+1] === '"'){ cur+='"'; i++; continue; }
+    if(ch === '"'){ q=!q; continue; }
+    if(ch === "," && !q){ out.push(cur); cur=""; continue; }
+    cur += ch;
+  }
+  out.push(cur);
+  return out;
+}
+
+function normalizeHeader(h){
+  const clean = String(h||"").trim().toLowerCase()
+    .replace(/\s+/g,"")
+    .replace(/_/g,"")
+    .replace(/-/g,"");
+
+  if(clean === "threats" || clean === "threads") return "threads";
+  if(clean === "linkedln" || clean === "linkedin") return "linkedin";
+  return clean;
+}
 </script>
 </body>
 </html>
