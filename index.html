@@ -1,112 +1,703 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b0f14" />
   <title>Soulink • Perfil</title>
+
   <style>
-    :root { --fg:#111; --muted:#666; --soft:#f6f6f6; }
-    * { box-sizing: border-box }
-    body { margin:0; font-family:-apple-system,system-ui,Segoe UI,Roboto,Inter,Arial,sans-serif; color:var(--fg); background:#fff }
-    .wrap { max-width:720px; margin:0 auto; padding:28px 18px; text-align:center }
-    .avatar { width:120px; height:120px; border-radius:999px; object-fit:cover; border:1px solid #eee; background:var(--soft) }
-    .uname { font-size:26px; font-weight:800; margin:12px 0 2px }
-    .name { color:var(--muted); margin-bottom:12px }
-    .buttons a { display:block; margin:10px 0; padding:14px; border-radius:12px; text-decoration:none; color:#fff; font-weight:800 }
-    .ig { background:#d62976 } .fb { background:#1877f2 } .tt { background:#000 } .yt { background:#ff0000 } .wa { background:#25d366; color:#003b16 } .em { background:#6d6d6d }
-    .msg { margin-top:14px; color:#b00020; background:#fff7f7; border:1px solid #ffd6d6; border-radius:10px; padding:12px }
-    .foot { margin-top:18px; color:#888; font-size:12px }
-    .skeleton { animation:pulse 1.2s ease-in-out infinite; background:#eee }
-    @keyframes pulse { 0%{opacity:.6} 50%{opacity:1} 100%{opacity:.6} }
+    :root{
+      --bg0:#05070a;
+      --bg1:#0b0f14;
+      --card:#0e141b;
+      --card2:#0b1117;
+      --text:#e9eef5;
+      --muted:#9aa7b5;
+      --stroke:rgba(255,255,255,.10);
+      --stroke2:rgba(255,255,255,.06);
+      --glow:rgba(255,255,255,.08);
+      --btn:#0f1720;
+      --btnHover:#121e2a;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius: 22px;
+      --avatar: 76px; /* << tamaño avatar */
+      --maxw: 520px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      min-height:100svh;
+      background:
+        radial-gradient(1200px 650px at 18% 12%, rgba(220,240,255,.10), transparent 55%),
+        radial-gradient(900px 520px at 82% 18%, rgba(120,170,255,.10), transparent 50%),
+        radial-gradient(900px 520px at 50% 90%, rgba(255,255,255,.06), transparent 52%),
+        linear-gradient(160deg, var(--bg0), var(--bg1) 55%, #060a10);
+      overflow-x:hidden;
+    }
+
+    /* “metal grain” */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(115deg, rgba(255,255,255,.06), transparent 35%, rgba(255,255,255,.04) 60%, transparent),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.016) 0 1px, transparent 1px 4px);
+      mix-blend-mode:overlay;
+      opacity:.55;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:var(--maxw);
+      margin:0 auto;
+      padding:28px 16px 26px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      margin-bottom:16px;
+      opacity:.92;
+      user-select:none;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      padding:10px 12px;
+      border:1px solid var(--stroke2);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border-radius:999px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+    }
+    .brandMark{
+      width:28px;height:28px;border-radius:10px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), rgba(255,255,255,.05));
+      border:1px solid var(--stroke);
+      display:grid;place-items:center;
+    }
+    .brandMark svg{opacity:.9}
+    .brandText{
+      font-weight:700;
+      letter-spacing:.2px;
+      font-size:14px;
+    }
+
+    .card{
+      border-radius:var(--radius);
+      border:1px solid var(--stroke2);
+      background:
+        radial-gradient(700px 240px at 40% 0%, rgba(255,255,255,.10), transparent 50%),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)),
+        linear-gradient(180deg, var(--card), var(--card2));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .header{
+      padding:20px 18px 10px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .avatar{
+      width:var(--avatar);
+      height:var(--avatar);
+      border-radius:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      border:1px solid var(--stroke);
+      box-shadow: 0 12px 26px rgba(0,0,0,.45);
+      overflow:hidden;
+      flex:0 0 auto;
+      position:relative;
+    }
+    .avatar::after{
+      content:"";
+      position:absolute;inset:-1px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.08);
+      pointer-events:none;
+    }
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .id{
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .username{
+      font-size:22px;
+      line-height:1.1;
+      font-weight:800;
+      letter-spacing:.2px;
+      margin:0;
+      word-break:break-word;
+    }
+    .handle{
+      color:var(--muted);
+      font-size:13px;
+      margin:0;
+    }
+
+    .socialRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      padding:0 18px 14px;
+      align-items:center;
+    }
+
+    .iconBtn{
+      width:42px;height:42px;
+      border-radius:14px;
+      border:1px solid var(--stroke2);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      display:grid;place-items:center;
+      color: rgba(233,238,245,.92);
+      text-decoration:none;
+      box-shadow: 0 10px 18px rgba(0,0,0,.30);
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .iconBtn:hover{
+      transform: translateY(-1px);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+      border-color: rgba(255,255,255,.14);
+    }
+    .iconBtn svg{width:20px;height:20px;display:block}
+
+    .links{
+      padding: 0 12px 14px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .link{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 14px;
+      border-radius:18px;
+      border:1px solid var(--stroke2);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
+      text-decoration:none;
+      color:var(--text);
+      box-shadow: 0 12px 22px rgba(0,0,0,.30);
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .link:hover{
+      transform: translateY(-1px);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+      border-color: rgba(255,255,255,.14);
+    }
+
+    .linkLeft{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .pill{
+      width:40px;height:40px;
+      border-radius:14px;
+      border:1px solid var(--stroke2);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      display:grid;place-items:center;
+      color: rgba(233,238,245,.92);
+      flex:0 0 auto;
+    }
+    .pill svg{width:18px;height:18px}
+    .linkTitle{
+      font-weight:700;
+      font-size:15px;
+      margin:0;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      max-width: 330px;
+    }
+    .chev{
+      opacity:.7;
+      flex:0 0 auto;
+    }
+
+    .footer{
+      padding:14px 16px 16px;
+      color:rgba(154,167,181,.85);
+      font-size:12px;
+      text-align:center;
+    }
+    .footer a{color:rgba(233,238,245,.9); text-decoration:none}
+    .footer a:hover{text-decoration:underline}
+
+    .state{
+      padding:14px 16px;
+      color: var(--muted);
+      font-size:13px;
+      text-align:center;
+    }
   </style>
 </head>
-<body>
-<div class="wrap">
-  <img id="avatar" class="avatar skeleton" alt="avatar" />
-  <div id="uname" class="uname skeleton" style="display:inline-block;min-width:140px;height:28px;border-radius:8px"></div>
-  <div id="realname" class="name skeleton" style="display:inline-block;min-width:200px;height:18px;border-radius:6px"></div>
 
-  <div id="btns" class="buttons">
-    <a id="btn-ig" class="ig" target="_blank" rel="noopener" style="display:none">Instagram</a>
-    <a id="btn-fb" class="fb" target="_blank" rel="noopener" style="display:none">Facebook</a>
-    <a id="btn-tt" class="tt" target="_blank" rel="noopener" style="display:none">TikTok</a>
-    <a id="btn-yt" class="yt" target="_blank" rel="noopener" style="display:none">YouTube</a>
-    <a id="btn-wa" class="wa" target="_blank" rel="noopener" style="display:none">WhatsApp</a>
-    <a id="btn-em" class="em" style="display:none">Email</a>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand" aria-label="Soulink">
+        <div class="brandMark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M7 12c0-4 3-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M17 12c0 4-3 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+            <path d="M9 12h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+          </svg>
+        </div>
+        <div class="brandText">Soulink</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="header">
+        <div class="avatar"><img id="avatarImg" alt="Avatar" /></div>
+        <div class="id">
+          <h1 class="username" id="nameText">@soulink</h1>
+          <p class="handle" id="handleText">soulink.bio/@soulink</p>
+        </div>
+      </div>
+
+      <div class="socialRow" id="socialRow"></div>
+
+      <div class="links" id="links"></div>
+
+      <div class="state" id="state"></div>
+      <div class="footer">© Soulink NFC</div>
+    </div>
   </div>
 
-  <div id="msg" class="msg" style="display:none"></div>
-  <div class="foot">© Soulink NFC</div>
-</div>
+  <script>
+    /***********************
+     * CONFIG
+     ***********************/
+    const DEFAULT_USERNAME = "soulink";
 
-<script>
-  // 1) USERNAME: soporta ?u=manu y /@manu
-  function getUsername() {
-    const q = new URLSearchParams(location.search);
-    const u = q.get('u');
-    if (u) return u.trim().toLowerCase();
-    const m = location.pathname.match(/\/@([^\/\?#]+)/);
-    if (m) return decodeURIComponent(m[1]).trim().toLowerCase();
-    return "";
-  }
+    // Pega aquí tu CSV publicado (Google Sheets → File → Share/Publish → CSV)
+    // Ejemplo: https://docs.google.com/spreadsheets/d/e/.../pub?output=csv
+    const SHEETS_CSV_URL = "PASTE_YOUR_PUBLISHED_CSV_URL";
 
-  // 2) URL del TSV publicado desde tu Google Sheet
-  // (Tomé tu pubhtml y lo convertí a TSV)
-  const SHEET_TSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=tsv";
+    // Columna mínima esperada:
+    // username | avatar | (opcional) display_name | (opcional) links (JSON)
+    // o columnas “wide”: instagram, tiktok, x, youtube, telegram, website, etc.
 
-  async function loadTSV() {
-    const res = await fetch(SHEET_TSV, { cache:'no-store' });
-    if (!res.ok) throw new Error('no_tsv');
-    const txt = await res.text();
-    const lines = txt.split(/\r?\n/).filter(l => l.trim() !== "");
-    const rows = lines.map(line => line.split('\t'));
-    const headers = rows[0].map(h => (h||"").trim().toLowerCase());
-    const data = rows.slice(1).map(r => {
-      const obj = {};
-      headers.forEach((h,i) => obj[h] = (r[i]||'').trim());
-      return obj;
-    });
-    const map = {};
-    data.forEach(obj => {
-      if (obj.username) map[obj.username.toLowerCase()] = obj;
-    });
-    return map;
-  }
+    /***********************
+     * ICONS (SVG)
+     ***********************/
+    const ICONS = {
+      website: svgLink(),
+      instagram: svgInstagram(),
+      tiktok: svgTikTok(),
+      x: svgX(),
+      twitter: svgX(),
+      youtube: svgYouTube(),
+      facebook: svgFacebook(),
+      linkedin: svgLinkedIn(),
+      telegram: svgTelegram(), // FIX: telegram visible
+      whatsapp: svgWhatsApp(),
+      email: svgMail(),
+    };
 
-  const $ = id => document.getElementById(id);
-  const showMsg = t => { const m=$('msg'); m.textContent=t; m.style.display='block'; };
-  const setHref = (id, url) => { const el=$(id); if(url){ el.href=url; el.style.display='block'; } };
-  const setMail = (id, email) => { const el=$(id); if(email){ el.href='mailto:'+email; el.style.display='block'; } };
+    const SOCIAL_ORDER = ["instagram","tiktok","x","youtube","telegram","facebook","linkedin","whatsapp","website","email"];
 
-  (async () => {
-    try {
-      const u = getUsername();
-      if (!u) { showMsg('Falta el usuario en el enlace. Usa ?u=manu360 o /@manu360'); return; }
+    /***********************
+     * RUNTIME
+     ***********************/
+    (async function init(){
+      await loadProfile(DEFAULT_USERNAME);
+    })();
 
-      const map = await loadTSV();
-      const p = map[u];
-      if (!p) { showMsg('No encontré este usuario en la hoja.'); return; }
+    async function loadProfile(username){
+      setState("Cargando perfil…");
+      const safeU = sanitizeUsername(username);
 
-      $('uname').classList.remove('skeleton');
-      $('realname').classList.remove('skeleton');
-      $('avatar').classList.remove('skeleton');
+      document.title = `Soulink • @${safeU}`;
+      document.getElementById("nameText").textContent = `@${safeU}`;
+      document.getElementById("handleText").textContent = `soulink.bio/@${safeU}`;
 
-      $('uname').textContent = '@' + (p.username || u);
-      $('realname').textContent = p.name || p.username || u;
-      $('avatar').src = p.avatar || 'https://i.pravatar.cc/300?img=12';
+      // fallback avatar (si no hay)
+      setAvatar(makeFallbackAvatar(safeU));
 
-      const wa = p.wa || p.whatsapp || "";
-      setHref('btn-ig', p.instagram);
-      setHref('btn-fb', p.facebook);
-      setHref('btn-tt', p.tiktok);
-      setHref('btn-yt', p.youtube);
-      setHref('btn-wa', wa);
-      setMail('btn-em', p.email);
-    } catch (e) {
-      showMsg('No pude leer datos. Verifica que la hoja esté publicada y accesible.');
-      console.error(e);
+      try{
+        const row = await fetchUserRowFromCSV(SHEETS_CSV_URL, safeU);
+        if(!row){
+          setState("Este usuario todavía no existe en la base de datos.");
+          renderSocial([]);
+          renderLinks([]);
+          return;
+        }
+
+        const avatar = row.avatar || row.avatar_url || row.pfp || row.profile_picture || "";
+        if(avatar) setAvatar(avatar);
+
+        // Links: JSON o formato wide
+        const links = normalizeLinks(row);
+
+        renderSocial(links);
+        renderLinks(links);
+
+        setState("");
+      }catch(err){
+        console.error(err);
+        setState("No pude cargar la data ahora mismo. Verifica el URL del CSV y que esté publicado.");
+        renderSocial([]);
+        renderLinks([]);
+      }
     }
-  })();
-</script>
+
+    function renderSocial(links){
+      const row = document.getElementById("socialRow");
+      row.innerHTML = "";
+
+      const socials = links
+        .filter(l => isSocialType(l.type))
+        .sort((a,b) => SOCIAL_ORDER.indexOf(a.type) - SOCIAL_ORDER.indexOf(b.type));
+
+      socials.forEach(l=>{
+        const a = document.createElement("a");
+        a.className = "iconBtn";
+        a.href = l.url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.title = l.type;
+        a.innerHTML = ICONS[l.type] || svgLink();
+        row.appendChild(a);
+      });
+    }
+
+    function renderLinks(links){
+      const box = document.getElementById("links");
+      box.innerHTML = "";
+
+      if(!links.length){
+        const div = document.createElement("div");
+        div.className = "state";
+        div.textContent = "No hay links todavía.";
+        box.appendChild(div);
+        return;
+      }
+
+      links.forEach(l=>{
+        const a = document.createElement("a");
+        a.className = "link";
+        a.href = l.url;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+
+        const left = document.createElement("div");
+        left.className = "linkLeft";
+
+        const pill = document.createElement("div");
+        pill.className = "pill";
+        pill.innerHTML = ICONS[l.type] || svgLink();
+
+        const title = document.createElement("p");
+        title.className = "linkTitle";
+        title.textContent = l.label || prettifyLabel(l.type);
+
+        left.appendChild(pill);
+        left.appendChild(title);
+
+        const chev = document.createElement("div");
+        chev.className = "chev";
+        chev.innerHTML = svgChevron();
+
+        a.appendChild(left);
+        a.appendChild(chev);
+
+        box.appendChild(a);
+      });
+    }
+
+    /***********************
+     * DATA: CSV → row
+     ***********************/
+    async function fetchUserRowFromCSV(csvUrl, username){
+      if(!csvUrl || csvUrl.includes("PASTE_YOUR_PUBLISHED_CSV_URL")){
+        throw new Error("SHEETS_CSV_URL no configurado.");
+      }
+      const res = await fetch(csvUrl, { cache: "no-store" });
+      if(!res.ok) throw new Error("CSV fetch failed: " + res.status);
+      const text = await res.text();
+      const { headers, rows } = parseCSV(text);
+
+      // map rows to objects
+      const objs = rows.map(r=>{
+        const o = {};
+        headers.forEach((h,i)=> o[h] = (r[i] ?? "").trim());
+        return o;
+      });
+
+      const key = username.toLowerCase();
+      return objs.find(o => (o.username || o.user || o.handle || "").toLowerCase() === key) || null;
+    }
+
+    function parseCSV(text){
+      const lines = text.replace(/\r/g,"").split("\n").filter(Boolean);
+      const rows = [];
+      let headers = [];
+      for(let i=0;i<lines.length;i++){
+        const row = splitCSVLine(lines[i]);
+        if(i===0){
+          headers = row.map(h => normalizeHeader(h));
+        }else{
+          rows.push(row);
+        }
+      }
+      return { headers, rows };
+    }
+
+    function splitCSVLine(line){
+      const out = [];
+      let cur = "";
+      let q = false;
+      for(let i=0;i<line.length;i++){
+        const ch = line[i];
+        if(ch === '"' && line[i+1] === '"'){ cur += '"'; i++; continue; }
+        if(ch === '"'){ q = !q; continue; }
+        if(ch === "," && !q){ out.push(cur); cur=""; continue; }
+        cur += ch;
+      }
+      out.push(cur);
+      return out;
+    }
+
+    function normalizeHeader(h){
+      return h.trim().toLowerCase()
+        .replace(/\s+/g,"_")
+        .replace(/[^\w]/g,"");
+    }
+
+    function normalizeLinks(row){
+      // 1) JSON column
+      const raw = row.links || row.links_json || row.socials || "";
+      if(raw){
+        try{
+          const arr = JSON.parse(raw);
+          if(Array.isArray(arr)){
+            return arr
+              .map(x => ({
+                type: (x.type||x.platform||"website").toLowerCase(),
+                label: x.label || x.title || "",
+                url: x.url || x.link || ""
+              }))
+              .filter(x => isValidUrl(x.url));
+          }
+        }catch(e){ /* ignore */ }
+      }
+
+      // 2) wide columns
+      const candidates = {};
+      for(const k in row){
+        const v = (row[k]||"").trim();
+        if(!v) continue;
+        // common known social keys
+        if(ICONS[k] && isValidUrl(v)) candidates[k] = v;
+      }
+
+      // 3) if they store usernames instead of urls
+      // (no inventamos; solo urls válidos)
+      const links = [];
+      const used = new Set();
+
+      // socials first
+      SOCIAL_ORDER.forEach(type=>{
+        if(candidates[type] && !used.has(candidates[type])){
+          used.add(candidates[type]);
+          links.push({ type, label: prettifyLabel(type), url: normalizeUrl(candidates[type]) });
+        }
+      });
+
+      // any extra icon-known fields not in order
+      Object.keys(candidates).forEach(type=>{
+        if(!used.has(candidates[type])){
+          used.add(candidates[type]);
+          links.push({ type, label: prettifyLabel(type), url: normalizeUrl(candidates[type]) });
+        }
+      });
+
+      return links;
+    }
+
+    function normalizeUrl(u){
+      const s = String(u || "").trim();
+      if(!s) return "";
+      if(/^https?:\/\//i.test(s)) return s;
+      // allow mailto
+      if(/^mailto:/i.test(s)) return s;
+      return "https://" + s;
+    }
+
+    function isValidUrl(u){
+      const s = String(u || "").trim();
+      if(!s) return false;
+      if(/^mailto:/i.test(s)) return true;
+      try{
+        new URL(normalizeUrl(s));
+        return true;
+      }catch(e){
+        return false;
+      }
+    }
+
+    function isSocialType(t){
+      const type = (t||"").toLowerCase();
+      return ["instagram","tiktok","x","twitter","youtube","facebook","linkedin","telegram","whatsapp","email","website"].includes(type);
+    }
+
+    function sanitizeUsername(u){
+      return String(u || "")
+        .trim()
+        .replace(/^@/,"")
+        .replace(/[^\w.-]/g,"")
+        .slice(0, 40) || "usuario";
+    }
+
+    function setAvatar(url){
+      const img = document.getElementById("avatarImg");
+      img.src = url;
+      img.onerror = () => { img.src = makeFallbackAvatar(document.getElementById("nameText").textContent.replace("@","")); };
+    }
+
+    function makeFallbackAvatar(seed){
+      const text = encodeURIComponent((seed||"S").slice(0,2).toUpperCase());
+      // tiny inline SVG avatar (no depende de sitios externos)
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160">
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffffff" stop-opacity=".18"/>
+              <stop offset="1" stop-color="#ffffff" stop-opacity=".05"/>
+            </linearGradient>
+          </defs>
+          <rect width="160" height="160" rx="36" fill="#0f1720"/>
+          <rect width="160" height="160" rx="36" fill="url(#g)"/>
+          <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle"
+            font-family="system-ui, -apple-system, Segoe UI, Roboto" font-size="56"
+            fill="rgba(233,238,245,.92)" font-weight="800">${decodeURIComponent(text)}</text>
+        </svg>`;
+      return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    }
+
+    function setState(msg){
+      document.getElementById("state").textContent = msg || "";
+    }
+
+    function prettifyLabel(type){
+      const t = (type||"").toLowerCase();
+      if(t==="x"||t==="twitter") return "X";
+      if(t==="tiktok") return "TikTok";
+      if(t==="youtube") return "YouTube";
+      if(t==="instagram") return "Instagram";
+      if(t==="telegram") return "Telegram";
+      if(t==="whatsapp") return "WhatsApp";
+      if(t==="linkedin") return "LinkedIn";
+      if(t==="facebook") return "Facebook";
+      if(t==="email") return "Email";
+      return "Link";
+    }
+
+    /***********************
+     * SVG ICONS
+     ***********************/
+    function svgChevron(){
+      return `<svg viewBox="0 0 24 24" fill="none">
+        <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>`;
+    }
+
+    function svgLink(){
+      return `<svg viewBox="0 0 24 24" fill="none">
+        <path d="M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>`;
+    }
+
+    function svgX(){
+      return `<svg viewBox="0 0 24 24" fill="none">
+        <path d="M8 6h3l5 12h-3L8 6Z" fill="currentColor" opacity=".92"/>
+        <path d="M16 6h-3L8 18h3l5-12Z" fill="currentColor" opacity=".55"/>
+      </svg>`;
+    }
+
+    function svgInstagram(){
+      return `<svg viewBox="0 0 24 24" fill="none">
+        <rect x="6" y="6" width="12" height="12" rx="4" stroke="currentColor" stroke-width="2"/>
+        <path d="M12 10a2 2 0 1 0 0 4a2 2 0 0 0 0-4Z" stroke="currentColor" stroke-width="2"/>
+        <path d="M16.2 7.8h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      </svg>`;
+    }
+
+    function svgTikTok(){
+      return `<svg viewBox="0 0 24 24" fill="none">
+        <path d="M14 6v9.2a3.2 3.2 0 1 1-2-3V6h2Z" fill="currentColor" opacity=".9"/>
+        <path d="M14 6c.9 1.8 2.2 2.9 4 3.3V11c-1.7-.2-3.1-.9-4-2V6Z" fill="currentColor" opacity=".55"/>
+      </svg>`;
+    }
+
+    function svgYouTube(){
+      return `<svg viewBox="0 0 24 24" fill="none">
+        <path d="M21 12c0 3.3-.4 4.6-1.1 5.3-.7.7-2 .9-3.9 1H8c-1.9-.1-3.2-.3-3.9-1C3.4 16.6 3 15.3 3 12s.4-4.6 1.1-5.3C4.8 6 6.1 5.8 8 5.7h8c1.9.1 3.2.3 3.9 1C20.6 7.4 21 8.7 21 12Z" stroke="currentColor" stroke-width="2" opacity=".95"/>
+        <path d="M11 10l4 2-4 2v-4Z" fill="currentColor"/>
+      </svg>`;
+    }
+
+    function svgFacebook(){
+      return `<svg viewBox="0 0 24 24" fill="none">
+        <path d="M13 10h3V7h-3c-2.2 0-4 1.8-4 4v3H7v3h2v4h3v-4h3l1-3h-4v-3c0-.6.4-1 1-1Z" fill="currentColor" opacity=".9"/>
+      </svg>`;
+    }
+
+    function svgLinkedIn(){
+      return `<svg viewBox="0 0 24 24" fill="none">
+        <path d="M7 10v10H4V10h3Z" fill="currentColor" opacity=".9"/>
+        <path d="M5.5 4.5A1.5 1.5 0 1 0 5.5 7.5A1.5 1.5 0 0 0 5.5 4.5Z" fill="currentColor" opacity=".9"/>
+        <path d="M20 20h-3v-5.4c0-1.3-.5-2.2-1.7-2.2-1 0-1.6.7-1.8 1.3-.1.2-.1.6-.1.9V20h-3s.04-8.7 0-10h3v1.4c.4-.7 1.2-1.7 3-1.7 2.2 0 3.6 1.4 3.6 4.4V20Z" fill="currentColor" opacity=".75"/>
+      </svg>`;
+    }
+
+    function svgWhatsApp(){
+      return `<svg viewBox="0 0 24 24" fill="none">
+        <path d="M12 4a8 8 0 0 0-6.9 12l-1.1 4 4-1.1A8 8 0 1 0 12 4Z" stroke="currentColor" stroke-width="2" opacity=".95"/>
+        <path d="M9.7 9.5c.2-.3.4-.3.6-.2l.7.4c.2.1.3.3.2.6-.1.3-.2.6-.1.8.2.5 1.1 1.6 2.1 2 .3.1.6.1.8-.1l.5-.5c.2-.2.4-.2.6-.1l.8.4c.2.1.3.3.2.6-.1.5-.5 1.2-1.4 1.3-1.5.2-3.6-1-5-2.6-1.2-1.3-2.2-3.4-2-4.9.1-.9.8-1.2 1-1.4Z" fill="currentColor" opacity=".85"/>
+      </svg>`;
+    }
+
+    function svgMail(){
+      return `<svg viewBox="0 0 24 24" fill="none">
+        <path d="M4 7h16v10H4V7Z" stroke="currentColor" stroke-width="2"/>
+        <path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>`;
+    }
+
+    function svgTelegram(){
+      /* FIX: icon correcto y visible, no se “pierde” */
+      return `<svg viewBox="0 0 24 24" fill="none">
+        <path d="M20.7 5.6 18 19.2c-.2 1-1 .9-1.6.6l-4.6-3.4-2.2 2.1c-.2.2-.4.4-.8.4l.3-5.1 9.3-8.4c.4-.3-.1-.5-.6-.2l-11.5 7.2-5-1.6c-1.1-.3-1.1-1.1.2-1.6l17.7-6.8c.8-.3 1.5.2 1.3 1.2Z"
+          fill="currentColor" opacity=".92"/>
+      </svg>`;
+    }
+  </script>
 </body>
 </html>
