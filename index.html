@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -14,609 +14,198 @@
       --stroke:rgba(255,255,255,.10); --stroke2:rgba(255,255,255,.06);
       --shadow:0 18px 60px rgba(0,0,0,.55);
       --radius:22px;
-      --avatar:92px;
       --maxw:540px;
+    }
+    html[data-theme="light"]{
+      --bg0:#f7f9fb; --bg1:#eef3f7;
+      --card:#ffffff; --card2:#f7f9fb;
+      --text:#0b0f14; --muted:#566474;
+      --stroke:rgba(10,15,20,.14); --stroke2:rgba(10,15,20,.08);
+      --shadow:0 18px 50px rgba(0,0,0,.12);
     }
 
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       color:var(--text);
       min-height:100svh;
       background:
-        radial-gradient(1200px 650px at 18% 12%, rgba(220,240,255,.10), transparent 55%),
-        radial-gradient(900px 520px at 82% 18%, rgba(120,170,255,.10), transparent 50%),
-        radial-gradient(900px 520px at 50% 90%, rgba(255,255,255,.06), transparent 52%),
-        linear-gradient(160deg, var(--bg0), var(--bg1) 55%, #060a10);
-      overflow-x:hidden;
+        radial-gradient(1200px 650px at 18% 12%, rgba(120,170,255,.14), transparent 55%),
+        radial-gradient(900px 520px at 82% 18%, rgba(220,240,255,.18), transparent 50%),
+        linear-gradient(160deg, var(--bg0), var(--bg1));
     }
 
-    body::before{
-      content:"";
-      position:fixed; inset:0; pointer-events:none;
-      background:
-        linear-gradient(115deg, rgba(255,255,255,.06), transparent 35%, rgba(255,255,255,.04) 60%, transparent),
-        repeating-linear-gradient(90deg, rgba(255,255,255,.016) 0 1px, transparent 1px 4px);
-      mix-blend-mode:overlay;
-      opacity:.55;
-    }
-
-    .wrap{max-width:var(--maxw); margin:0 auto; padding:28px 16px 26px;}
-
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:28px 16px;}
     .card{
       border-radius:var(--radius);
       border:1px solid var(--stroke2);
-      background:
-        radial-gradient(700px 240px at 40% 0%, rgba(255,255,255,.10), transparent 50%),
-        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)),
-        linear-gradient(180deg, var(--card), var(--card2));
+      background:linear-gradient(180deg, var(--card), var(--card2));
       box-shadow:var(--shadow);
-      overflow:hidden;
-      backdrop-filter:blur(12px);
-    }
-
-    .profile{
-      padding:22px 18px 14px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:12px;
-      text-align:center;
-    }
-
-    .avatar{
-      width:var(--avatar);
-      height:var(--avatar);
-      border-radius:26px;
-      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-      border:1px solid var(--stroke);
-      box-shadow:0 16px 32px rgba(0,0,0,.45);
       overflow:hidden;
       position:relative;
     }
-    .avatar::after{
-      content:"";
-      position:absolute; inset:-1px;
-      border-radius:26px;
-      border:1px solid rgba(255,255,255,.08);
-      pointer-events:none;
-    }
-    .avatar img{width:100%; height:100%; object-fit:cover; display:block;}
 
+    .topTools{
+      position:absolute; top:12px; right:12px;
+      display:flex; gap:8px;
+    }
+    .toggleBtn{
+      width:38px; height:38px;
+      border-radius:12px;
+      border:1px solid var(--stroke2);
+      background:transparent;
+      color:var(--text);
+      cursor:pointer;
+      font-size:16px;
+    }
+
+    .profile{
+      padding:30px 18px 10px;
+      text-align:center;
+    }
     .username{
       margin:0;
-      font-size:24px;
-      line-height:1.05;
-      font-weight:950;
-      letter-spacing:.2px;
-      word-break:break-word;
+      font-size:26px;
+      font-weight:900;
     }
-
     .handle{
-      margin:0;
+      margin:4px 0 0;
       font-size:13px;
       color:var(--muted);
     }
 
-    .iconsWrap{
-      padding: 10px 16px 18px;
-    }
-
-    /* grid de icons */
+    .iconsWrap{padding:20px 16px 22px;}
     .icons{
       display:grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns:repeat(5,1fr);
       gap:12px;
     }
-
-    @media (max-width: 420px){
-      .icons{grid-template-columns: repeat(4, 1fr);}
+    @media(max-width:420px){
+      .icons{grid-template-columns:repeat(4,1fr);}
     }
 
     .iconBtn{
       height:54px;
       border-radius:18px;
       border:1px solid var(--stroke2);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      box-shadow:0 12px 22px rgba(0,0,0,.30);
       display:grid;
       place-items:center;
-      text-decoration:none;
-      position:relative;
-      overflow:hidden;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      background:transparent;
+      transition:.15s;
     }
     .iconBtn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,.14);
-      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+      transform:translateY(-2px);
+      border-color:rgba(255,255,255,.18);
     }
-
-    /* “glow” con color de la red */
-    .iconBtn::before{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background: radial-gradient(circle at 50% 50%, var(--brandGlow, rgba(255,255,255,.10)), transparent 55%);
-      opacity:.75;
-      pointer-events:none;
-    }
-
     .iconBtn svg{
-      width:24px;
-      height:24px;
-      display:block;
-      color: var(--brandColor, rgba(233,238,245,.92));
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,.45));
+      width:24px; height:24px;
+      color:var(--brandColor,#e9eef5);
     }
 
     .state{
-      padding: 0 16px 16px;
-      color:var(--muted);
+      padding:0 16px 16px;
+      text-align:center;
       font-size:13px;
-      text-align:center;
+      color:var(--muted);
     }
-
     .footer{
-      padding: 14px 16px 16px;
-      color:rgba(154,167,181,.85);
-      font-size:12px;
+      padding:14px 16px 18px;
       text-align:center;
+      font-size:12px;
+      color:var(--muted);
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="card">
-      <div class="profile">
-        <div class="avatar"><img id="avatarImg" alt="Avatar" /></div>
-        <h1 class="username" id="nameText">@soulink</h1>
-        <p class="handle" id="handleText">soulink.bio/@soulink</p>
-      </div>
-
-      <div class="iconsWrap">
-        <div class="icons" id="icons"></div>
-      </div>
-
-      <div class="state" id="state"></div>
-      <div class="footer">© soulink.bio</div>
+<div class="wrap">
+  <div class="card">
+    <div class="topTools">
+      <button class="toggleBtn" id="themeBtn">🌓</button>
     </div>
+
+    <div class="profile">
+      <h1 class="username" id="nameText">@soulink</h1>
+      <p class="handle" id="handleText">soulink.bio/@soulink</p>
+    </div>
+
+    <div class="iconsWrap">
+      <div class="icons" id="icons"></div>
+    </div>
+
+    <div class="state" id="state"></div>
+    <div class="footer">© soulink.bio</div>
   </div>
+</div>
 
-  <script>
-    /***********************
-     * CONFIG
-     ***********************/
-    const DEFAULT_USERNAME = "soulink";
+<script>
+const DEFAULT_USERNAME="soulink";
+const SHEETS_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
 
-    // ✅ tu Google Sheets publicado
-    const SHEETS_CSV_URL =
-      "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8qA-po2EufvnIotOaNgFsvfQqOMOFMR4KyaIGramGsEErGpOzckJYN2nPMvfsdnqoC34w_DawjNdA/pub?output=csv";
+const BRAND={
+  email:"#e9eef5",x:"#e9eef5",facebook:"#1877F2",instagram:"#E1306C",
+  whatsapp:"#25D366",threads:"#e9eef5",tiktok:"#00F2EA",
+  snapchat:"#FFFC00",youtube:"#FF0033",twitch:"#9146FF",
+  telegram:"#26A5E4",discord:"#5865F2",github:"#e9eef5",
+  linkedin:"#0A66C2",reddit:"#FF4500",pinterest:"#E60023"
+};
 
-    // Brand colors (para glow)
-    const BRAND = {
-      instagram:  { color: "#E1306C", glow: "rgba(225,48,108,.28)" },
-      tiktok:     { color: "#00F2EA", glow: "rgba(0,242,234,.22)" },
-      x:          { color: "#E9EEF5", glow: "rgba(233,238,245,.14)" },
-      twitter:    { color: "#E9EEF5", glow: "rgba(233,238,245,.14)" },
-      youtube:    { color: "#FF0033", glow: "rgba(255,0,51,.22)" },
-      facebook:   { color: "#1877F2", glow: "rgba(24,119,242,.22)" },
-      linkedin:   { color: "#0A66C2", glow: "rgba(10,102,194,.22)" },
-      telegram:   { color: "#26A5E4", glow: "rgba(38,165,228,.22)" },
-      whatsapp:   { color: "#25D366", glow: "rgba(37,211,102,.22)" },
-      snapchat:   { color: "#FFFC00", glow: "rgba(255,252,0,.16)" },
-      discord:    { color: "#5865F2", glow: "rgba(88,101,242,.22)" },
-      spotify:    { color: "#1DB954", glow: "rgba(29,185,84,.22)" },
-      twitch:     { color: "#9146FF", glow: "rgba(145,70,255,.22)" },
-      github:     { color: "#E9EEF5", glow: "rgba(233,238,245,.14)" },
-      website:    { color: "#E9EEF5", glow: "rgba(233,238,245,.14)" },
-      email:      { color: "#E9EEF5", glow: "rgba(233,238,245,.14)" },
-      generic:    { color: "#E9EEF5", glow: "rgba(233,238,245,.14)" },
-    };
+const ICONS={
+  email:`<svg viewBox="0 0 24 24"><path d="M4 7h16v10H4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 8l8 6 8-6" fill="none" stroke="currentColor" stroke-width="2"/></svg>`,
+  x:`<svg viewBox="0 0 24 24"><path d="M18 3h3l-7 8 8 10h-6l-5-6-5 6H2l8-9-8-9h6l4 5z" fill="currentColor"/></svg>`,
+  instagram:`<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="6" ry="6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/></svg>`,
+  whatsapp:`<svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-7.5 14.2L3 21l4-1.3A9 9 0 1 0 12 3z" fill="currentColor"/></svg>`,
+  telegram:`<svg viewBox="0 0 24 24"><path d="M21 4L3 11l6 2 2 6 3-4 4 3z" fill="currentColor"/></svg>`,
+  discord:`<svg viewBox="0 0 24 24"><path d="M19 6c-2-1-4-1-4-1l-.3.6a12 12 0 0 0-5.4 0L9 5s-2 0-4 1C3 9 3 15 3 15s2 3 6 3l.7-1c-1-.3-2-.8-3-1.5l.6-.4c2 1 6 1 8 0l.6.4c-1 .7-2 1.2-3 1.5l.7 1c4 0 6-3 6-3s0-6-2-9z" fill="currentColor"/></svg>`,
+  tiktok:`<svg viewBox="0 0 24 24"><path d="M14 3v10a4 4 0 1 1-3-3.9V3z" fill="currentColor"/></svg>`,
+  reddit:`<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="6" fill="currentColor"/><circle cx="9.5" cy="12" r="1" fill="#05070a"/><circle cx="14.5" cy="12" r="1" fill="#05070a"/></svg>`
+};
 
-    // Icon SVGs (estilo “logo” con color por brand)
-    const ICONS = {
-      instagram: svgInstagram(),
-      tiktok: svgTikTok(),
-      x: svgX(),
-      twitter: svgX(),
-      youtube: svgYouTube(),
-      facebook: svgFacebook(),
-      linkedin: svgLinkedIn(),
-      telegram: svgTelegram(),
-      whatsapp: svgWhatsApp(),
-      snapchat: svgSnapchat(),
-      discord: svgDiscord(),
-      spotify: svgSpotify(),
-      twitch: svgTwitch(),
-      github: svgGithub(),
-      website: svgLink(),
-      email: svgMail(),
-      generic: svgLink(),
-    };
+const ORDER=["email","x","instagram","whatsapp","tiktok","telegram","discord","reddit"];
 
-    const ORDER = [
-      "instagram","tiktok","x","twitter","youtube","telegram","whatsapp","facebook","linkedin",
-      "snapchat","discord","spotify","twitch","github","website","email"
-    ];
+init();
+async function init(){
+  const u=new URL(location.href).searchParams.get("u")||DEFAULT_USERNAME;
+  document.getElementById("nameText").textContent="@"+u;
+  document.getElementById("handleText").textContent="soulink.bio/@"+u;
+  await loadLinks(u);
+}
 
-    /***********************
-     * INIT (lee ?u=usuario)
-     ***********************/
-    (async function init(){
-      const u = getParam("u") || DEFAULT_USERNAME;
-      await loadProfile(u);
-    })();
-
-    // expuesto para 404
-    window.loadProfile = loadProfile;
-
-    async function loadProfile(username){
-      setState("Cargando…");
-
-      const safeU = sanitizeUsername(username);
-      document.title = `@${safeU} • soulink.bio`;
-      document.getElementById("nameText").textContent = `@${safeU}`;
-      document.getElementById("handleText").textContent = `soulink.bio/@${safeU}`;
-
-      // Avatar: si falla, muestra Soulink mark
-      setAvatar(makeSoulinkFallbackAvatar());
-
-      try{
-        const row = await fetchUserRowFromCSV(SHEETS_CSV_URL, safeU);
-        if(!row){
-          renderIcons([]);
-          setState("Este usuario todavía no existe en la base de datos.");
-          return;
-        }
-
-        // avatar
-        const avatar = row.avatar || row.avatar_url || row.pfp || row.profile_picture || row.photo || "";
-        if(avatar) setAvatar(avatar);
-
-        // construir lista de links desde columnas del sheet
-        const links = extractLinksFromRow(row);
-
-        // ordenar (los conocidos primero)
-        const sorted = sortLinks(links);
-
-        renderIcons(sorted);
-        setState(sorted.length ? "" : "No hay redes sociales guardadas todavía.");
-      }catch(e){
-        console.error(e);
-        renderIcons([]);
-        setState("No pude cargar la data. Verifica que el Sheet esté publicado.");
-      }
+async function loadLinks(u){
+  const res=await fetch(SHEETS_CSV_URL);
+  const txt=await res.text();
+  const lines=txt.split("\n");
+  const headers=lines[0].toLowerCase().split(",");
+  const rows=lines.slice(1);
+  let row=null;
+  rows.forEach(r=>{
+    const cols=r.split(",");
+    if(cols[headers.indexOf("username")]===u) row=cols;
+  });
+  if(!row){setState("Usuario no encontrado");return;}
+  const icons=document.getElementById("icons");
+  icons.innerHTML="";
+  ORDER.forEach(k=>{
+    const i=headers.indexOf(k);
+    if(i>-1 && row[i]){
+      const a=document.createElement("a");
+      a.href=row[i].startsWith("http")?row[i]:"https://"+row[i];
+      a.target="_blank";
+      a.className="iconBtn";
+      a.style.setProperty("--brandColor",BRAND[k]);
+      a.innerHTML=ICONS[k];
+      icons.appendChild(a);
     }
+  });
+}
 
-    /***********************
-     * ICON RENDER
-     ***********************/
-    function renderIcons(links){
-      const box = document.getElementById("icons");
-      box.innerHTML = "";
+function setState(t){document.getElementById("state").textContent=t||"";}
 
-      links.forEach(l=>{
-        const a = document.createElement("a");
-        a.className = "iconBtn";
-        a.href = l.url;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        a.title = l.type;
-
-        const b = BRAND[l.type] || BRAND.generic;
-        a.style.setProperty("--brandColor", b.color);
-        a.style.setProperty("--brandGlow", b.glow);
-
-        a.innerHTML = ICONS[l.type] || ICONS.generic;
-
-        box.appendChild(a);
-      });
-    }
-
-    /***********************
-     * DATA
-     ***********************/
-    async function fetchUserRowFromCSV(csvUrl, username){
-      const res = await fetch(csvUrl, { cache: "no-store" });
-      if(!res.ok) throw new Error("CSV fetch failed: " + res.status);
-
-      const text = await res.text();
-      const { headers, rows } = parseCSV(text);
-
-      const objs = rows.map(r=>{
-        const o = {};
-        headers.forEach((h,i)=> o[h] = (r[i] ?? "").trim());
-        return o;
-      });
-
-      const key = username.toLowerCase();
-      return objs.find(o => (o.username || o.user || o.handle || "").toLowerCase() === key) || null;
-    }
-
-    function extractLinksFromRow(row){
-      const links = [];
-      for(const k in row){
-        const key = String(k || "").toLowerCase().trim();
-        const val = String(row[k] || "").trim();
-        if(!val) continue;
-
-        // ignorar campos no-red
-        if(["username","user","handle","avatar","avatar_url","pfp","profile_picture","photo","display_name","name"].includes(key)) continue;
-
-        // si parece URL o mailto
-        if(isValidUrl(val)){
-          const type = normalizeType(key);
-          links.push({
-            type,
-            url: normalizeUrl(val),
-          });
-        }
-      }
-
-      // dedupe por url
-      const seen = new Set();
-      return links.filter(l=>{
-        if(seen.has(l.url)) return false;
-        seen.add(l.url);
-        return true;
-      });
-    }
-
-    function sortLinks(links){
-      const rank = (t) => {
-        const i = ORDER.indexOf(t);
-        return i === -1 ? 999 : i;
-      };
-      return links.slice().sort((a,b)=> rank(a.type) - rank(b.type));
-    }
-
-    function normalizeType(key){
-      // mapas comunes
-      const k = key.replace(/\s+/g,"").replace(/_/g,"").replace(/-/g,"");
-      if(k === "twitter" || k === "x") return "x";
-      if(k === "yt" || k === "youtube") return "youtube";
-      if(k === "ig" || k === "instagram") return "instagram";
-      if(k === "tiktok") return "tiktok";
-      if(k === "fb" || k === "facebook") return "facebook";
-      if(k === "li" || k === "linkedin") return "linkedin";
-      if(k === "tg" || k === "telegram") return "telegram";
-      if(k === "wa" || k === "whatsapp") return "whatsapp";
-      if(k === "snap" || k === "snapchat") return "snapchat";
-      if(k === "discord") return "discord";
-      if(k === "spotify") return "spotify";
-      if(k === "twitch") return "twitch";
-      if(k === "github") return "github";
-      if(k.includes("mail")) return "email";
-      if(k.includes("web") || k.includes("site") || k.includes("url")) return "website";
-
-      // si el key coincide con un icon conocido
-      if(ICONS[k]) return k;
-
-      return "generic";
-    }
-
-    function parseCSV(text){
-      const lines = text.replace(/\r/g,"").split("\n").filter(Boolean);
-      const rows = [];
-      let headers = [];
-      for(let i=0;i<lines.length;i++){
-        const row = splitCSVLine(lines[i]);
-        if(i===0) headers = row.map(h => normalizeHeader(h));
-        else rows.push(row);
-      }
-      return { headers, rows };
-    }
-
-    function splitCSVLine(line){
-      const out = [];
-      let cur = "";
-      let q = false;
-      for(let i=0;i<line.length;i++){
-        const ch = line[i];
-        if(ch === '"' && line[i+1] === '"'){ cur += '"'; i++; continue; }
-        if(ch === '"'){ q = !q; continue; }
-        if(ch === "," && !q){ out.push(cur); cur=""; continue; }
-        cur += ch;
-      }
-      out.push(cur);
-      return out;
-    }
-
-    function normalizeHeader(h){
-      return String(h||"").trim().toLowerCase()
-        .replace(/\s+/g,"_")
-        .replace(/[^\w]/g,"");
-    }
-
-    function normalizeUrl(u){
-      const s = String(u || "").trim();
-      if(!s) return "";
-      if(/^https?:\/\//i.test(s)) return s;
-      if(/^mailto:/i.test(s)) return s;
-      return "https://" + s;
-    }
-
-    function isValidUrl(u){
-      const s = String(u || "").trim();
-      if(!s) return false;
-      if(/^mailto:/i.test(s)) return true;
-      try{ new URL(normalizeUrl(s)); return true; }
-      catch(e){ return false; }
-    }
-
-    function sanitizeUsername(u){
-      return String(u || "")
-        .trim()
-        .replace(/^@/,"")
-        .replace(/[^\w.-]/g,"")
-        .slice(0, 40) || "usuario";
-    }
-
-    function setAvatar(url){
-      const img = document.getElementById("avatarImg");
-      img.src = url;
-      img.onerror = () => { img.src = makeSoulinkFallbackAvatar(); };
-    }
-
-    function makeSoulinkFallbackAvatar(){
-      // fallback “Soulink” (en vez de “so”)
-      const svg =
-        `<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240">
-          <defs>
-            <radialGradient id="rg" cx="30%" cy="25%" r="75%">
-              <stop offset="0" stop-color="rgba(255,255,255,.22)"/>
-              <stop offset="1" stop-color="rgba(255,255,255,.05)"/>
-            </radialGradient>
-            <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#0f1720"/>
-              <stop offset="1" stop-color="#070b10"/>
-            </linearGradient>
-          </defs>
-          <rect width="240" height="240" rx="58" fill="url(#lg)"/>
-          <rect width="240" height="240" rx="58" fill="url(#rg)"/>
-          <g fill="none" stroke="rgba(233,238,245,.92)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M82 122c0-34 26-60 60-60"/>
-            <path d="M158 118c0 34-26 60-60 60" opacity=".9"/>
-            <path d="M94 120h52" opacity=".9"/>
-          </g>
-        </svg>`;
-      return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
-    }
-
-    function setState(msg){
-      document.getElementById("state").textContent = msg || "";
-    }
-
-    function getParam(name){
-      try{
-        const url = new URL(location.href);
-        return url.searchParams.get(name);
-      }catch(e){
-        return null;
-      }
-    }
-
-    /***********************
-     * SVG ICONS
-     * (se colorean con --brandColor)
-     ***********************/
-    function svgX(){
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M18.2 3H21l-6.6 7.6L22 21h-6.6l-5.2-6.8L4.7 21H2l7.2-8.3L2 3h6.8l4.7 6.2L18.2 3Z"
-          fill="currentColor"/>
-      </svg>`;
-    }
-
-    function svgInstagram(){
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M7.4 2h9.2A5.4 5.4 0 0 1 22 7.4v9.2A5.4 5.4 0 0 1 16.6 22H7.4A5.4 5.4 0 0 1 2 16.6V7.4A5.4 5.4 0 0 1 7.4 2Z" stroke="currentColor" stroke-width="2"/>
-        <path d="M12 8.2A3.8 3.8 0 1 0 12 15.8A3.8 3.8 0 0 0 12 8.2Z" stroke="currentColor" stroke-width="2"/>
-        <path d="M17.2 6.8h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-      </svg>`;
-    }
-
-    function svgTikTok(){
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M14 3v9.2a3.8 3.8 0 1 1-2.6-3.6V3H14Z" fill="currentColor"/>
-        <path d="M14 3c1.2 2.4 3.1 3.9 5.6 4.3v2.6c-2.3-.3-4.2-1.4-5.6-3V3Z" fill="currentColor" opacity=".55"/>
-      </svg>`;
-    }
-
-    function svgYouTube(){
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M21.5 12c0 3.6-.5 5.1-1.4 6-.9.9-2.5 1.1-4.9 1.2H9.8c-2.4-.1-4-.3-4.9-1.2C4 17.1 3.5 15.6 3.5 12s.5-5.1 1.4-6C5.8 5.1 7.4 4.9 9.8 4.8h5.4c2.4.1 4 .3 4.9 1.2.9.9 1.4 2.4 1.4 6Z"
-          fill="currentColor" opacity=".22"/>
-        <path d="M10.5 9.5v5l5-2.5-5-2.5Z" fill="currentColor"/>
-      </svg>`;
-    }
-
-    function svgFacebook(){
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M14 8h3V5h-3c-2.2 0-4 1.8-4 4v3H7v3h3v6h3v-6h3l1-3h-4V9c0-.6.4-1 1-1Z"
-          fill="currentColor"/>
-      </svg>`;
-    }
-
-    function svgLinkedIn(){
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M6.3 9.7H3.6V20.4h2.7V9.7Z" fill="currentColor"/>
-        <path d="M5 3.6a1.6 1.6 0 1 0 0 3.2a1.6 1.6 0 0 0 0-3.2Z" fill="currentColor"/>
-        <path d="M20.4 20.4h-2.7v-5.8c0-1.4-.6-2.3-1.8-2.3-1 0-1.6.7-1.8 1.3-.1.2-.1.6-.1.9v5.9H11.3V9.7H14v1.5c.5-.8 1.4-1.8 3.2-1.8 2.3 0 3.9 1.5 3.9 4.6v6.4Z"
-          fill="currentColor" opacity=".9"/>
-      </svg>`;
-    }
-
-    function svgTelegram(){
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M20.7 5.6 18 19.2c-.2 1-1 .9-1.6.6l-4.6-3.4-2.2 2.1c-.2.2-.4.4-.8.4l.3-5.1 9.3-8.4c.4-.3-.1-.5-.6-.2l-11.5 7.2-5-1.6c-1.1-.3-1.1-1.1.2-1.6l17.7-6.8c.8-.3 1.5.2 1.3 1.2Z"
-          fill="currentColor"/>
-      </svg>`;
-    }
-
-    function svgWhatsApp(){
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.5-1.1A8.5 8.5 0 1 0 12 3.5Z"
-          stroke="currentColor" stroke-width="2" opacity=".9"/>
-        <path d="M9.7 9.5c.2-.3.4-.3.6-.2l.7.4c.2.1.3.3.2.6-.1.3-.2.6-.1.8.2.5 1.1 1.6 2.1 2 .3.1.6.1.8-.1l.5-.5c.2-.2.4-.2.6-.1l.8.4c.2.1.3.3.2.6-.1.5-.5 1.2-1.4 1.3-1.5.2-3.6-1-5-2.6-1.2-1.3-2.2-3.4-2-4.9.1-.9.8-1.2 1-1.4Z"
-          fill="currentColor"/>
-      </svg>`;
-    }
-
-    function svgSnapchat(){
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 3c2.6 0 4.7 2.1 4.7 4.7v3.3c0 .7.4 1.3 1.1 1.6l.9.4c.6.3.6 1.1 0 1.4l-1.3.6c-.7.3-1.2 1-1.3 1.8-.1.9-.8 1.6-1.7 1.6H9.6c-.9 0-1.6-.7-1.7-1.6-.1-.8-.6-1.5-1.3-1.8l-1.3-.6c-.6-.3-.6-1.1 0-1.4l.9-.4c.7-.3 1.1-.9 1.1-1.6V7.7C7.3 5.1 9.4 3 12 3Z"
-          fill="currentColor"/>
-      </svg>`;
-    }
-
-    function svgDiscord(){
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M19.5 6.3A15.2 15.2 0 0 0 16 5l-.4.8a13.3 13.3 0 0 0-3.2-.4c-1.1 0-2.2.1-3.2.4L8.8 5A15.2 15.2 0 0 0 5.3 6.3C3.6 9 3.2 11.6 3.4 14.2c1.4 1.1 2.8 1.7 4.2 2l.5-1a9.8 9.8 0 0 1-1.4-.7l.3-.2c2.7 1.2 5.7 1.2 8.4 0l.3.2c-.5.3-.9.5-1.4.7l.5 1c1.4-.3 2.8-.9 4.2-2 .2-2.6-.2-5.2-1.9-7.9Z"
-          fill="currentColor"/>
-        <path d="M9.3 13.2a1.3 1.3 0 1 1 0-2.6a1.3 1.3 0 0 1 0 2.6Zm5.4 0a1.3 1.3 0 1 1 0-2.6a1.3 1.3 0 0 1 0 2.6Z"
-          fill="#05070a" opacity=".55"/>
-      </svg>`;
-    }
-
-    function svgSpotify(){
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 3.5a8.5 8.5 0 1 0 0 17a8.5 8.5 0 0 0 0-17Z" fill="currentColor" opacity=".25"/>
-        <path d="M7.6 10.2c2.9-1 6.2-.8 8.8.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <path d="M8.2 12.8c2.4-.8 5.1-.6 7.2.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>
-        <path d="M8.8 15c1.8-.6 3.8-.4 5.4.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".85"/>
-      </svg>`;
-    }
-
-    function svgTwitch(){
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M6 4h15v10l-4 4h-4l-2 2H9v-2H6V4Z" fill="currentColor" opacity=".92"/>
-        <path d="M15 8v4M18 8v4" stroke="#05070a" stroke-width="2" stroke-linecap="round" opacity=".55"/>
-      </svg>`;
-    }
-
-    function svgGithub(){
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 3.5a8.8 8.8 0 0 0-2.8 17.2c.4.1.6-.2.6-.4v-1.4c-2.4.6-2.9-1-2.9-1-.4-1.1-1-1.4-1-1.4-.8-.6.1-.6.1-.6.9.1 1.4 1 1.4 1 .8 1.4 2.2 1 2.7.8.1-.6.3-1 .6-1.3-1.9-.2-3.8-1-3.8-4.2 0-.9.3-1.7.9-2.3-.1-.2-.4-1.1.1-2.2 0 0 .7-.2 2.4.9a8.2 8.2 0 0 1 4.4 0c1.7-1.1 2.4-.9 2.4-.9.5 1.1.2 2 .1 2.2.6.6.9 1.4.9 2.3 0 3.2-1.9 4-3.8 4.2.3.2.6.8.6 1.6v2.4c0 .2.2.5.6.4A8.8 8.8 0 0 0 12 3.5Z"
-          fill="currentColor"/>
-      </svg>`;
-    }
-
-    function svgLink(){
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M10 13a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <path d="M14 11a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>`;
-    }
-
-    function svgMail(){
-      return `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M4 7h16v10H4V7Z" stroke="currentColor" stroke-width="2"/>
-        <path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>`;
-    }
-  </script>
+document.getElementById("themeBtn").onclick=()=>{
+  const h=document.documentElement;
+  h.dataset.theme=h.dataset.theme==="dark"?"light":"dark";
+};
+</script>
 </body>
 </html>
