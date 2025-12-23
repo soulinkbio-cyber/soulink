@@ -7,16 +7,33 @@
 </head>
 <body>
 <script>
-(async()=>{
+(async function(){
   try{
-    const r=await fetch("/index.html",{cache:"no-store"});
-    document.open();document.write(await r.text());document.close();
-    const m=location.pathname.match(/^\/@([^\/?#]+)/);
-    const u=m?m[1]:"soulink";
-    const run=()=>window.init?init(u):setTimeout(run,30);
+    // Carga el index.html
+    const res = await fetch("/index.html", { cache:"no-store" });
+    const html = await res.text();
+    document.open();
+    document.write(html);
+    document.close();
+
+    // Extrae username desde /@username
+    const path = decodeURIComponent(location.pathname || "/");
+    const match = path.match(/^\/@([^\/?#]+)/);
+    const username = match ? match[1].replace(/^@/,"") : null;
+
+    // Espera a que init exista
+    const run = () => {
+      if (typeof window.init === "function") {
+        if (username) window.init(username);
+      } else {
+        setTimeout(run, 30);
+      }
+    };
     run();
+
   }catch(e){
-    document.body.innerHTML="Error cargando perfil";
+    document.body.innerHTML =
+      "<div style='font-family:system-ui;padding:24px'>Error cargando perfil</div>";
   }
 })();
 </script>
